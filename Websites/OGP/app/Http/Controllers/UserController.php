@@ -41,12 +41,23 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //register
-        $user = User::create([
-            'username' => $request->username,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        try {
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+            ]);
+            $token = $user->createToken('my-app-token')->plainTextToken;
+            $response = [
+                'user' => $user,
+                'token' => $token
+            ];
+            return response($response, 201);
+        } catch (\Throwable $th) {
+            return response([
+                'message' => $th->getMessage()
+            ], 500);
+        }
     }
 
     /**
