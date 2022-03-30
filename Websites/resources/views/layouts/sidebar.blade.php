@@ -16,7 +16,7 @@
                 </svg>
                 <ol>
 {{--                   @for($i = 0; $i < count($friends); $i++)
-                    <li>{{ $friends }}</li>
+                    <li>{{ $friends }}</li>        TODO: FIX DENNE HER!
                   @endfor --}}
                 </ol>
               </a>

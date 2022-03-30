@@ -13,9 +13,6 @@ class EmailVerificationController extends Controller
 {
     public function __invoke(string $id, string $hash): RedirectResponse
     {
-        /*
-        TODO: Kald authController i API, for at tjekke om en user allerede findes, eller er verificeret.
-        */
 
         return redirect(route('home'));
     }
