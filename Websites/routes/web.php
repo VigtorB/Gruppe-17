@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Auth\EmailVerificationController;
+use App\Http\Controllers\FriendController;
+use App\Http\Controllers\CoinController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Livewire\Auth\Login;
 use App\Http\Livewire\Auth\Passwords\Confirm;
@@ -10,7 +12,7 @@ use App\Http\Livewire\Auth\Register;
 use App\Http\Livewire\Auth\Verify;
 use Illuminate\Support\Facades\Route;
 
-/*
+/*{{  }}
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
@@ -22,6 +24,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::view('/', 'welcome')->name('home');
+Route::get('test', [FriendController::class, 'getFriends']);
+//Route::get('test', [CoinController::class, 'getCoins']);
+
 
 Route::middleware('guest')->group(function () {
     Route::get('login', Login::class)

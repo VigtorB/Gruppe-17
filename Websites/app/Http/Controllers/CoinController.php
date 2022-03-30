@@ -1,17 +1,27 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
+
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Auth\AuthController; //Brug denne for at få fat i user og user id
-
 
 class CoinController extends Controller
 {
-    public function getCoins($id)
-    {
-        $coins = Request::get('http://localhost:8000/api/coins/'+$id)->json();
-        return $coins;
-    }
 
+    public function getCoins()
+    {
+        $id = Auth::user()->id;
+        //parse $id to string
+        //$id = (string)$id;
+        //$authController = new AuthController();
+        //$id = $authController->getUserId();
+        $url = "http://localhost:8000/api/coins/" . $id;
+        $coins = Http::get($url)->json();
+        dd($coins['coins_amount']); //kommer med en null værdi
+        return view('test', ['coins' => $coins['coins_amount']] );
+
+
+    }
 }

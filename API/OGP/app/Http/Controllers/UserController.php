@@ -74,11 +74,31 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function getUser($info)
     {
         //find user
         try {
-            $user = User::findOrFail($id);
+            if(is_numeric($info)){
+                $user = User::findOrFail($info);
+                return response($user, 200);
+            }
+            else
+            {
+                $user = User::where('username', $info)->first();
+                return response($user, 200);
+            }
+        } catch (\Exception $e) {
+            return response([
+                'message' => ['User not found']
+            ], 500);
+        }
+    }
+    /*
+    public function getUserByUsername($username)
+    {
+        //find user
+        try {
+            $user = User::where('username', $username)->first();
             return response($user, 200);
         } catch (\Exception $e) {
             return response([
@@ -86,6 +106,7 @@ class UserController extends Controller
             ], 404);
         }
     }
+    */
 
     //find all users
     public function showAll()

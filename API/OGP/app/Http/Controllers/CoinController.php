@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Coin;
@@ -38,7 +38,12 @@ class CoinController extends Controller
     public function getCoins($id)
     {
         //show current amount of coins
-        $coin = Coin::where('user_id', $id)->first();
+        $coin = Coin::where('user_id', $id)
+                    ->select('coins_amount')
+                    ->get()
+                    ->first();
+
+        return response()->json($coin);
     }
 
     /**

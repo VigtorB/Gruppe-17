@@ -13,13 +13,14 @@ class UserController extends Controller
         $users = Http::get('https://jsonplaceholder.typicode.com/users')->json();
         return view('users.index', compact('users'));
     }
-    /*
-    public function getUser($id)
+    */
+    public function getUser($info)
     {
-        $user = Http::get('http://localhost:8000/api/'+$id)->json();
+        $user = Http::get('http://localhost:8000/api/'.$info)->json();
         $user = json_decode(file_get_contents('php://input'), true);
         return $user;
     }
+
     /*public function register($username, $email, $password)
     {
         $url = 'http://localhost:8000/api/register';
