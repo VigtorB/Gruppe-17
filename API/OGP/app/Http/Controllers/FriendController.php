@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use App\Models\Friend;
 
@@ -40,7 +41,12 @@ class FriendController extends Controller
     //get friends
     public function getFriends($id)
     {
-        $friends = Friend::where('my_user', $id)->select('friend_user')->get();
+        $userController = new UserController();
+        $friend_ids = Friend::where('my_user', $id)->select('friend_user')->get();
+        foreach($friend_ids as $friend_id){
+            $friend = $friend_id->friend_user;
+            $friends[] = $userController->getUsername($friend);
+        }
         return response()->json(['success' => true, 'friend' => $friends]);
     }
 

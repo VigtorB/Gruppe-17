@@ -93,6 +93,15 @@ class UserController extends Controller
             ], 500);
         }
     }
+    public function getUsername($info)
+    {
+        //find user
+            if(is_numeric($info)){
+                $user = User::findOrFail($info);
+                return $user->username;
+            }
+
+    }
     /*
     public function getUserByUsername($username)
     {

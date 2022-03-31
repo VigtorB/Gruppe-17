@@ -1,27 +1,29 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Route;
 
 
 use Illuminate\Http\Request;
+use App\Models\Coin;
+use Illuminate\Support\Facades\Redirect;
 
 class CoinController extends Controller
 {
 
     public function getCoins()
     {
+        $coin = new Coin();
+
         $id = Auth::user()->id;
-        //parse $id to string
-        //$id = (string)$id;
-        //$authController = new AuthController();
-        //$id = $authController->getUserId();
-        $url = "http://localhost:8000/api/coins/" . $id;
+        $url = 'http://localhost:8000/api/coins/' . $id;
         $coins = Http::get($url)->json();
-        dd($coins['coins_amount']); //kommer med en null værdi
-        return view('test', ['coins' => $coins['coins_amount']] );
-
-
+        //dd($coins['coins_amount']);
+        $coin->coins_amount = $coins['coins_amount'];
+        return view('welcome', ['coins' => $coin->coins_amount]);
     }
 }

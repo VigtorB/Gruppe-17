@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="flex items-center justify-center">
-        <div class="flex flex-col justify-around">
+        <div class="flex flex-col">
             <div class="space-y-6">
                 <a href="{{ route('home') }}">
                     <x-logo class="w-auto h-16 mx-auto text-indigo-600" />
@@ -16,26 +16,27 @@
                     <li class="inline px-4">
                         <a href="https://tailwindcss.com"
                             class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
-                                Tailwind CSS
+                            Tailwind CSS
                         </a>
                     </li>
                     <li class="inline px-4">
                         <a href="https://github.com/alpinejs/alpine"
                             class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
-                                Alpine.js
+                            Alpine.js
                         </a>
                     </li>
+
                     <li class="inline px-4">
                         <a href="https://laravel.com"
                             class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
-                                Laravel
-                            </a>
+                            Laravel
+                        </a>
                     </li>
                     <li class="inline px-4">
                         <a href="https://laravel-livewire.com"
                             class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
-                                Livewire
-                            </a>
+                            Livewire
+                        </a>
                     </li>
                 </ul>
             </div>

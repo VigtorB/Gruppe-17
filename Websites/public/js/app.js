@@ -27,7 +27,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpinejs */ \"./node_modules/alpinejs/dist/module.esm.js\");\n__webpack_require__(/*! ./bootstrap */ \"./resources/js/bootstrap.js\");\n\n\nwindow.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_0__[\"default\"];\nalpinejs__WEBPACK_IMPORTED_MODULE_0__[\"default\"].start();//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9yZXNvdXJjZXMvanMvYXBwLmpzLmpzIiwibWFwcGluZ3MiOiI7O0FBQUFBLG1CQUFPLENBQUMsZ0RBQUQsQ0FBUDs7QUFDQTtBQUNBRSxNQUFNLENBQUNELE1BQVAsR0FBZ0JBLGdEQUFoQjtBQUNBQSxzREFBQSIsInNvdXJjZXMiOlsid2VicGFjazovLy8uL3Jlc291cmNlcy9qcy9hcHAuanM/Y2VkNiJdLCJzb3VyY2VzQ29udGVudCI6WyJyZXF1aXJlKCcuL2Jvb3RzdHJhcCcpO1xuaW1wb3J0IEFscGluZSBmcm9tICdhbHBpbmVqcyc7XG53aW5kb3cuQWxwaW5lID0gQWxwaW5lO1xuQWxwaW5lLnN0YXJ0KCk7Il0sIm5hbWVzIjpbInJlcXVpcmUiLCJBbHBpbmUiLCJ3aW5kb3ciLCJzdGFydCJdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./resources/js/app.js\n");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpinejs */ \"./node_modules/alpinejs/dist/module.esm.js\");\n__webpack_require__(/*! ./bootstrap */ \"./resources/js/bootstrap.js\");\n\n\nwindow.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_0__[\"default\"];\nalpinejs__WEBPACK_IMPORTED_MODULE_0__[\"default\"].start();\nvar icon1 = document.getElementById(\"icon1\");\nvar menu1 = document.getElementById(\"menu1\");\n\nvar showMenu1 = function showMenu1(flag) {\n  if (flag) {\n    icon1.classList.toggle(\"rotate-180\");\n    menu1.classList.toggle(\"hidden\");\n  }\n};\n\nvar icon2 = document.getElementById(\"icon2\");\n\nvar showMenu2 = function showMenu2(flag) {\n  if (flag) {\n    icon2.classList.toggle(\"rotate-180\");\n  }\n};\n\nvar icon3 = document.getElementById(\"icon3\");\n\nvar showMenu3 = function showMenu3(flag) {\n  if (flag) {\n    icon3.classList.toggle(\"rotate-180\");\n  }\n};\n\nvar Main = document.getElementById(\"Main\");\nvar open = document.getElementById(\"open\");\nvar close = document.getElementById(\"close\");\n\nvar showNav = function showNav(flag) {\n  if (flag) {\n    Main.classList.toggle(\"-translate-x-full\");\n    Main.classList.toggle(\"translate-x-0\");\n    open.classList.toggle(\"hidden\");\n    close.classList.toggle(\"hidden\");\n  }\n};//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9yZXNvdXJjZXMvanMvYXBwLmpzLmpzIiwibWFwcGluZ3MiOiI7O0FBQUFBLG1CQUFPLENBQUMsZ0RBQUQsQ0FBUDs7QUFDQTtBQUNBRSxNQUFNLENBQUNELE1BQVAsR0FBZ0JBLGdEQUFoQjtBQUNBQSxzREFBQTtBQUNBLElBQUlHLEtBQUssR0FBR0MsUUFBUSxDQUFDQyxjQUFULENBQXdCLE9BQXhCLENBQVo7QUFDQSxJQUFJQyxLQUFLLEdBQUdGLFFBQVEsQ0FBQ0MsY0FBVCxDQUF3QixPQUF4QixDQUFaOztBQUNBLElBQU1FLFNBQVMsR0FBRyxTQUFaQSxTQUFZLENBQUNDLElBQUQsRUFBVTtBQUN4QixNQUFJQSxJQUFKLEVBQVU7QUFDTkwsSUFBQUEsS0FBSyxDQUFDTSxTQUFOLENBQWdCQyxNQUFoQixDQUF1QixZQUF2QjtBQUNBSixJQUFBQSxLQUFLLENBQUNHLFNBQU4sQ0FBZ0JDLE1BQWhCLENBQXVCLFFBQXZCO0FBQ0g7QUFDSixDQUxEOztBQU1BLElBQUlDLEtBQUssR0FBR1AsUUFBUSxDQUFDQyxjQUFULENBQXdCLE9BQXhCLENBQVo7O0FBRUEsSUFBTU8sU0FBUyxHQUFHLFNBQVpBLFNBQVksQ0FBQ0osSUFBRCxFQUFVO0FBQ3hCLE1BQUlBLElBQUosRUFBVTtBQUNORyxJQUFBQSxLQUFLLENBQUNGLFNBQU4sQ0FBZ0JDLE1BQWhCLENBQXVCLFlBQXZCO0FBQ0g7QUFDSixDQUpEOztBQUtBLElBQUlHLEtBQUssR0FBR1QsUUFBUSxDQUFDQyxjQUFULENBQXdCLE9BQXhCLENBQVo7O0FBRUEsSUFBTVMsU0FBUyxHQUFHLFNBQVpBLFNBQVksQ0FBQ04sSUFBRCxFQUFVO0FBQ3hCLE1BQUlBLElBQUosRUFBVTtBQUNOSyxJQUFBQSxLQUFLLENBQUNKLFNBQU4sQ0FBZ0JDLE1BQWhCLENBQXVCLFlBQXZCO0FBQ0g7QUFDSixDQUpEOztBQU1BLElBQUlLLElBQUksR0FBR1gsUUFBUSxDQUFDQyxjQUFULENBQXdCLE1BQXhCLENBQVg7QUFDQSxJQUFJVyxJQUFJLEdBQUdaLFFBQVEsQ0FBQ0MsY0FBVCxDQUF3QixNQUF4QixDQUFYO0FBQ0EsSUFBSVksS0FBSyxHQUFHYixRQUFRLENBQUNDLGNBQVQsQ0FBd0IsT0FBeEIsQ0FBWjs7QUFFQSxJQUFNYSxPQUFPLEdBQUcsU0FBVkEsT0FBVSxDQUFDVixJQUFELEVBQVU7QUFDdEIsTUFBSUEsSUFBSixFQUFVO0FBQ05PLElBQUFBLElBQUksQ0FBQ04sU0FBTCxDQUFlQyxNQUFmLENBQXNCLG1CQUF0QjtBQUNBSyxJQUFBQSxJQUFJLENBQUNOLFNBQUwsQ0FBZUMsTUFBZixDQUFzQixlQUF0QjtBQUNBTSxJQUFBQSxJQUFJLENBQUNQLFNBQUwsQ0FBZUMsTUFBZixDQUFzQixRQUF0QjtBQUNBTyxJQUFBQSxLQUFLLENBQUNSLFNBQU4sQ0FBZ0JDLE1BQWhCLENBQXVCLFFBQXZCO0FBQ0g7QUFDSixDQVBEIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vLy4vcmVzb3VyY2VzL2pzL2FwcC5qcz9jZWQ2Il0sInNvdXJjZXNDb250ZW50IjpbInJlcXVpcmUoJy4vYm9vdHN0cmFwJyk7XG5pbXBvcnQgQWxwaW5lIGZyb20gJ2FscGluZWpzJztcbndpbmRvdy5BbHBpbmUgPSBBbHBpbmU7XG5BbHBpbmUuc3RhcnQoKTtcbmxldCBpY29uMSA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKFwiaWNvbjFcIik7XG5sZXQgbWVudTEgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChcIm1lbnUxXCIpO1xuY29uc3Qgc2hvd01lbnUxID0gKGZsYWcpID0+IHtcbiAgICBpZiAoZmxhZykge1xuICAgICAgICBpY29uMS5jbGFzc0xpc3QudG9nZ2xlKFwicm90YXRlLTE4MFwiKTtcbiAgICAgICAgbWVudTEuY2xhc3NMaXN0LnRvZ2dsZShcImhpZGRlblwiKTtcbiAgICB9XG59O1xubGV0IGljb24yID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoXCJpY29uMlwiKTtcblxuY29uc3Qgc2hvd01lbnUyID0gKGZsYWcpID0+IHtcbiAgICBpZiAoZmxhZykge1xuICAgICAgICBpY29uMi5jbGFzc0xpc3QudG9nZ2xlKFwicm90YXRlLTE4MFwiKTtcbiAgICB9XG59O1xubGV0IGljb24zID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoXCJpY29uM1wiKTtcblxuY29uc3Qgc2hvd01lbnUzID0gKGZsYWcpID0+IHtcbiAgICBpZiAoZmxhZykge1xuICAgICAgICBpY29uMy5jbGFzc0xpc3QudG9nZ2xlKFwicm90YXRlLTE4MFwiKTtcbiAgICB9XG59O1xuXG5sZXQgTWFpbiA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKFwiTWFpblwiKTtcbmxldCBvcGVuID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoXCJvcGVuXCIpO1xubGV0IGNsb3NlID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoXCJjbG9zZVwiKTtcblxuY29uc3Qgc2hvd05hdiA9IChmbGFnKSA9PiB7XG4gICAgaWYgKGZsYWcpIHtcbiAgICAgICAgTWFpbi5jbGFzc0xpc3QudG9nZ2xlKFwiLXRyYW5zbGF0ZS14LWZ1bGxcIik7XG4gICAgICAgIE1haW4uY2xhc3NMaXN0LnRvZ2dsZShcInRyYW5zbGF0ZS14LTBcIik7XG4gICAgICAgIG9wZW4uY2xhc3NMaXN0LnRvZ2dsZShcImhpZGRlblwiKTtcbiAgICAgICAgY2xvc2UuY2xhc3NMaXN0LnRvZ2dsZShcImhpZGRlblwiKTtcbiAgICB9XG59O1xuXG4iXSwibmFtZXMiOlsicmVxdWlyZSIsIkFscGluZSIsIndpbmRvdyIsInN0YXJ0IiwiaWNvbjEiLCJkb2N1bWVudCIsImdldEVsZW1lbnRCeUlkIiwibWVudTEiLCJzaG93TWVudTEiLCJmbGFnIiwiY2xhc3NMaXN0IiwidG9nZ2xlIiwiaWNvbjIiLCJzaG93TWVudTIiLCJpY29uMyIsInNob3dNZW51MyIsIk1haW4iLCJvcGVuIiwiY2xvc2UiLCJzaG93TmF2Il0sInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./resources/js/app.js\n");
 
 /***/ }),
 
@@ -41,14 +41,14 @@ eval("/**\n * Echo exposes an expressive API for subscribing to channels and lis
 
 /***/ }),
 
-/***/ "./resources/sass/app.scss":
+/***/ "./resources/scss/app.scss":
 /*!*********************************!*\
-  !*** ./resources/sass/app.scss ***!
+  !*** ./resources/scss/app.scss ***!
   \*********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9yZXNvdXJjZXMvc2Fzcy9hcHAuc2Nzcy5qcyIsIm1hcHBpbmdzIjoiO0FBQUEiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9yZXNvdXJjZXMvc2Fzcy9hcHAuc2Nzcz9hOTdiIl0sInNvdXJjZXNDb250ZW50IjpbIi8vIGV4dHJhY3RlZCBieSBtaW5pLWNzcy1leHRyYWN0LXBsdWdpblxuZXhwb3J0IHt9OyJdLCJuYW1lcyI6W10sInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./resources/sass/app.scss\n");
+eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9yZXNvdXJjZXMvc2Nzcy9hcHAuc2Nzcy5qcyIsIm1hcHBpbmdzIjoiO0FBQUEiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9yZXNvdXJjZXMvc2Nzcy9hcHAuc2Nzcz9mZmFkIl0sInNvdXJjZXNDb250ZW50IjpbIi8vIGV4dHJhY3RlZCBieSBtaW5pLWNzcy1leHRyYWN0LXBsdWdpblxuZXhwb3J0IHt9OyJdLCJuYW1lcyI6W10sInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./resources/scss/app.scss\n");
 
 /***/ })
 
@@ -56,7 +56,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extr
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/ 	
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -70,17 +70,17 @@ eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extr
 /******/ 			// no module.loaded needed
 /******/ 			exports: {}
 /******/ 		};
-/******/ 	
+/******/
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/ 	
+/******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = __webpack_modules__;
-/******/ 	
+/******/
 /************************************************************************/
 /******/ 	/* webpack/runtime/chunk loaded */
 /******/ 	(() => {
@@ -113,7 +113,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extr
 /******/ 			return result;
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -125,12 +125,12 @@ eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extr
 /******/ 			}
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	(() => {
 /******/ 		// define __esModule on exports
@@ -141,11 +141,11 @@ eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extr
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/jsonp chunk loading */
 /******/ 	(() => {
 /******/ 		// no baseURI
-/******/ 		
+/******/
 /******/ 		// object to store loaded and loading chunks
 /******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
 /******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
@@ -153,19 +153,19 @@ eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extr
 /******/ 			"/js/app": 0,
 /******/ 			"css/app": 0
 /******/ 		};
-/******/ 		
+/******/
 /******/ 		// no chunk on demand loading
-/******/ 		
+/******/
 /******/ 		// no prefetching
-/******/ 		
+/******/
 /******/ 		// no preloaded
-/******/ 		
+/******/
 /******/ 		// no HMR
-/******/ 		
+/******/
 /******/ 		// no HMR manifest
-/******/ 		
+/******/
 /******/ 		__webpack_require__.O.j = (chunkId) => (installedChunks[chunkId] === 0);
-/******/ 		
+/******/
 /******/ 		// install a JSONP callback for chunk loading
 /******/ 		var webpackJsonpCallback = (parentChunkLoadingFunction, data) => {
 /******/ 			var [chunkIds, moreModules, runtime] = data;
@@ -190,20 +190,36 @@ eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extr
 /******/ 			}
 /******/ 			return __webpack_require__.O(result);
 /******/ 		}
-/******/ 		
+/******/
 /******/ 		var chunkLoadingGlobal = self["webpackChunk"] = self["webpackChunk"] || [];
 /******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
 /******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
 /******/ 	})();
-/******/ 	
+/******/
 /************************************************************************/
-/******/ 	
+/******/
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
 /******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/js/app.js")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/sass/app.scss")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/scss/app.scss")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
-/******/ 	
+/******/
 /******/ })()
 ;
+
+function addFriend(username) {
+    friendController = new FriendController();
+    if (document.getElementById('addFriendButton').click == true && document.getElementById('friendSearch') == username) {
+        result = friendController.addFriend(username);
+        if(result == true){
+          alert(username + ' added to friends, pending accept');
+          return;
+        }
+        else{
+          alert('Error adding friend');
+          return;
+        }
+
+    }
+}

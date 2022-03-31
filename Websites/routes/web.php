@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\FriendController;
 use App\Http\Controllers\CoinController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Livewire\Auth\Login;
 use App\Http\Livewire\Auth\Passwords\Confirm;
@@ -10,6 +11,7 @@ use App\Http\Livewire\Auth\Passwords\Email;
 use App\Http\Livewire\Auth\Passwords\Reset;
 use App\Http\Livewire\Auth\Register;
 use App\Http\Livewire\Auth\Verify;
+use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
 
 /*{{  }}
@@ -22,11 +24,13 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::view('/', 'welcome')->name('home');
+//Route::get('/', [HomeController::class, 'index'])->name('home')->middleware(Authenticate::class);
+Route::get('/', [FriendController::class, 'getFriends'])->name('home')->middleware(Authenticate::class);
+//Route::get('/', [CoinController::class, 'getCoins'])->name('home')->middleware(Authenticate::class);
 Route::get('test', [FriendController::class, 'getFriends']);
 //Route::get('test', [CoinController::class, 'getCoins']);
 
+Route::post('/', [FriendController::class, 'addFriend'])->name('addFriend')->middleware(Authenticate::class);
 
 Route::middleware('guest')->group(function () {
     Route::get('login', Login::class)

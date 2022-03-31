@@ -51,8 +51,11 @@ class FriendController extends Controller
         $id = Auth::user()->id;
         $url = 'http://localhost:8000/api/friends/'.$id;
         $friends = Http::get($url)->json();
-        //dd($friends['friend']);
-        return view('test', ['friends' => $friends['friend']] );  //Denne skal henvendes til sidebar
+        //dd($friends['friend'][0]);
+            return view('welcome', ['friends' => $friends['friend']]);
+          //Denne skal henvendes til sidebar
+        /* $store = Store::all(); // got this from database model
+        return view('store')->with('store', $store); */
     }
     public function deleteFriend($username)
     {
