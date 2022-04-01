@@ -1,6 +1,6 @@
 <div class="flex flex-col justify-center min-h-min py-12 bg-gray-50 sm:px-6 lg:px-8 border border-gray-300">
-        <div class="absolute top-0 left-0 mt-4 mr-4">
-            <div class="justify-center">
+        <div class="absolute top-0 mt-4 mr-4">
+            <div class="">
                 <div class="flex flex-col">
                     <div class="space-y-6">
                         <a href="{{ route('home') }}">
