@@ -32,6 +32,7 @@ Route::get('test', [FriendController::class, 'getFriends']);
 
 Route::get('profile', [HomeController::class, 'profilePage'])->name('profile');
 Route::get('userprofile', [HomeController::class, 'userProfilePage'])->name('userprofile');
+Route::get('editprofile', [HomeController::class, 'editProfilePage'])->name('editprofile');
 
 Route::post('/', [FriendController::class, 'addFriend'])->name('addFriend')->middleware(Authenticate::class);
 

@@ -19,6 +19,9 @@ class HomeController extends Controller
     public function userProfilePage()
     {
         return view('profile.userprofile');
-
+    }
+    public function editProfilePage()
+    {
+        return view('profile.settings.editprofile');
     }
 }
