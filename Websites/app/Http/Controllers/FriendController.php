@@ -13,7 +13,7 @@ class FriendController extends Controller
         $id = Auth::user()->id;
         $user = env('API_URL') .'users/'.$username;
         $friend_id = $user['id'];
-        $url = 'http://localhost:8000/api/friend/addFriend/';
+        $url = env('API_URL') . 'friend/addFriend/';
         $ch = curl_init($url);
         $data = array(
             'user_id_fl' => $id,
@@ -51,11 +51,7 @@ class FriendController extends Controller
         $id = Auth::user()->id;
         $url = env('API_URL') . 'friends/'.$id;
         $friends = Http::get($url)->json();
-        //dd($friends['friend'][0]);
-            return view('welcome', ['friends' => $friends['friend']]);
-          //Denne skal henvendes til sidebar
-        /* $store = Store::all(); // got this from database model
-        return view('store')->with('store', $store); */
+        return $friends['friend'];
     }
     public function deleteFriend($username)
     {

@@ -22,8 +22,7 @@ class CoinController extends Controller
         $id = Auth::user()->id;
         $url = env('API_URL') . 'coins/' . $id;
         $coins = Http::get($url)->json();
-        //dd($coins['coins_amount']);
         $coin->coins_amount = $coins['coins_amount'];
-        return view('layouts.header', ['coins' => $coin->coins_amount]);
+        return $coins['coins_amount'];
     }
 }

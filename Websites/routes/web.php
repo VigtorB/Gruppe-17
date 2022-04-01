@@ -24,8 +24,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-//Route::get('/', [HomeController::class, 'index'])->name('home')->middleware(Authenticate::class);
-Route::get('/', [FriendController::class, 'getFriends'])->name('home')->middleware(Authenticate::class);
+Route::get('/', [HomeController::class, 'index'])->name('home')->middleware(Authenticate::class);
+//Route::get('/', [FriendController::class, 'getFriends'])->name('home')->middleware(Authenticate::class);
 //Route::get('/', [CoinController::class, 'getCoins'])->name('home')->middleware(Authenticate::class);
 Route::get('test', [FriendController::class, 'getFriends']);
 //Route::get('test', [CoinController::class, 'getCoins']);
