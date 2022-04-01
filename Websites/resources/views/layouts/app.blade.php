@@ -1,6 +1,6 @@
 @extends('layouts.base')
 
-{{-- @extends('layouts.header') --}}
+@extends('layouts.header')
 
 @extends('layouts.sidebar')
 
