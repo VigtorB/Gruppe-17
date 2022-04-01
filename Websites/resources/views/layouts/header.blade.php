@@ -1,13 +1,12 @@
 <div class="flex flex-col justify-center min-h-min py-12 bg-gray-50 sm:px-6 lg:px-8 border border-gray-300">
-        <div class="absolute top-0 mt-4 mr-4">
-            <div class="">
+        <div class="absolute top-1 mt-4 mr-4">
                 <div class="flex flex-col">
-                    <div class="space-y-6">
+                    <div class="space-y-6 center">
                         <a href="{{ route('home') }}">
-                            <x-logo class="w-auto h-16 mx-auto text-indigo-600" />
+                            <x-logo class="w-5 h-16 mx-auto text-indigo-600" />
                         </a>
 
-                        <h1 class="text-3xl font-extrabold tracking-wider text-center text-gray-600">
+                        <h1 class="text-sm font-extrabold tracking-wider text-center text-gray-600">
                             {{ config('app.name') }}
                         </h1>
 
@@ -24,7 +23,6 @@
                                     Alpine.js
                                 </a>
                             </li>
-
                             <li class="inline px-4">
                                 <a href="https://laravel.com"
                                     class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
@@ -40,7 +38,6 @@
                         </ul>
                     </div>
                 </div>
-            </div>
         </div>
     <div class="absolute top-0 right-0 mt-4 mr-4">
         @if (Route::has('login'))
