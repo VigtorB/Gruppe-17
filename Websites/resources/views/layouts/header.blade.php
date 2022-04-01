@@ -1,38 +1,37 @@
-<div class="flex flex-col justify-center min-h-min py-12 bg-gray-50 sm:px-6 lg:px-8 border border-gray-300">
-        <div class="absolute top-1 mt-4 mr-4">
+<div class="flex flex-col justify-center h-18 py-12 bg-gray-50 sm:px-6 lg:px-8 border border-gray-300">
+        <div class="relative top-0">
                 <div class="flex flex-col">
                     <div class="space-y-6 center">
                         <a href="{{ route('home') }}">
-                            <x-logo class="w-5 h-16 mx-auto text-indigo-600" />
+                            <x-logo class="w-8 h-10 text-indigo-600" />
                         </a>
-
                         <h1 class="text-sm font-extrabold tracking-wider text-center text-gray-600">
                             {{ config('app.name') }}
                         </h1>
 
                         <ul class="list-reset">
                             <li class="inline px-4">
-                                <a href="https://tailwindcss.com"
+                                <a href="{{ route('games') }}"
                                     class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
-                                    Tailwind CSS
+                                    Games
                                 </a>
                             </li>
                             <li class="inline px-4">
-                                <a href="https://github.com/alpinejs/alpine"
+                                <a href="{{ route('blog.index') }}"
                                     class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
-                                    Alpine.js
+                                    News
                                 </a>
                             </li>
                             <li class="inline px-4">
-                                <a href="https://laravel.com"
+                                <a href=""
                                     class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
-                                    Laravel
+                                    General Chat
                                 </a>
                             </li>
                             <li class="inline px-4">
-                                <a href="https://laravel-livewire.com"
+                                <a href=""
                                     class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
-                                    Livewire
+                                    About us
                                 </a>
                             </li>
                         </ul>

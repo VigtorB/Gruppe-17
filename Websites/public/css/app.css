@@ -952,6 +952,15 @@ input:invalid, textarea:invalid, select:invalid {
 .hidden {
   display: none;
 }
+
+.h-18 {
+    height: 18px;
+}
+
+.h-17 {
+    height: 17px;
+}
+
 .h-16 {
   height: 4rem;
 }
@@ -993,6 +1002,15 @@ input:invalid, textarea:invalid, select:invalid {
 .w-5 {
   width: 1.25rem;
 }
+
+.w-7 {
+    width: 1.75rem;
+}
+
+.w-8 {
+  width: 2rem;
+}
+
 .w-64 {
   width: 16rem;
 }

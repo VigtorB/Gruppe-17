@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\FriendController;
-use App\Http\Controllers\CoinController;
+use App\Http\Controllers\CoinController; //TODO: Denne skal vi sætte ind, for at bruge den i post metoder.
+use App\Http\Controllers\GamesController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Livewire\Auth\Login;
@@ -24,18 +26,28 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', [HomeController::class, 'index'])->name('home')->middleware(Authenticate::class);
-//Route::get('/', [FriendController::class, 'getFriends'])->name('home')->middleware(Authenticate::class);
-//Route::get('/', [CoinController::class, 'getCoins'])->name('home')->middleware(Authenticate::class);
-Route::get('test', [FriendController::class, 'getFriends']);
-//Route::get('test', [CoinController::class, 'getCoins']);
+// Home pages
+Route::get('/', [HomeController::class, 'index'])->name('home')->middleware(Authenticate::class);  //TODO: Ændre den her til at have to startsider. En for brugere der er logged in,
+                                                                                                   //      en for brugere der ikke er logget ind. <---- Ikke logget ind her
 
-Route::get('profile', [HomeController::class, 'profilePage'])->name('profile');
-Route::get('userprofile', [HomeController::class, 'userProfilePage'])->name('userprofile');
-Route::get('editprofile', [HomeController::class, 'editProfilePage'])->name('editprofile');
+// Profile pages
+Route::get('profile', [HomeController::class, 'profilePage'])->name('profile'); //De her skal nok skifte til ProfileController.
+Route::get('userprofile', [HomeController::class, 'userProfilePage'])->name('userprofile'); //TODO: Authenticate
+Route::get('editprofile', [HomeController::class, 'editProfilePage'])->name('editprofile'); //TODO: Authenticate
 
+// Games pages
+Route::get('games', [GamesController::class, 'games'])->name('games');
+Route::get('games/blackjack', [GamesController::class, 'startBlackjack'])->name('blackjack');
+
+//Post/blog pages
+Route::resource('posts', PostController::class);
+Route::get('posts.index', [PostController::class, 'index'])->name('blog.index');
+
+//FriendController routes metoder
 Route::post('/', [FriendController::class, 'addFriend'])->name('addFriend')->middleware(Authenticate::class);
 
+
+// Login og authentication
 Route::middleware('guest')->group(function () {
     Route::get('login', Login::class)
         ->name('login');
@@ -67,3 +79,13 @@ Route::middleware('auth')->group(function () {
     Route::post('logout', LogoutController::class)
         ->name('logout');
 });
+
+
+
+
+
+
+
+
+//TEST PAGE!
+Route::get('test', [FriendController::class, 'getFriends']);
