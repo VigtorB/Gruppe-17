@@ -16,7 +16,7 @@ class UserController extends Controller
     */
     public function getUser($info)
     {
-        $user = Http::get('http://localhost:8000/api/'.$info)->json();
+        $user = Http::get(env('API_URL') . $info)->json();
         $user = json_decode(file_get_contents('php://input'), true);
         return $user;
     }

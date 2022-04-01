@@ -11,7 +11,7 @@ class FriendController extends Controller
     public function addFriend($username)
     {
         $id = Auth::user()->id;
-        $user = 'http://localhost:8000/api/users/'.$username;
+        $user = env('API_URL') .'users/'.$username;
         $friend_id = $user['id'];
         $url = 'http://localhost:8000/api/friend/addFriend/';
         $ch = curl_init($url);
@@ -30,9 +30,9 @@ class FriendController extends Controller
     public function acceptFriend($username)
     {
         $id = Auth::user()->id;
-        $user = 'http://localhost:8000/api/users/'.$username;
+        $user = env('API_URL') . 'users/'.$username;
         $friend_id = $user['id'];
-        $url = 'http://localhost:8000/api/friend/acceptFriend/';
+        $url = env('API_URL') . 'friend/acceptFriend/';
         $ch = curl_init($url);
         $data = array(
             'user_id_fl' => $id,
@@ -49,7 +49,7 @@ class FriendController extends Controller
     public function getFriends()
     {
         $id = Auth::user()->id;
-        $url = 'http://localhost:8000/api/friends/'.$id;
+        $url = env('API_URL') . 'friends/'.$id;
         $friends = Http::get($url)->json();
         //dd($friends['friend'][0]);
             return view('welcome', ['friends' => $friends['friend']]);
@@ -59,9 +59,9 @@ class FriendController extends Controller
     }
     public function deleteFriend($username)
     {
-        $user = 'http://localhost:8000/api/users/'.$username;
+        $user = env('API_URL') . 'users/'.$username;
         $friend_id = $user['id'];
-        $url = 'http://localhost:8000/api/friend/deleteFriend/'.$friend_id;
+        $url = env('API_URL') . 'friend/deleteFriend/'.$friend_id;
         return Http::delete($url);
     }
 }
