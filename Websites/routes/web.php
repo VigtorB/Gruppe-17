@@ -31,6 +31,7 @@ Route::get('test', [FriendController::class, 'getFriends']);
 //Route::get('test', [CoinController::class, 'getCoins']);
 
 Route::get('profile', [HomeController::class, 'profilePage'])->name('profile');
+Route::get('userprofile', [HomeController::class, 'userProfilePage'])->name('userprofile');
 
 Route::post('/', [FriendController::class, 'addFriend'])->name('addFriend')->middleware(Authenticate::class);
 
