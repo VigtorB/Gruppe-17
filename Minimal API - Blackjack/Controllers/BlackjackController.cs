@@ -15,6 +15,7 @@ namespace Controllers
     {
         DbConnection db = new DbConnection();
     }
+    [HttpGet($"gamestart/{{id}}")]
     public void GameStart(int id)
     {
         var GameState = db.Where(x => x.Id == id)
@@ -36,6 +37,7 @@ namespace Controllers
         }
 
     }
+    [HttpGet($"hit/{{id}}")]
     public void hit(int id)
     {
         var GameState = db.Where(x => x.Id == id)
@@ -68,6 +70,8 @@ namespace Controllers
 
 
     }
+    
+    [HttpGet($"stand/{{id}}")]
     public void stand(int id)
     {
         while(dealer.HandValue < 17)
