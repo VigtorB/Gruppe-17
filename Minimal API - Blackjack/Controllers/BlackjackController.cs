@@ -44,14 +44,6 @@ namespace Controllers
                           .LastOrDefault();
         player = db.where(x => x.Id == id).LastOrDefault
             .update(x => x.Player = GameState.Player + deck.Deal(1));
-        foreach (var card in player)
-        {
-
-        }
-        if (player)
-        {
-
-        }
 
         if (player.HandValue == 21)
         {
