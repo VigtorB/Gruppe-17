@@ -10,6 +10,7 @@
                 <div class="text-center bg-gray-100 ">
                     <button class="" type="submit" @disabled($errors->isNotEmpty())>Add friend</button>
                 </div>
+            </form>
                 <aside>
                     <ul></ul>
                         <li>
@@ -17,18 +18,6 @@
 
                                 <ol>
                                     @foreach ($friends as $item)
-                                        <p>{{ $item }}</p>
-                                        <p>{{ $item }}</p>
-                                        <p>{{ $item }}</p>
-                                        <p>{{ $item }}</p>
-                                        <p>{{ $item }}</p>
-                                        <p>{{ $item }}</p>
-                                        <p>{{ $item }}</p>
-                                        <p>{{ $item }}</p>
-                                        <p>{{ $item }}</p>
-                                        <p>{{ $item }}</p>
-                                        <p>{{ $item }}</p>
-                                        <p>{{ $item }}</p>
                                         <p>{{ $item }}</p>
                                     @endforeach
                                 </ol>
