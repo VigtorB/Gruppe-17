@@ -901,6 +901,11 @@ input:invalid, textarea:invalid, select:invalid {
 .mt-8 {
   margin-top: 2rem;
 }
+
+.mt-20 {
+  margin-top: 20px;
+}
+
 .mt-1 {
   margin-top: 0.25rem;
 }
@@ -1688,6 +1693,14 @@ input:invalid, textarea:invalid, select:invalid {
         justify-content: center;
         align-items: center;
     }
+
+    .center2 {
+        position: absolute;
+        top: 50%;
+        transform: translate(0, -50%);
+        border: 5px solid #FFFF00;
+        padding: 10px;
+        }
 
     /* The sticky class is added to the header with JS when it reaches its scroll position */
     .sticky {
