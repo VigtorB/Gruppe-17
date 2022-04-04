@@ -14,6 +14,7 @@ class FriendController extends Controller
         $user = env('API_URL') .'users/'.$username;
         $friend_id = $user['id'];
                                                         // TODO: En if else statement til at tjekke om brugeren allerede er tilføjet som ven.
+                                                        // Herefter returner den ven, så den kan blive vist på siden.
         $url = env('API_URL') . 'friend/addFriend/';
         $ch = curl_init($url);
         $data = array(
