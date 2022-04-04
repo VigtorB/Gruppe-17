@@ -1688,3 +1688,18 @@ input:invalid, textarea:invalid, select:invalid {
         justify-content: center;
         align-items: center;
     }
+
+    /* The sticky class is added to the header with JS when it reaches its scroll position */
+    .sticky {
+        position: fixed;
+        top: 0;
+        width: 100%
+    }
+
+    .content {
+        padding: 46px;
+      }
+
+    .sticky + .content {
+        padding-top: 102px;
+      }
