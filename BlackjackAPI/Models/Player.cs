@@ -2,11 +2,13 @@ namespace BlackjackAPI.Models
 {
     public class Player
     {
-        public Card[] Hand { get; set; }
+        
+
+        public Card[] hand { get; set; }
         public int HandValue()
         {
             int value = 0;
-            foreach (var card in Hand)
+            foreach (var card in hand)
             {
                 if (card.Rank == 1 && value + 11 <= 21)
                 {
@@ -24,9 +26,10 @@ namespace BlackjackAPI.Models
             return value;
         }
 
-        public void Deal(Card[] cards)
+        public Array Deal(int n)
         {
-            Hand = cards;
+            Array hand = new Deck().Deal(n);
+            return hand;
         }
     }
 }

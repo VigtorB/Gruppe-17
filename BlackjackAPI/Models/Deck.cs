@@ -3,7 +3,7 @@ namespace BlackjackAPI.Models
 {
     public class Deck
     {
-        private Card[] cards;
+        public Card[] cards;
 
         public Deck() => cards =
             new[] { "Spades", "Hearts", "Clubs", "Diamonds", }

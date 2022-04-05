@@ -1,13 +1,13 @@
+using System;
 namespace BlackjackAPI.Models
 {
     public class Game
     {
         //getset
-        public int playerid { get; set; }
-        public string gameResult { get; set; }
-        public Guid gameid { get; set; }
-        public Deck deck { get; set; }
-        public Player player { get; set; }
-        public Player dealer { get; set; }
+        public int PlayerId { get; set; }
+        public string GameStatus { get; set; }
+        public Array[] Deck { get; set; }
+        public Array[] Player { get; set; }
+        public Array[] Dealer { get; set; }
     }
 }
