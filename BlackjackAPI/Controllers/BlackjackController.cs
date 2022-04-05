@@ -40,5 +40,40 @@ namespace BlackjackAPI.Controllers
             //}
 
         }
+        //api get
+        [HttpGet("{id:int}/hit")]
+        public IActionResult Hit(int id)
+        {
+            DbGameAccess db = new DbGameAccess();
+            /* db.HitGame(id, deck, playerHand, dealerHand); */
+            /* Game game = new Game();
+            game = db.GetGame(id);
+            if (game.GameStatus == "pending")
+            {
+            }
+            else
+            {
+                return BadRequest("Game is not pending");
+            } */
+            return Ok("Hit");
+        }
+
+        //api get
+        [HttpGet("{id:int}/stand")]
+        public IActionResult Stand(int id)
+        {
+            DbGameAccess db = new DbGameAccess();
+            db.StandGame(id);
+            /* Game game = new Game();
+            game = db.GetGame(id);
+            if (game.GameStatus == "pending")
+            {
+            }
+            else
+            {
+                return BadRequest("Game is not pending");
+            } */
+            return Ok("Stand");
+        }
     }
 }
