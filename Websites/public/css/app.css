@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /**
  * This injects Tailwind's base styles, which is a combination of
  * Normalize.css and some additional base styles.
@@ -45,6 +49,9 @@ body {
   margin: 0; /* 1 */
   line-height: inherit; /* 2 */
 }
+
+
+
 /*
 1. Add the correct height in Firefox.
 2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)
@@ -1687,6 +1694,12 @@ input:invalid, textarea:invalid, select:invalid {
     padding-right: 2rem;
   }
 }
+    .center-block {
+    top:50%;
+    left: 50%;
+    transform: translate3d(-50%,-50%, 0);
+    position: absolute;
+  }
 
     .center {
         display: flex;
@@ -1694,25 +1707,24 @@ input:invalid, textarea:invalid, select:invalid {
         align-items: center;
     }
 
-    .center2 {
-        position: absolute;
-        top: 50%;
-        transform: translate(0, -50%);
-        border: 5px solid #FFFF00;
-        padding: 10px;
-        }
-
-    /* The sticky class is added to the header with JS when it reaches its scroll position */
-    .sticky {
-        position: fixed;
-        top: 0;
-        width: 100%
+    .foot {
+        vertical-align : bottom;
+        height : 1px;
     }
 
-    .content {
-        padding: 46px;
-      }
+    .footer {
+        position:fixed;
+        left:0px;
+        bottom:0px;
+        height:30px;
+        width:100%;
+        background:#999;
+     }
 
-    .sticky + .content {
-        padding-top: 102px;
-      }
+     #container{
+        position: absolute;
+        width:100%;
+        height: 100%;
+        display:flex;
+        flex-direction: column;
+    }

@@ -44,7 +44,7 @@ Route::resource('posts', PostController::class);
 Route::get('posts.index', [PostController::class, 'index'])->name('blog.index');
 
 //FriendController routes metoder
-Route::post('/', [FriendController::class, 'addFriend'])->name('addFriend')->middleware(Authenticate::class);
+Route::post('/', [FriendController::class, 'addFriend'])->name('addFriend')->middleware(Authenticate::class); //TODO: Istedet for '/' skal vi skifte den til sidebar.
 
 
 // Login og authentication

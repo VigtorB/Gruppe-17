@@ -50,13 +50,24 @@ eval("/**\n * Echo exposes an expressive API for subscribing to channels and lis
 "use strict";
 eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9yZXNvdXJjZXMvc2Nzcy9hcHAuc2Nzcy5qcyIsIm1hcHBpbmdzIjoiO0FBQUEiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9yZXNvdXJjZXMvc2Nzcy9hcHAuc2Nzcz9mZmFkIl0sInNvdXJjZXNDb250ZW50IjpbIi8vIGV4dHJhY3RlZCBieSBtaW5pLWNzcy1leHRyYWN0LXBsdWdpblxuZXhwb3J0IHt9OyJdLCJuYW1lcyI6W10sInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./resources/scss/app.scss\n");
 
+/***/ }),
+
+/***/ "./resources/css/app.css":
+/*!*******************************!*\
+  !*** ./resources/css/app.css ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9yZXNvdXJjZXMvY3NzL2FwcC5jc3MuanMiLCJtYXBwaW5ncyI6IjtBQUFBIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vLy4vcmVzb3VyY2VzL2Nzcy9hcHAuY3NzPzllY2YiXSwic291cmNlc0NvbnRlbnQiOlsiLy8gZXh0cmFjdGVkIGJ5IG1pbmktY3NzLWV4dHJhY3QtcGx1Z2luXG5leHBvcnQge307Il0sIm5hbWVzIjpbXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///./resources/css/app.css\n");
+
 /***/ })
 
 /******/ 	});
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/
+/******/ 	
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -70,17 +81,17 @@ eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extr
 /******/ 			// no module.loaded needed
 /******/ 			exports: {}
 /******/ 		};
-/******/
+/******/ 	
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/
+/******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/
+/******/ 	
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = __webpack_modules__;
-/******/
+/******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/chunk loaded */
 /******/ 	(() => {
@@ -113,7 +124,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extr
 /******/ 			return result;
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -125,12 +136,12 @@ eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extr
 /******/ 			}
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	(() => {
 /******/ 		// define __esModule on exports
@@ -141,11 +152,11 @@ eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extr
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/jsonp chunk loading */
 /******/ 	(() => {
 /******/ 		// no baseURI
-/******/
+/******/ 		
 /******/ 		// object to store loaded and loading chunks
 /******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
 /******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
@@ -153,19 +164,19 @@ eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extr
 /******/ 			"/js/app": 0,
 /******/ 			"css/app": 0
 /******/ 		};
-/******/
+/******/ 		
 /******/ 		// no chunk on demand loading
-/******/
+/******/ 		
 /******/ 		// no prefetching
-/******/
+/******/ 		
 /******/ 		// no preloaded
-/******/
+/******/ 		
 /******/ 		// no HMR
-/******/
+/******/ 		
 /******/ 		// no HMR manifest
-/******/
+/******/ 		
 /******/ 		__webpack_require__.O.j = (chunkId) => (installedChunks[chunkId] === 0);
-/******/
+/******/ 		
 /******/ 		// install a JSONP callback for chunk loading
 /******/ 		var webpackJsonpCallback = (parentChunkLoadingFunction, data) => {
 /******/ 			var [chunkIds, moreModules, runtime] = data;
@@ -190,36 +201,21 @@ eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extr
 /******/ 			}
 /******/ 			return __webpack_require__.O(result);
 /******/ 		}
-/******/
+/******/ 		
 /******/ 		var chunkLoadingGlobal = self["webpackChunk"] = self["webpackChunk"] || [];
 /******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
 /******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
 /******/ 	})();
-/******/
+/******/ 	
 /************************************************************************/
-/******/
+/******/ 	
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
 /******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/js/app.js")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/scss/app.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/scss/app.scss")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/css/app.css")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
-/******/
+/******/ 	
 /******/ })()
 ;
-
-function addFriend(username) {
-    friendController = new FriendController();
-    if (document.getElementById('addFriendButton').click == true && document.getElementById('friendSearch') == username) {
-        result = friendController.addFriend(username);
-        if(result == true){
-          alert(username + ' added to friends, pending accept');
-          return;
-        }
-        else{
-          alert('Error adding friend');
-          return;
-        }
-
-    }
-}

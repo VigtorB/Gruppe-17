@@ -3,7 +3,6 @@
 @extends('layouts.header')
 
 @extends('layouts.sidebar')
-
 @section('body')
     @yield('content')
 
@@ -11,3 +10,5 @@
         {{ $slot }}
     @endisset
 @endsection
+
+
