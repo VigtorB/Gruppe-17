@@ -7,41 +7,37 @@ using MongoDB.Bson;
 
 namespace BlackjackAPI.Controllers
 {
+    [Route("api/blackjack")]
+    [ApiController]
 
         
     public class BlackjackController : Controller
     {
-        private readonly IConfiguration _config;
         private string gameStatus;
-
-        public BlackjackController(IConfiguration configuration)
-        {
-            _config = configuration;
-        }
         //api get
-        [HttpGet("{id}")]
-        [Route("api/blackjack/gamestart/{id}")]
+        [HttpGet("{id:int}")]
         public IActionResult GameStart(int id)
         {
-            DbGameAccess db = new DbGameAccess(_config);
-            Game game = new Game();
+            DbGameAccess db = new DbGameAccess();
+            /* Game game = new Game();
             game = db.GetGame(id);
-            if (gameStatus == game.GameStatus)
+            if (game.GameStatus == "pending")
             {
-                //return game to json
                 return Ok(game);
             }
             else
-            {
+            { */
                 var deck = new Deck();
-                deck.Shuffle();
-                gameStatus = "pending";
                 var player = new Player();
                 var dealer = new Player();
-                player.Deal(deck.Deal(2));
-                dealer.Deal(deck.Deal(2));
+                var shflDeck = deck.Shuffle();
+                gameStatus = "pending";
+                var playerHand = player.Deal(2);
+                var dealerHand = dealer.Deal(2);
+                
+                db.GameStart(id, shflDeck, playerHand, dealerHand, gameStatus); //TODO: fix deck, playerHand and dealerHand
                 return Ok($"{player}" + $"{dealer}");
-            }
+            //}
 
         }
     }

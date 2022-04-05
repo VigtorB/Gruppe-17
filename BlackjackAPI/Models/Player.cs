@@ -2,8 +2,6 @@ namespace BlackjackAPI.Models
 {
     public class Player
     {
-        
-
         public Card[] hand { get; set; }
         public int HandValue()
         {
@@ -26,9 +24,9 @@ namespace BlackjackAPI.Models
             return value;
         }
 
-        public Array Deal(int n)
+        public Card[] Deal(int n)
         {
-            Array hand = new Deck().Deal(n);
+            Card[] hand = new Deck().Deal(n);
             return hand;
         }
     }

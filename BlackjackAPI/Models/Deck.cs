@@ -12,7 +12,7 @@ namespace BlackjackAPI.Models
                     (suit, rank) => new Card(rank, suit))
                 .ToArray();
 
-        public void Shuffle()
+        public Card[] Shuffle()
         {
             var rng = new Random();
             var n = cards.Length;
@@ -24,6 +24,8 @@ namespace BlackjackAPI.Models
                 cards[k] = cards[n];
                 cards[n] = temp;
             }
+            return cards;
+            
         }
         public Card[] Deal(int n)
         {
