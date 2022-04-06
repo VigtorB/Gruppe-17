@@ -4,11 +4,14 @@
 
 @extends('layouts.sidebar')
 @section('body')
-    @yield('content')
+        @yield('content')
 
-    @isset($slot)
-        {{ $slot }}
-    @endisset
+
+        @isset($slot)
+            {{ $slot }}
+        @endisset
 @endsection
+
+@extends('layouts.footer')
 
 

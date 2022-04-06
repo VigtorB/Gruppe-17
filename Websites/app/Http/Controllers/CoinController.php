@@ -2,15 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Route;
 
-
-use Illuminate\Http\Request;
 use App\Models\Coin;
-use Illuminate\Support\Facades\Redirect;
 
 class CoinController extends Controller
 {

@@ -1,5 +1,5 @@
 <div class="flex flex-col justify-center h-18 py-12 bg-gray-50 sm:px-6 lg:px-8 border border-gray-300 sticky content">
-        <div class="relative top-0" id="container">
+        <div class="relative top-0">
                 <div class="flex flex-col">
                     <div class="space-y-6 center">
                         <a href="{{ route('home') }}">
