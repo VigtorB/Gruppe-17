@@ -1,11 +1,17 @@
+
+using BlackjackAPI.DbAccess;
 namespace BlackjackAPI.Models
 {
     public class Player
     {
+        private Card[] deck;
+        public int value;
+
         public Card[] hand { get; set; }
+        
         public int HandValue()
         {
-            int value = 0;
+            value = 0;
             foreach (var card in hand)
             {
                 if (card.Rank == 1 && value + 11 <= 21)
@@ -24,10 +30,17 @@ namespace BlackjackAPI.Models
             return value;
         }
 
-        public Card[] Deal(int n)
+        public Card[] Deal(int n, Card[] shflDeck, int id)
         {
-            Card[] hand = new Deck().Deal(n);
+            hand = shflDeck.Take(n).ToArray();
+            shflDeck = shflDeck.Skip(n).ToArray();
+            DbGameAccess db = new DbGameAccess();
+            deck = shflDeck;
             return hand;
+        }
+        public Card[] GetDeck
+        {
+            get { return deck; }
         }
     }
 }

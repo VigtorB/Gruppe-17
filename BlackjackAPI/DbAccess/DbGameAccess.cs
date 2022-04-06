@@ -15,16 +15,45 @@ namespace BlackjackAPI.DbAccess
             var collection = database.GetCollection<BsonDocument>("blackjack");
             BsonDocument[] documents = new BsonDocument[]
             {
-                new BsonDocument { 
-                { "playerid", id }, 
-                { "deck", new BsonArray { /* deck */ "PLACEHOLDER"}  }, 
-                { "player", new BsonArray { /* player */ "PLACEHOLDER"}  }, 
-                { "dealer", new BsonArray { /* dealer */ "PLACEHOLDER"}  }, 
+                new BsonDocument {
+                { "playerid", id },
+                { "deck", ArrayConverter(deck)  },
+                { "player", ArrayConverter(player)  },
+                { "dealer", ArrayConverter(dealer)  },
                 { "gameStatus", gameStatus }
                 }
             };
             collection.InsertMany(documents);
         }
+        public BsonArray ArrayConverter(Card[] item)
+        {
+            BsonArray array = new BsonArray();
+            foreach (var card in item)
+            {
+                array.Add(card.Rank + " of " + card.Suit);
+            }
+            return array;
+        }
+
+        internal void UpdateGameStatus(int id, string gameStatus)
+        {
+            var client = new MongoClient("mongodb+srv://vigtor:Password1@cluster0.7xgxe.mongodb.net/test");
+            var database = client.GetDatabase("blackjackapi");
+            var collection = database.GetCollection<BsonDocument>("blackjack");
+            var filter = Builders<BsonDocument>.Filter.Eq("playerid", id);
+            filter = filter & Builders<BsonDocument>.Filter.Eq("gameStatus", "pending");
+            var update = Builders<BsonDocument>.Update.Set("gameStatus", gameStatus);
+        }
+
+        internal void UpdateDeck(Card[] shflDeck, int id)
+        {
+            var client = new MongoClient("mongodb+srv://vigtor:Password1@cluster0.7xgxe.mongodb.net/test");
+            var database = client.GetDatabase("blackjackapi");
+            var collection = database.GetCollection<BsonDocument>("blackjack");
+            var filter = Builders<BsonDocument>.Filter.Eq("playerid", id);
+            var update = Builders<BsonDocument>.Update.Set("deck", ArrayConverter(shflDeck));
+        }
+
         public void HitGame(int id, Card[] deck, Card[] player, Card[] dealer)
         {
             var client = new MongoClient("mongodb+srv://vigtor:Password1@cluster0.7xgxe.mongodb.net/test");
@@ -52,14 +81,14 @@ namespace BlackjackAPI.DbAccess
             var client = new MongoClient("mongodb+srv://vigtor:Password1@cluster0.7xgxe.mongodb.net/test");
             var database = client.GetDatabase("blackjackapi");
             var collection = database.GetCollection<BsonDocument>("blackjack");
-            
+
             var filter = Builders<BsonDocument>.Filter.Eq("playerid", id);
             var result = collection.Find(filter).ToList().LastOrDefault();
             game.PlayerId = id;
-            game.Deck = (Array[])BsonSerializer.Deserialize<object[]>(result["deck"].ToJson()); //TODO: den får problemer med at lave en array af en klasse om til en array
-            game.Player = (Array[])BsonSerializer.Deserialize<object[]>(result["player"].ToJson());
-            game.Dealer = (Array[])BsonSerializer.Deserialize<object[]>(result["dealer"].ToJson());
-            game.GameStatus = result["gamesesult"].AsString;
+            /* game.Deck = ArrayConverter(result["deck"].AsBsonArray.Select(x => new Card(x.AsString)).ToArray());
+            game.Player = ArrayConverter(result["player"].AsBsonArray.Select(x => new Card(x.AsString)).ToArray());
+            game.Dealer = ArrayConverter(result["dealer"].AsBsonArray.Select(x => new Card(x.AsString)).ToArray()); */
+            game.GameStatus = result["gameStatus"].AsString;
             return game;
         }
         /* public Game getAllGamesById(int id){
@@ -69,8 +98,15 @@ namespace BlackjackAPI.DbAccess
             var filter = Builders<BsonDocument>.Filter.Eq("playerid", id);
             var result = collection.Find(filter).ToList();
         } */
-            /* var client = new MongoClient(_config.GetSection("MongoDb:ConnectionString").Value);
-            var database = client.GetDatabase(_config.GetSection("MongoDb:blackjackapi").Value);
-            var collection = database.GetCollection<BsonDocument>(_config.GetSection("MongoDb:blackjack").Value); */
+        /* var client = new MongoClient(_config.GetSection("MongoDb:ConnectionString").Value);
+        var database = client.GetDatabase(_config.GetSection("MongoDb:blackjackapi").Value);
+        var collection = database.GetCollection<BsonDocument>(_config.GetSection("MongoDb:blackjack").Value); */
+        /* { "player", BsonArray  {"player" } foreach (var item in player)
+                {
+                    new BsonDocument {
+                        { "rank", item.Rank },
+                        { "suit", item.Suit }
+                    }
+                } } },  */
     }
 }

@@ -27,12 +27,8 @@ namespace BlackjackAPI.Models
             return cards;
             
         }
-        public Card[] Deal(int n)
-        {
-            var hand = cards.Take(n).ToArray();
-            cards = cards.Skip(n).ToArray();
-            return hand;
-        }
+        //deal cards, update deck and return hand
+        
     }
 
 }

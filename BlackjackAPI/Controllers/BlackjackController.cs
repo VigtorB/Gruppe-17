@@ -10,7 +10,7 @@ namespace BlackjackAPI.Controllers
     [Route("api/blackjack")]
     [ApiController]
 
-        
+
     public class BlackjackController : Controller
     {
         private string gameStatus;
@@ -19,25 +19,62 @@ namespace BlackjackAPI.Controllers
         public IActionResult GameStart(int id)
         {
             DbGameAccess db = new DbGameAccess();
-            /* Game game = new Game();
-            game = db.GetGame(id);
-            if (game.GameStatus == "pending")
+            Game game = new Game();
+            try
             {
-                return Ok(game);
+                game = db.GetGame(id);
+                if (game.GameStatus == "pending")
+                {
+                    return Ok(game.GameStatus);
+                }
+                else
+                {
+                    var deck = new Deck();
+                    var player = new Player();
+                    var dealer = new Player();
+                    var shflDeck = deck.Shuffle();
+                    gameStatus = "pending";
+                    var playerHand = player.Deal(2, shflDeck, id);
+                    shflDeck = player.GetDeck;
+                    var dealerHand = dealer.Deal(2, shflDeck, id);
+                    shflDeck = dealer.GetDeck;
+                    if (player.value == 21)
+                    {
+                        //update gamestatus
+                        db.UpdateGameStatus(id, "blackjack");
+                        return Ok("blackjack");
+
+                    }
+                    db.GameStart(id, shflDeck, playerHand, dealerHand, gameStatus); //TODO: fix deck, playerHand and dealerHand
+                    return Ok($"{playerHand}" + $"{dealerHand}");
+                }
             }
-            else
-            { */
+            catch (Exception e)
+            {
                 var deck = new Deck();
                 var player = new Player();
                 var dealer = new Player();
                 var shflDeck = deck.Shuffle();
                 gameStatus = "pending";
-                var playerHand = player.Deal(2);
-                var dealerHand = dealer.Deal(2);
-                
+                var playerHand = player.Deal(2, shflDeck, id);
+                shflDeck = player.GetDeck;
+                var dealerHand = dealer.Deal(2, shflDeck, id);
+                shflDeck = dealer.GetDeck;
+                if (player.value == 21)
+                {
+                    //update gamestatus
+                    db.UpdateGameStatus(id, "blackjack");
+                    return Ok("blackjack");
+
+                }
                 db.GameStart(id, shflDeck, playerHand, dealerHand, gameStatus); //TODO: fix deck, playerHand and dealerHand
-                return Ok($"{player}" + $"{dealer}");
-            //}
+                return Ok($"{playerHand}" + $"{dealerHand}");
+
+
+
+
+
+            }
 
         }
         //api get
