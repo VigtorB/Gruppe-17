@@ -1728,3 +1728,14 @@ input:invalid, textarea:invalid, select:invalid {
         display:flex;
         flex-direction: column;
     }
+
+    .img-blackjack {
+        text-align: center;
+        width: 34%;
+    }
+
+    .img-blackjack img {
+        display: block;
+        margin: 0 auto;
+        width: 34%
+    }
