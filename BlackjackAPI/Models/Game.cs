@@ -8,5 +8,7 @@ namespace BlackjackAPI.Models
         public string? GameStatus { get; set; }
         public Card[] Player { get; set; }
         public Card[] Dealer { get; set; }
+
+        public Card[] Deck { get; set; }
     }
 }

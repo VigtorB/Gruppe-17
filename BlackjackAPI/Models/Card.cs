@@ -7,6 +7,9 @@ namespace BlackjackAPI.Models
             Rank = rank;
             Suit = suit;
         }
+        public Card()
+        {
+        }
         //get set Rank
         public int Rank { get; set; }
         //get set Suit

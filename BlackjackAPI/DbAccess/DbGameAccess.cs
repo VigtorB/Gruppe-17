@@ -41,8 +41,10 @@ namespace BlackjackAPI.DbAccess
             var database = client.GetDatabase("blackjackapi");
             var collection = database.GetCollection<BsonDocument>("blackjack");
             var filter = Builders<BsonDocument>.Filter.Eq("playerid", id);
-            filter = filter & Builders<BsonDocument>.Filter.Eq("gameStatus", "pending");
-            var update = Builders<BsonDocument>.Update.Set("gameStatus", gameStatus);
+            filter = filter & Builders<BsonDocument>.Filter.Eq("gamestatus", "pending");
+            
+            var update = Builders<BsonDocument>.Update.Set("gamestatus", gameStatus);
+            collection.UpdateOne(filter, update);
         }
 
         internal void UpdateDeck(Card[] shflDeck, int id)
@@ -54,27 +56,34 @@ namespace BlackjackAPI.DbAccess
             var update = Builders<BsonDocument>.Update.Set("deck", ArrayConverter(shflDeck));
         }
 
-        public void HitGame(int id, Card[] deck, Card[] player, Card[] dealer)
+        public void HitGame(int id, Card[] deck, Card[] player)
         {
             var client = new MongoClient("mongodb+srv://vigtor:Password1@cluster0.7xgxe.mongodb.net/test");
             var database = client.GetDatabase("blackjackapi");
             var collection = database.GetCollection<BsonDocument>("blackjack");
-
             var filter = Builders<BsonDocument>.Filter.Eq("playerid", id);
-            var updateDeck = Builders<BsonDocument>.Update.Set("deck", new BsonArray {/*  deck  */});
-            var updatePlayer = Builders<BsonDocument>.Update.Set("player", new BsonArray {/*  player  */});
-            var updateDealer = Builders<BsonDocument>.Update.Set("dealer", new BsonArray {/*  dealer  */});
-
-            collection.UpdateOne(filter, updateDeck);
-            collection.UpdateOne(filter, updatePlayer);
-            collection.UpdateOne(filter, updateDealer);
+            filter = filter & Builders<BsonDocument>.Filter.Eq("gamestatus", "pending");
+            
+            var update = Builders<BsonDocument>.Update.Set("player", ArrayConverter(player));
+            collection.UpdateOne(filter, update);
+            var update2 = Builders<BsonDocument>.Update.Set("deck", ArrayConverter(deck));
+            collection.UpdateOne(filter, update2);
         }
-        public void StandGame(int id)
+        //TODO: Overvej at kombinere metoderne og lave nogle if statements
+        public void StandGame(int id, Card[] deck, Card[] dealer)
         {
             var client = new MongoClient("mongodb+srv://vigtor:Password1@cluster0.7xgxe.mongodb.net/test");
             var database = client.GetDatabase("blackjackapi");
             var collection = database.GetCollection<BsonDocument>("blackjack");
+            var filter = Builders<BsonDocument>.Filter.Eq("playerid", id);
+            filter = filter & Builders<BsonDocument>.Filter.Eq("gamestatus", "pending");
+
+            var update = Builders<BsonDocument>.Update.Set("dealer", ArrayConverter(dealer));
+            collection.UpdateOne(filter, update);
+            var update2 = Builders<BsonDocument>.Update.Set("deck", ArrayConverter(deck));
+            collection.UpdateOne(filter, update2);
         }
+        
         public Game GetGame(int id)
         {
             Game game = new Game();
@@ -88,8 +97,9 @@ namespace BlackjackAPI.DbAccess
             try
             {
                 game.PlayerId = result["playerid"].AsInt32;
-                game.Player = result["player"].AsBsonArray.Select(x => new Card { Rank = x["Rank"].AsInt32, Suit = x["Suit"].AsString }).ToArray();
-                game.Dealer = result["dealer"].AsBsonArray.Select(x => new Card { Rank = x["Rank"].AsInt32, Suit = x["Suit"].AsString }).ToArray();
+                game.Dealer = result["dealer"].AsBsonArray.Select(x => new Card(x["Rank"].AsInt32, x["Suit"].AsString)).ToArray();
+                game.Player = result["player"].AsBsonArray.Select(x => new Card(x["Rank"].AsInt32, x["Suit"].AsString)).ToArray();
+                game.Deck = result["deck"].AsBsonArray.Select(x => new Card(x["Rank"].AsInt32, x["Suit"].AsString)).ToArray();
                 game.GameStatus = result["gamestatus"].AsString;
             }
             catch (System.Exception)
@@ -97,26 +107,10 @@ namespace BlackjackAPI.DbAccess
                 game.PlayerId = 0;
                 game.Player = new Card[0];
                 game.Dealer = new Card[0];
+                game.Deck = new Card[0];
                 game.GameStatus = "null";
             }
             return game;
         }
-        /* public Game getAllGamesById(int id){
-            var client = new MongoClient("mongodb+srv://vigtor:Password1@cluster0.7xgxe.mongodb.net/test");
-            var database = client.GetDatabase("blackjackapi");
-            var collection = database.GetCollection<BsonDocument>("blackjack");
-            var filter = Builders<BsonDocument>.Filter.Eq("playerid", id);
-            var result = collection.Find(filter).ToList();
-        } */
-        /* var client = new MongoClient(_config.GetSection("MongoDb:ConnectionString").Value);
-        var database = client.GetDatabase(_config.GetSection("MongoDb:blackjackapi").Value);
-        var collection = database.GetCollection<BsonDocument>(_config.GetSection("MongoDb:blackjack").Value); */
-        /* { "player", BsonArray  {"player" } foreach (var item in player)
-                {
-                    new BsonDocument {
-                        { "rank", item.Rank },
-                        { "suit", item.Suit }
-                    }
-                } } },  */
     }
 }
