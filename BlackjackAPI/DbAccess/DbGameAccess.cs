@@ -17,20 +17,20 @@ namespace BlackjackAPI.DbAccess
             {
                 new BsonDocument {
                 { "playerid", id },
-                { "deck", ArrayConverter(deck)  },
-                { "player", ArrayConverter(player)  },
-                { "dealer", ArrayConverter(dealer)  },
-                { "gameStatus", gameStatus }
+                { "dealer", ArrayConverter(dealer) },
+                { "player", ArrayConverter(player) },
+                { "deck", ArrayConverter(deck) },
+                { "gamestatus", gameStatus }
                 }
             };
             collection.InsertMany(documents);
         }
-        public BsonArray ArrayConverter(Card[] item)
+        public BsonArray ArrayConverter(Card[] item) 
         {
             BsonArray array = new BsonArray();
             foreach (var card in item)
             {
-                array.Add(card.Rank + " of " + card.Suit);
+                array.Add(new BsonDocument { { "Suit", card.Suit }, { "Rank", card.Rank } });
             }
             return array;
         }
@@ -84,11 +84,22 @@ namespace BlackjackAPI.DbAccess
 
             var filter = Builders<BsonDocument>.Filter.Eq("playerid", id);
             var result = collection.Find(filter).ToList().LastOrDefault();
-            game.PlayerId = id;
-            /* game.Deck = ArrayConverter(result["deck"].AsBsonArray.Select(x => new Card(x.AsString)).ToArray());
-            game.Player = ArrayConverter(result["player"].AsBsonArray.Select(x => new Card(x.AsString)).ToArray());
-            game.Dealer = ArrayConverter(result["dealer"].AsBsonArray.Select(x => new Card(x.AsString)).ToArray()); */
-            game.GameStatus = result["gameStatus"].AsString;
+
+            try
+            {
+                game.PlayerId = result["playerid"].AsInt32;
+                BsonArray player = result["player"].AsBsonArray;
+                BsonArray dealer = result["dealer"].AsBsonArray;
+                /* game.Player = BsonSerializer.Deserialize<List<Card>>(player); */
+                game.GameStatus = result["gameStatus"].AsString;
+            }
+            catch (System.Exception)
+            {
+                game.PlayerId = 0;
+                game.Player = new Card[0];
+                game.Dealer = new Card[0];
+                game.GameStatus = "null";
+            }
             return game;
         }
         /* public Game getAllGamesById(int id){

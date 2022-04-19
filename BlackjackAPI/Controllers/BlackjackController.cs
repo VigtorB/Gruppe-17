@@ -36,14 +36,13 @@ namespace BlackjackAPI.Controllers
                     gameStatus = "pending";
                     var playerHand = player.Deal(2, shflDeck, id);
                     shflDeck = player.GetDeck;
-                    var dealerHand = dealer.Deal(2, shflDeck, id);
+                    var dealerHand = dealer.Deal(1, shflDeck, id);
                     shflDeck = dealer.GetDeck;
                     if (player.value == 21)
                     {
                         //update gamestatus
                         db.UpdateGameStatus(id, "blackjack");
                         return Ok("blackjack");
-
                     }
                     db.GameStart(id, shflDeck, playerHand, dealerHand, gameStatus); //TODO: fix deck, playerHand and dealerHand
                     return Ok($"{playerHand}" + $"{dealerHand}");
@@ -69,11 +68,6 @@ namespace BlackjackAPI.Controllers
                 }
                 db.GameStart(id, shflDeck, playerHand, dealerHand, gameStatus); //TODO: fix deck, playerHand and dealerHand
                 return Ok($"{playerHand}" + $"{dealerHand}");
-
-
-
-
-
             }
 
         }
