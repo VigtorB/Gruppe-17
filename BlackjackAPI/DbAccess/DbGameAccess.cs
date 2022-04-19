@@ -83,15 +83,14 @@ namespace BlackjackAPI.DbAccess
             var collection = database.GetCollection<BsonDocument>("blackjack");
 
             var filter = Builders<BsonDocument>.Filter.Eq("playerid", id);
-            var result = collection.Find(filter).ToList().LastOrDefault();
+            BsonDocument result = collection.Find(filter).ToList().LastOrDefault();
 
             try
             {
                 game.PlayerId = result["playerid"].AsInt32;
-                BsonArray player = result["player"].AsBsonArray;
-                BsonArray dealer = result["dealer"].AsBsonArray;
-                /* game.Player = BsonSerializer.Deserialize<List<Card>>(player); */
-                game.GameStatus = result["gameStatus"].AsString;
+                game.Player = result["player"].AsBsonArray.Select(x => new Card { Rank = x["Rank"].AsInt32, Suit = x["Suit"].AsString }).ToArray();
+                game.Dealer = result["dealer"].AsBsonArray.Select(x => new Card { Rank = x["Rank"].AsInt32, Suit = x["Suit"].AsString }).ToArray();
+                game.GameStatus = result["gamestatus"].AsString;
             }
             catch (System.Exception)
             {

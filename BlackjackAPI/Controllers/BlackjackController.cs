@@ -20,8 +20,6 @@ namespace BlackjackAPI.Controllers
         {
             DbGameAccess db = new DbGameAccess();
             Game game = new Game();
-            try
-            {
                 game = db.GetGame(id);
                 if (game.GameStatus == "pending")
                 {
@@ -44,32 +42,9 @@ namespace BlackjackAPI.Controllers
                         db.UpdateGameStatus(id, "blackjack");
                         return Ok("blackjack");
                     }
-                    db.GameStart(id, shflDeck, playerHand, dealerHand, gameStatus); //TODO: fix deck, playerHand and dealerHand
-                    return Ok($"{playerHand}" + $"{dealerHand}");
+                    db.GameStart(id, shflDeck, playerHand, dealerHand, gameStatus);
+                    return Ok($"Player: {player.value} " + $"Dealer: {dealer.value}");
                 }
-            }
-            catch (Exception e)
-            {
-                var deck = new Deck();
-                var player = new Player();
-                var dealer = new Player();
-                var shflDeck = deck.Shuffle();
-                gameStatus = "pending";
-                var playerHand = player.Deal(2, shflDeck, id);
-                shflDeck = player.GetDeck;
-                var dealerHand = dealer.Deal(2, shflDeck, id);
-                shflDeck = dealer.GetDeck;
-                if (player.value == 21)
-                {
-                    //update gamestatus
-                    db.UpdateGameStatus(id, "blackjack");
-                    return Ok("blackjack");
-
-                }
-                db.GameStart(id, shflDeck, playerHand, dealerHand, gameStatus); //TODO: fix deck, playerHand and dealerHand
-                return Ok($"{playerHand}" + $"{dealerHand}");
-            }
-
         }
         //api get
         [HttpGet("{id:int}/hit")]

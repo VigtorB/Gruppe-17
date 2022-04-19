@@ -11,7 +11,6 @@ namespace BlackjackAPI.Models
         
         public int HandValue()
         {
-            value = 0;
             foreach (var card in hand)
             {
                 if (card.Rank == 1 && value + 11 <= 21)
@@ -34,8 +33,8 @@ namespace BlackjackAPI.Models
         {
             hand = shflDeck.Take(n).ToArray();
             shflDeck = shflDeck.Skip(n).ToArray();
-            DbGameAccess db = new DbGameAccess();
             deck = shflDeck;
+            HandValue();
             return hand;
         }
         public Card[] GetDeck
