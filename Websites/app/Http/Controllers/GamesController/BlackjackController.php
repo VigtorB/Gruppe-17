@@ -26,6 +26,6 @@ class BlackjackController extends Controller
             return redirect('/');
         }
 
-        return view('games.blackjack')->with('title', 'Blackjack');
+        return view('games.blackjack')->with('game', $game);
     }
 }

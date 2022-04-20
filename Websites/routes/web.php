@@ -37,7 +37,7 @@ Route::get('editprofile', [HomeController::class, 'editProfilePage'])->name('edi
 
 // Games pages
 Route::get('games', [GamesController::class, 'games'])->name('games');
-Route::get('games/blackjack', [GamesController::class, 'startBlackjack'])->name('blackjack');
+Route::get('games/blackjack', [GamesController::class, 'index'])->name('blackjack');
 
 //Post/blog pages
 Route::resource('posts', PostController::class);

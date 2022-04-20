@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\GitHub\\Gruppe-17\\BlackjackAPI\\BlackjackAPI.csproj": {}
+    "C:\\Users\\Steam\\Documents\\Workspace\\Gruppe-17\\BlackjackAPI\\BlackjackAPI.csproj": {}
   },
   "projects": {
-    "D:\\GitHub\\Gruppe-17\\BlackjackAPI\\BlackjackAPI.csproj": {
+    "C:\\Users\\Steam\\Documents\\Workspace\\Gruppe-17\\BlackjackAPI\\BlackjackAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\GitHub\\Gruppe-17\\BlackjackAPI\\BlackjackAPI.csproj",
+        "projectUniqueName": "C:\\Users\\Steam\\Documents\\Workspace\\Gruppe-17\\BlackjackAPI\\BlackjackAPI.csproj",
         "projectName": "BlackjackAPI",
-        "projectPath": "D:\\GitHub\\Gruppe-17\\BlackjackAPI\\BlackjackAPI.csproj",
-        "packagesPath": "C:\\Users\\mikke\\.nuget\\packages\\",
-        "outputPath": "D:\\GitHub\\Gruppe-17\\BlackjackAPI\\obj\\",
+        "projectPath": "C:\\Users\\Steam\\Documents\\Workspace\\Gruppe-17\\BlackjackAPI\\BlackjackAPI.csproj",
+        "packagesPath": "C:\\Users\\Steam\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Steam\\Documents\\Workspace\\Gruppe-17\\BlackjackAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\mikke\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Steam\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -71,7 +71,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.200\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }
