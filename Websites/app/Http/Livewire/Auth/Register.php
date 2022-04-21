@@ -24,25 +24,33 @@ class Register extends Component
     /** @var string */
     public $passwordConfirmation = '';
 
+
     public function register()
     {
-        $this->validate([
-            'username' => ['required'],
-            'email' => ['required', 'email', 'unique:users'],
-            'password' => ['required', 'min:8', 'same:passwordConfirmation'],
-        ]);
+        try{
+            $this->validate([
+                'username' => ['required'],
+                'email' => ['required', 'email', 'unique:users'],
+                'password' => ['required', 'min:8', 'same:passwordConfirmation'],
+            ]);
 
-        $user = User::create([
-            'email' => $this->email,
-            'username' => $this->username,
-            'password' => Hash::make($this->password),
-        ]);
+            $user = User::create([
+                'email' => $this->email,
+                'username' => $this->username,
+                'password' => Hash::make($this->password),
+            ]);
 
-        $user_id = $user->id;
-        //add user id to current coin database
-        $coin = new Coin;
-        $coin->user_id = $user_id;
-        $coin->save();
+            $coin = Coin::create([
+                'coin_owner' => $user->id,
+                'balance' => 1000,
+                'coin_bet' => 0,
+            ]);
+
+        }
+        catch(\Exception $e){
+            return redirect()->route('test')->with('error', $e->getMessage());
+        }
+
 
         /*
         $user = $userController->register($this->username, $this->email, Hash::make($this->password));

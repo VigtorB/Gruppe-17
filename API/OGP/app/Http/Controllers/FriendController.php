@@ -14,8 +14,8 @@ class FriendController extends Controller
         try{
         $friend_id = $request->friend_id;
         $friend = Friend::create([
-            'my_user' => $request->user_id,
-            'friend_user' => $request->friend_id,
+            'sender_id' => $request->user_id,
+            'receiver_id' => $request->friend_id,
         ]);
         return response()->json(['success' => true]);
     }catch(\Exception $e){
@@ -28,8 +28,8 @@ class FriendController extends Controller
         try{
         $friend_id = $request->friend_id;
         $friend = Friend::create([
-            'my_user' => $request->user_id,
-            'friend_user' => $request->friend_id,
+            'sender_id' => $request->user_id,
+            'receiver_id' => $request->friend_id,
         ]);
         return response()->json(['success' => true]);
     }catch(\Exception $e){
@@ -42,7 +42,7 @@ class FriendController extends Controller
     public function getFriends($id)
     {
         $userController = new UserController();
-        $friend_ids = Friend::where('my_user', $id)->select('friend_user')->get();
+        $friend_ids = Friend::where('sender_id', $id)->select('receiver_id')->get();
         foreach($friend_ids as $friend_id){
             $friend = $friend_id->friend_user;
             $friends[] = $userController->getUsername($friend);
@@ -53,7 +53,7 @@ class FriendController extends Controller
     //delete friend
     public function deleteFriend(Request $request)
     {
-        $friend = Friend::where('my_user', $request->user_id)->where('friend_user', $request->friend_id)->delete();
+        $friend = Friend::where('sender_id', $request->user_id)->where('receiver_id', $request->friend_id)->delete();
         return response()->json(['success' => true]);
     }
 }
