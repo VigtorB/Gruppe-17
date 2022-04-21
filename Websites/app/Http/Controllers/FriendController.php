@@ -63,6 +63,7 @@ class FriendController extends Controller
             return $friends['friend'];
         }
         return $friends['friend'];
+        //tihi
     }
     public function deleteFriend($username)
     {
