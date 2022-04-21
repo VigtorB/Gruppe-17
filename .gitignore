@@ -1,4 +1,12 @@
 
 BlackjackAPI/bin/Debug/net6.0/ref/BlackjackAPI.dll
+<<<<<<< HEAD
 Websites/.env
 API/OGP/.env
+=======
+API/OGP/composer.lock
+BlackjackAPI/obj/Debug/net6.0/BlackjackAPI.assets.cache
+Websites/bootstrap/cache/packages.php
+Websites/bootstrap/cache/services.php
+Websites/composer.lock
+>>>>>>> master

@@ -18,9 +18,10 @@ class FriendController extends Controller
         $url = env('API_URL') . 'friend/addFriend/';
         $ch = curl_init($url);
         $data = array(
-            'user_id_fl' => $id,
-            'friend_id' => $friend_id,
+            'sender_id' => $id,
+            'receiver_id' => $friend_id,
         );
+
         $payload = json_encode($data);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
@@ -37,8 +38,8 @@ class FriendController extends Controller
         $url = env('API_URL') . 'friend/acceptFriend/';
         $ch = curl_init($url);
         $data = array(
-            'user_id_fl' => $id,
-            'friend_id' => $friend_id,
+            'sender_id' => $id,
+            'receiver_id' => $friend_id,
         );
         $payload = json_encode($data);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
@@ -53,6 +54,14 @@ class FriendController extends Controller
         $id = Auth::user()->id;
         $url = env('API_URL') . 'friends/'.$id;
         $friends = Http::get($url)->json();
+        if($friends == null)
+        {
+            return $friends['No friends :('];
+        }
+        else
+        {
+            return $friends['friend'];
+        }
         return $friends['friend'];
     }
     public function deleteFriend($username)

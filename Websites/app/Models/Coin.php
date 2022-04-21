@@ -8,16 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Coin extends Model
 {
     use HasFactory;
-    private float $value;
-    public $timestamps = false;
-    //get coinsAmount
-    public function getCoinsAmount($value)
-    {
-        return number_format($value, 2, '.', ',');
-    }
-    //set coinsAmount
-    public function setCoinsAmount($value)
-    {
-        $this->attributes['coinsAmount'] = number_format($value, 2, '.', ',');
-    }
+    protected $table = 'coins';
+    //get balance++
+    protected $fillable = [
+        'coin_owner',
+        'balance',
+        'coin_bet'
+    ];
+
 }
