@@ -89,3 +89,6 @@ Route::middleware('auth')->group(function () {
 
 //TEST PAGE!
 Route::get('test', [FriendController::class, 'getFriends']);
+Route::get('phpinfo', function () {
+    phpinfo();
+});
