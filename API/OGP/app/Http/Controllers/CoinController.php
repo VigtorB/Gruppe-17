@@ -38,8 +38,8 @@ class CoinController extends Controller
     public function getCoins($id)
     {
         //show current amount of coins
-        $coin = Coin::where('user_id', $id)
-                    ->select('coins_amount')
+        $coin = Coin::where('coin_owner', $id)
+                    ->select('balance')
                     ->get()
                     ->first();
 
@@ -53,23 +53,28 @@ class CoinController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function updateCoin(Request $request, $winlose, $token)       //Master token som altid er der for programmet.
+    public function pendingBet($request)       //Master token som altid er der for programmet.
     {
-        $user = User::where('token', $token)->first(); //TODO: Ikke rigtig. Vi skal få token fra et andet sted. Ikke fra User Scheme
-        $userid = $user->id;
-        try {
-            if($winlose == true) {
-                $coin = Coin::where('user_id', $userid)->first();
-                $coin->amount += $request;
-                $coin->save();
-            } else {
-                $coin = Coin::where('user_id', $userid)->first();
-                $coin->amount -= $request;
-                $coin->save();
-            }  //TODO: Tjek om dette virker, hvis ikke, fix det. (Spillet bestemmer win/lose)
-            return response()->json(['success' => 'Coin amount updated successfully'], 200);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Coin amount could not be updated'], 500);
+        $coin = Coin::where('coin_owner', $request->id)
+                    ->update(['coin_bet' => $request->coin_bet]);
+    }
+
+    public function updateCoin($id, $addOrSubtract)
+    {
+        if($addOrSubtract == 'add')
+        {
+            $coin = Coin::where('coin_owner', $id)
+                        ->update(['balance' => 'balance' + 'coin_bet']);
+        }
+        if($addOrSubtract == 'subtract')
+        {
+            $coin = Coin::where('coin_owner', $id)
+                        ->update(['balance' => 'balance' - 'coin_bet']);
+        }
+        if($addOrSubtract == 'draw')
+        {
+            $coin = Coin::where('coin_owner', $id)
+                        ->update(['coin_bet' => 0]);
         }
     }
 
