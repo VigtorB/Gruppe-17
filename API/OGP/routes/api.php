@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CoinController;
 use App\Http\Controllers\FriendController;
+use App\Http\Controllers\GamesController\BlackjackController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,3 +45,6 @@ Route::post("friends",[FriendController::class,'acceptFriend']);
 Route::get("friends/{id}",[FriendController::class,'getFriends']);
 Route::delete("friends",[FriendController::class,'deleteFriend']);
 //Friend End-points
+
+//Games End-points
+Route::post("blackjack",[BlackjackController::class,'startBlackjack']);
