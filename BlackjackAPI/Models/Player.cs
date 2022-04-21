@@ -11,6 +11,8 @@ namespace BlackjackAPI.Models
         
         public int HandValue()
         {
+            //sort hand decending, so that aces are always counted as (the right value)
+            Array.Sort(hand, (x, y) => y.Rank.CompareTo(x.Rank));
             foreach (var card in hand)
             {
                 if (card.Rank == 1 && value + 11 <= 21)
