@@ -30,17 +30,20 @@ class GamesController extends Controller
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $result = curl_exec($ch);
         curl_close($ch);
-        dd($result);
-        return view('games.blackjack')->with($result);
+        //dd($result);
+        $result = json_decode($result, true);
+
+        //dd($result[]);
+        return view('games.blackjack'); //TODO: husk with('result')
     }
     public function hitBlackjack()
     {
         $id = Auth::user()->id;
-        $url = env('API_URL') . 'blackjack/'.$id.'hit';
+        $url = env('API_URL') . 'blackjack/'.$id.'/hit';
         $result = Http::get($url)->json();
 
-        dd($result);
-        //return view('games.blackjack')->with($result);
+        //dd($result);
+        return view('games.blackjack')->redirect()->route('blackjack'); //TODO: husk with('result')
     }
 
     public function standBlackjack($id)

@@ -13,7 +13,6 @@ class FriendController extends Controller
     public function addFriend(Request $request)
     {
         try {
-            $friend_id = $request->friend_id;
             $friend = Friend::create([
                 'sender_id' => $request->user_id,
                 'receiver_id' => $request->friend_id,
@@ -27,7 +26,6 @@ class FriendController extends Controller
     public function acceptFriend(Request $request)
     {
         try {
-            $friend_id = $request->friend_id;
             $friend = Friend::create([
                 'sender_id' => $request->user_id,
                 'receiver_id' => $request->friend_id,

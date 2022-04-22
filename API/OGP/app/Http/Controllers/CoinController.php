@@ -55,26 +55,28 @@ class CoinController extends Controller
      */
     public function pendingBet($request)       //Master token som altid er der for programmet.
     {
+        //add to coin db
         $coin = Coin::where('coin_owner', $request->id)
                     ->update(['coin_bet' => $request->coin_bet]);
+
     }
 
     public function updateCoin($id, $addOrSubtract)
     {
-        if($addOrSubtract == 'add')
+        if($addOrSubtract = 'add')
         {
             $coin = Coin::where('coin_owner', $id)
-                        ->update(['balance' => 'balance' + 'coin_bet']);
+                        ->put(['balance' => 'balance' + 'coin_bet']);
         }
-        if($addOrSubtract == 'subtract')
+        if($addOrSubtract = 'subtract')
         {
             $coin = Coin::where('coin_owner', $id)
-                        ->update(['balance' => 'balance' - 'coin_bet']);
+                        ->put(['balance' => 'balance' - 'coin_bet']);
         }
-        if($addOrSubtract == 'draw')
+        if($addOrSubtract = 'draw')
         {
             $coin = Coin::where('coin_owner', $id)
-                        ->update(['coin_bet' => 0]);
+                        ->put(['coin_bet' => 0]);
         }
     }
 

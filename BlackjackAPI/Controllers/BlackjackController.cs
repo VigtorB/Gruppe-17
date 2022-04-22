@@ -70,17 +70,18 @@ namespace BlackjackAPI.Controllers
             if (value == 21)
             {
                 //update gamestatus
+                db.HitGame(id, game.Deck, game.Player);
+                //TODO: ÆNDRE ALLE DE HER METODER: TIL AT DERES STATUS BLIVER OPDATERET I HIT OG STAND I STEDET.
                 db.UpdateGameStatus(id, "blackjack");
                 game.GameStatus = "blackjack";
-                db.HitGame(id, game.Deck, game.Player);
                 return Ok(ReturnGame(game));
             }
             if (value > 21)
             {
                 //update gamestatus
+                db.HitGame(id, game.Deck, game.Player);
                 db.UpdateGameStatus(id, "bust");
                 game.GameStatus = "bust";
-                db.HitGame(id, game.Deck, game.Player);
                 return Ok(ReturnGame(game));
             }
             db.HitGame(id, game.Deck, game.Player);
@@ -108,37 +109,37 @@ namespace BlackjackAPI.Controllers
             }
             if (dealerValue == 21)
             {
+                db.StandGame(id, game.Deck, game.Dealer);
                 db.UpdateGameStatus(id, "dealer blackjack");
                 game.GameStatus = "dealer blackjack";
-                db.StandGame(id, game.Deck, game.Dealer);
                 return Ok(ReturnGame(game));
             }
             if (dealerValue > 21)
             {
+                db.StandGame(id, game.Deck, game.Dealer);
                 db.UpdateGameStatus(id, "dealer bust");
                 game.GameStatus = "dealer bust";
-                db.StandGame(id, game.Deck, game.Dealer);
                 return Ok(ReturnGame(game));
             }
             if (dealerValue > playerValue)
             {
+                db.StandGame(id, game.Deck, game.Dealer);
                 db.UpdateGameStatus(id, "dealer win");
                 game.GameStatus = "dealer win";
-                db.StandGame(id, game.Deck, game.Dealer);
                 return Ok(ReturnGame(game));
             }
             if (dealerValue < playerValue)
             {
+                db.StandGame(id, game.Deck, game.Dealer);
                 db.UpdateGameStatus(id, "player win");
                 game.GameStatus = "player win";
-                db.StandGame(id, game.Deck, game.Dealer);
                 return Ok(ReturnGame(game));
             }
             if (dealerValue == playerValue)
             {
+                db.StandGame(id, game.Deck, game.Dealer);
                 db.UpdateGameStatus(id, "draw");
                 game.GameStatus = "draw";
-                db.StandGame(id, game.Deck, game.Dealer);
                 return Ok(ReturnGame(game));
             }
             return Ok(ReturnGame(game));
