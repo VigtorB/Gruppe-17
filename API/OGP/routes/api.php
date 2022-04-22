@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CoinController;
 use App\Http\Controllers\FriendController;
-use App\Http\Controllers\GamesController\BlackjackController;
+use App\Http\Controllers\BlackjackController;
 
 /*
 |--------------------------------------------------------------------------

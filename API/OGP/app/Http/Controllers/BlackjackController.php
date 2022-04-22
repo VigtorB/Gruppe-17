@@ -5,13 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
-class GamesController extends Controller
+class BlackjackController extends Controller
 {
-    public function games()
-    {
-        return view('games.index');
-    }
-
     public function startBlackjack(Request $request)
     {
 

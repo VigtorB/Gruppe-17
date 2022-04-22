@@ -143,14 +143,14 @@ namespace BlackjackAPI.Controllers
             }
             return Ok(ReturnGame(game));
         }
-        public void ReturnGame(Game game)
+        public GameInfo ReturnGame(Game game)
         {
             GameInfo gameInfo = new GameInfo();
             //return game
             gameInfo.GameStatus = game.GameStatus;
             gameInfo.Player = game.Player;
             gameInfo.Dealer = game.Dealer;
-            return Ok(gameInfo);
+            return gameInfo;
 
         }
     }

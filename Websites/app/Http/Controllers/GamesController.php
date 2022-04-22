@@ -13,8 +13,9 @@ class GamesController extends Controller
         return view('games.index');
     }
 
-    public function startBlackjack($coin_bet)
+    public function startBlackjack()
     {
+        $coin_bet = 100;
         $id = Auth::user()->id;
         $url = env('API_URL') . 'blackjack/';
         $ch = curl_init($url);
