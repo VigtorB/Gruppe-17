@@ -23,7 +23,7 @@ namespace BlackjackAPI.Controllers
             game = db.GetGame(id);
             if (game.GameStatus == "pending")
             {
-                return Ok(returnGame(game));
+                return Ok(ReturnGame(game));
             }
             else
             {
@@ -43,12 +43,12 @@ namespace BlackjackAPI.Controllers
                     db.UpdateGameStatus(id, "blackjack");
                     game.GameStatus = "blackjack";
                     db.GameStart(game.PlayerId, shflDeck, player.hand, dealer.hand, game.GameStatus);
-                    return Ok(returnGame(game));
+                    return Ok(ReturnGame(game));
                 }
                 try
                 {
                     db.GameStart(game.PlayerId, shflDeck, player.hand, dealer.hand, game.GameStatus);
-                    return Ok(returnGame(game));
+                    return Ok(ReturnGame(game));
                 }
                 catch (Exception e)
                 {
@@ -73,7 +73,7 @@ namespace BlackjackAPI.Controllers
                 db.UpdateGameStatus(id, "blackjack");
                 game.GameStatus = "blackjack";
                 db.HitGame(id, game.Deck, game.Player);
-                return Ok(returnGame(game));
+                return Ok(ReturnGame(game));
             }
             if (value > 21)
             {
@@ -81,10 +81,10 @@ namespace BlackjackAPI.Controllers
                 db.UpdateGameStatus(id, "bust");
                 game.GameStatus = "bust";
                 db.HitGame(id, game.Deck, game.Player);
-                return Ok(returnGame(game));
+                return Ok(ReturnGame(game));
             }
             db.HitGame(id, game.Deck, game.Player);
-            return Ok(returnGame(game));
+            return Ok(ReturnGame(game));
         }
 
         //api get
@@ -111,39 +111,39 @@ namespace BlackjackAPI.Controllers
                 db.UpdateGameStatus(id, "dealer blackjack");
                 game.GameStatus = "dealer blackjack";
                 db.StandGame(id, game.Deck, game.Dealer);
-                return Ok(returnGame(game));
+                return Ok(ReturnGame(game));
             }
             if (dealerValue > 21)
             {
                 db.UpdateGameStatus(id, "dealer bust");
                 game.GameStatus = "dealer bust";
                 db.StandGame(id, game.Deck, game.Dealer);
-                return Ok(returnGame(game));
+                return Ok(ReturnGame(game));
             }
             if (dealerValue > playerValue)
             {
                 db.UpdateGameStatus(id, "dealer win");
                 game.GameStatus = "dealer win";
                 db.StandGame(id, game.Deck, game.Dealer);
-                return Ok(returnGame(game));
+                return Ok(ReturnGame(game));
             }
             if (dealerValue < playerValue)
             {
                 db.UpdateGameStatus(id, "player win");
                 game.GameStatus = "player win";
                 db.StandGame(id, game.Deck, game.Dealer);
-                return Ok(returnGame(game));
+                return Ok(ReturnGame(game));
             }
             if (dealerValue == playerValue)
             {
                 db.UpdateGameStatus(id, "draw");
                 game.GameStatus = "draw";
                 db.StandGame(id, game.Deck, game.Dealer);
-                return Ok(returnGame(game));
+                return Ok(ReturnGame(game));
             }
-            return Ok(returnGame(game));
+            return Ok(ReturnGame(game));
         }
-        public void returnGame(Game game)
+        public void ReturnGame(Game game)
         {
             GameInfo gameInfo = new GameInfo();
             //return game
