@@ -147,10 +147,9 @@ namespace BlackjackAPI.Controllers
         {
             GameInfo gameInfo = new GameInfo();
             //return game
-            gameInfo.PlayerId = game.PlayerId;
+            gameInfo.GameStatus = game.GameStatus;
             gameInfo.Player = game.Player;
             gameInfo.Dealer = game.Dealer;
-            gameInfo.GameStatus = game.GameStatus;
             return Ok(gameInfo);
 
         }
