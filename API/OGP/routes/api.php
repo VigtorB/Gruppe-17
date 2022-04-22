@@ -48,3 +48,6 @@ Route::delete("friends",[FriendController::class,'deleteFriend']);
 
 //Games End-points
 Route::post("blackjack",[BlackjackController::class,'startBlackjack']);
+Route::get("blackjack/{id}/hit",[BlackjackController::class,'hit']);
+Route::get("blackjack/{id}/stand",[BlackjackController::class,'stand']);
+//Games End-points

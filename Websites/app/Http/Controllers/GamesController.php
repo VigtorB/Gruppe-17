@@ -13,9 +13,8 @@ class GamesController extends Controller
         return view('games.index');
     }
 
-    public function startBlackjack()
+    public function startBlackjack($coin_bet)
     {
-        $coin_bet = 100;
         $id = Auth::user()->id;
         $url = env('API_URL') . 'blackjack/';
         $ch = curl_init($url);
@@ -30,6 +29,25 @@ class GamesController extends Controller
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $result = curl_exec($ch);
         curl_close($ch);
+        dd($result);
+        //return view('games.blackjack')->with($result);
+    }
+    public function hitBlackjack()
+    {
+        $id = Auth::user()->id;
+        $url = env('API_URL') . 'blackjack/'.$id.'hit';
+        $result = Http::get($url)->json();
+
+        dd($result);
+        //return view('games.blackjack')->with($result);
+    }
+
+    public function standBlackjack($id)
+    {
+        $id = Auth::user()->id;
+        $url = env('API_URL') . 'blackjack/'.$id.'stand';
+        $result = Http::get($url)->json();
+
         dd($result);
         //return view('games.blackjack')->with($result);
     }

@@ -33,12 +33,11 @@ class GamesController extends Controller
         return $response;
     }
 
-    public function hit(Request $request)
+    public function hit($id)
     {
         $CoinController = new CoinController();
 
         //hit game and receive $game
-        $id = $request->id;
         $url = env('BAPI_URL') . 'blackjack/'.$id.'/hit';
         $game = Http::get($url)->json();
 
@@ -51,12 +50,11 @@ class GamesController extends Controller
         }
         return $game['game'];
     }
-    public function stand(Request $request)
+    public function stand($id)
     {
         $CoinController = new CoinController();
 
         //stand game and receive $game
-        $id = $request->id;
         $url = env('BAPI_URL') . 'blackjack/'.$id.'/stand';
         $game = Http::get($url)->json();
 
