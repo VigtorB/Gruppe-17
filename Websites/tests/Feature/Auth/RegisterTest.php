@@ -55,7 +55,7 @@ class RegisterTest extends TestCase
     }
 
     /** @test */
-    function name_is_required()
+    function username_is_required()
     {
         Livewire::test('auth.register')
             ->set('username', '')

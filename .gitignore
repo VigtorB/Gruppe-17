@@ -30,3 +30,7 @@ BlackjackAPI/bin/Debug/net6.0/BlackjackAPI.pdb
 BlackjackAPI/bin/Debug/net6.0/BlackjackAPI.dll
 BlackjackAPI/obj/BlackjackAPI.csproj.nuget.g.props
 BlackjackAPI/obj/BlackjackAPI.csproj.nuget.dgspec.json
+
+BlackjackAPI/.vs/BlackjackAPI/v17/.suo
+
+BlackjackAPI/obj/Debug/net6.0/apphost.exe

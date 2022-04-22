@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Http;
 
 class GamesController extends Controller
 {
-    public function games()
+    public function index()
     {
         return view('games.index');
     }
@@ -30,7 +30,7 @@ class GamesController extends Controller
         $result = curl_exec($ch);
         curl_close($ch);
         dd($result);
-        //return view('games.blackjack')->with($result);
+        return view('games.blackjack')->with($result);
     }
     public function hitBlackjack()
     {

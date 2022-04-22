@@ -36,8 +36,9 @@ Route::get('userprofile', [HomeController::class, 'userProfilePage'])->name('use
 Route::get('editprofile', [HomeController::class, 'editProfilePage'])->name('editprofile'); //TODO: Authenticate
 
 // Games pages
-Route::get('games', [GamesController::class, 'games'])->name('games');
+Route::get('games', [GamesController::class, 'index'])->name('games');
 Route::get('games/blackjack', [GamesController::class, 'startBlackjack'])->name('blackjack');
+Route::post('games/blackjack', [GamesController::class, 'hitBlackjack'])->name('blackjack.hit');
 
 //Post/blog pages
 Route::resource('posts', PostController::class);
