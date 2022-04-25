@@ -56,30 +56,50 @@ class CoinController extends Controller
     public function pendingBet($request)       //Master token som altid er der for programmet.
     {
         //add to coin db
-        $coin = Coin::where('coin_owner', $request->id)
+        Coin::where('coin_owner', $request->id)
                     ->update(['coin_bet' => $request->coin_bet]);
 
     }
 
     public function updateCoin($id, $addOrSubtract)
     {
-        if($addOrSubtract = 'add')
+        //TODO: Sørg for man ikke kan bette mere end man har
+        $coin_bet = Coin::where('coin_owner', $id)
+                            ->select('coin_bet')
+                            ->get()
+                            ->first();
+        $coin_balance = Coin::where('coin_owner', $id)
+                            ->select('balance')
+                            ->get()
+                            ->first();
+
+        if($addOrSubtract == 'add')
         {
-            $coin = Coin::where('coin_owner', $id)
-                        ->put(['balance' => 'balance' + 'coin_bet']);
+            $new_balance = $coin_balance->balance + $coin_bet->coin_bet;
+            Coin::where('coin_owner', $id)
+                ->update(['balance' => $new_balance]);
+            Coin::where('coin_owner', $id)
+                ->update(['coin_bet' => 0]);
         }
-        if($addOrSubtract = 'subtract')
+        if($addOrSubtract == 'subtract')
         {
-            $coin = Coin::where('coin_owner', $id)
-                        ->put(['balance' => 'balance' - 'coin_bet']);
+            $new_balance = $coin_balance->balance - $coin_bet->coin_bet;
+            Coin::where('coin_owner', $id)
+                ->update(['balance' => $new_balance]);
+            Coin::where('coin_owner', $id)
+                ->update(['coin_bet' => 0]);
         }
-        if($addOrSubtract = 'draw')
+        if($addOrSubtract == 'draw')
         {
-            $coin = Coin::where('coin_owner', $id)
-                        ->put(['coin_bet' => 0]);
+            Coin::where('coin_owner', $id)
+                ->update(['coin_bet' => 0]);
         }
     }
-
+    /* $coin = Coin::create([
+        'coin_owner' => $user->id,
+        'balance' => 1000,
+        'coin_bet' => 0,
+    ]); */
     /**
      * Remove the specified resource from storage.
      *

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use Redirect;
 
 class GamesController extends Controller
 {
@@ -43,10 +44,10 @@ class GamesController extends Controller
         $result = Http::get($url)->json();
 
         //dd($result);
-        return view('games.blackjack')->redirect()->route('blackjack'); //TODO: husk with('result')
+        return view('games.blackjack'); //TODO: husk with('result')
     }
 
-    public function standBlackjack($id)
+    public function standBlackjack()
     {
         $id = Auth::user()->id;
         $url = env('API_URL') . 'blackjack/'.$id.'stand';

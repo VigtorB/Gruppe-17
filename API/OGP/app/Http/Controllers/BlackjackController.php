@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Http;
 
 class BlackjackController extends Controller
 {
-    public string $addOrSubtract;
     public function startBlackjack(Request $request)
     {
 
@@ -20,15 +19,16 @@ class BlackjackController extends Controller
         $id = $request->id;
         $url = env('BAPI_URL') . 'blackjack/'.$id;
         $response = Http::get($url)->json();
-        /* dd($response); */
         //updateBet
-        $decodedResponse = json_decode($response, true);
-        if($decodedResponse['gameStatus'] == 'blackjack'){
-            $addOrSubtract = 'add';
-            $CoinController->updateBet($id, $addOrSubtract);
+        if($response['gameStatus'] == 'pending'){
+            return $response;
         }
-
-        return $response;
+        if($response['gameStatus'] == 'blackjack'){
+            $addOrSubtract = 'add';
+            $CoinController->updateCoin($id, $addOrSubtract);
+            return $response;
+        }
+        /* dd($response); */
     }
 
     public function hit($id)
@@ -39,15 +39,15 @@ class BlackjackController extends Controller
         $url = env('BAPI_URL') . 'blackjack/'.$id.'/hit';
         $response = Http::get($url)->json();
 
+
         //updateBet
-        $decodedResponse = json_decode($response, true);
-        if($decodedResponse['gameStatus'] == 'blackjack'){
+        if($response['gameStatus'] == 'blackjack'){
             $addOrSubtract = 'add';
-            $CoinController->updateBet($id, $addOrSubtract);
+            $CoinController->updateCoin($id, $addOrSubtract);
         }
-        if($decodedResponse['gameStatus'] == 'bust'){
+        if($response['gameStatus'] == 'bust'){
             $addOrSubtract = 'subtract';
-            $CoinController->updateBet($id, $addOrSubtract);
+            $CoinController->updateCoin($id, $addOrSubtract);
         }
         return $response;
     }
@@ -63,15 +63,15 @@ class BlackjackController extends Controller
         $decodedResponse = json_decode($response, true);
         if($decodedResponse['gameStatus'] == 'won'){
             $addOrSubtract = 'add';
-            $CoinController->updateBet($id, $addOrSubtract);
+            $CoinController->updateCoin($id, $addOrSubtract);
         }
-        if($decodedResponse['gameStatus'] == 'bust' || $decodedResponse['gameStatus'] == 'dealer blackjack'){
+        if($decodedResponse['gameStatus'] == 'bust' || $decodedResponse['GameStatus'] == 'dealer blackjack'){
             $addOrSubtract = 'subtract';
-            $CoinController->updateBet($id, $addOrSubtract);
+            $CoinController->updateCoin($id, $addOrSubtract);
         }
         if($decodedResponse['gameStatus'] == 'draw'){
             $addOrSubtract = 'draw';
-            $CoinController->updateBet($id, $addOrSubtract);
+            $CoinController->updateCoin($id, $addOrSubtract);
         }
         return $response;
     }
