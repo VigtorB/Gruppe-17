@@ -60,16 +60,15 @@ class BlackjackController extends Controller
         $response = Http::get($url)->json();
 
         //updateBet
-        $decodedResponse = json_decode($response, true);
-        if($decodedResponse['gameStatus'] == 'won'){
+        if($response['gameStatus'] == 'player win'){
             $addOrSubtract = 'add';
             $CoinController->updateCoin($id, $addOrSubtract);
         }
-        if($decodedResponse['gameStatus'] == 'bust' || $decodedResponse['GameStatus'] == 'dealer blackjack'){
+        if($response['gameStatus'] == 'dealer bust' || $response['gameStatus'] == 'dealer blackjack' || $response['gameStatus'] == 'dealer win'){
             $addOrSubtract = 'subtract';
             $CoinController->updateCoin($id, $addOrSubtract);
         }
-        if($decodedResponse['gameStatus'] == 'draw'){
+        if($response['gameStatus'] == 'draw'){
             $addOrSubtract = 'draw';
             $CoinController->updateCoin($id, $addOrSubtract);
         }
