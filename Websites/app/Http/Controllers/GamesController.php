@@ -16,7 +16,7 @@ class GamesController extends Controller
 
     public function startBlackjack()
     {
-        $coin_bet = 100;
+        $coin_bet = 100; //TODO: Make this dynamic, based on users bet input
         $id = Auth::user()->id;
         $url = env('API_URL') . 'blackjack/';
         $ch = curl_init($url);
