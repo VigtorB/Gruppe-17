@@ -1,9 +1,11 @@
+<?php
+use \App\Http\Controllers\GamesController; ?>
 @extends('layouts.app')
 
 @section('content')
     <div class="container">
         <div class="center-block">
-            <a href="{{ route('blackjack.hit') }}"
+            <a href="{{ GamesController::hitBlackjack() }}"
                 class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
                 Hit
             </a>
