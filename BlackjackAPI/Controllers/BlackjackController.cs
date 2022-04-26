@@ -13,7 +13,6 @@ namespace BlackjackAPI.Controllers
 
     public class BlackjackController : Controller
     {
-        private string gameStatus;
         //api get
         [HttpGet("{id:int}")]
         public IActionResult GameStart(int id)
@@ -64,6 +63,10 @@ namespace BlackjackAPI.Controllers
             Game game = new Game();
             var player = new Player();
             game = db.GetGame(id);
+            if(game.GameStatus != "pending")
+            {
+                return BadRequest("Game is over");
+            }
             game.Player = player.Hit(1, game.Deck, game.Player);
             game.Deck = player.GetDeck;
             var value = player.value;
@@ -97,6 +100,10 @@ namespace BlackjackAPI.Controllers
             var dealer = new Player();
             var player = new Player();
             game = db.GetGame(id);
+            if(game.GameStatus != "pending")
+            {
+                return BadRequest("Game is over");
+            }
             var playerValue = player.GetValue(game.Player);
             var dealerValue = dealer.GetValue(game.Dealer);
             while (dealerValue <= 17)

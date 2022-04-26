@@ -102,13 +102,13 @@ namespace BlackjackAPI.DbAccess
                 game.Deck = result["deck"].AsBsonArray.Select(x => new Card(x["Rank"].AsInt32, x["Suit"].AsString)).ToArray();
                 game.GameStatus = result["gamestatus"].AsString;
             }
-            catch (System.Exception)
+            catch (System.NullReferenceException)
             {
                 game.PlayerId = 0;
-                game.Player = new Card[0];
                 game.Dealer = new Card[0];
+                game.Player = new Card[0];
                 game.Deck = new Card[0];
-                game.GameStatus = "null";
+                game.GameStatus = "";
             }
             return game;
         }
