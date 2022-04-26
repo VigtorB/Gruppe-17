@@ -11,6 +11,8 @@ class Card extends Model
     private int $rank;
     private string $suit;
 
+    protected $fillable = ['rank', 'suit'];
+
     //get rank
     public function getRank()
     {

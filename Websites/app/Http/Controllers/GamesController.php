@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Redirect;
 
+use App\Models\BlackjackModels\Card;
+use App\Models\BlackjackModels\Game;
+
 class GamesController extends Controller
 {
     public function index()
@@ -39,14 +42,17 @@ class GamesController extends Controller
     }
     public function hitBlackjack()
     {
-
+        $card = new Card();
+        $game = new Game();
 
         $id = Auth::user()->id;
         $url = env('API_URL') . 'blackjack/'.$id.'/hit';
         $result = Http::get($url)->json();
+        $game->GameStatus = $result['gameStatus'];
+        $game->Player = $result['player'];
+        $game->Dealer = $result['dealer'];
 
-
-        dd($result);
+        dd($result['gameStatus']);
         //return redirect()->route('blackjack')->with($result); //TODO: husk with('result')
     }
 
