@@ -6,7 +6,7 @@ namespace BlackjackAPI.Models
         public Card[] cards;
 
         public Deck() => cards =
-            new[] { "Spades", "Hearts", "Clubs", "Diamonds", }
+            new[] { "spades", "hearts", "clubs", "diamonds", }
                 .SelectMany(
                     suit => Enumerable.Range(1, 13),
                     (suit, rank) => new Card(rank, suit))
