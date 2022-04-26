@@ -39,9 +39,9 @@ class CoinController extends Controller
     {
         //show current amount of coins
         $coin = Coin::where('coin_owner', $id)
-                    ->select('balance')
-                    ->get()
-                    ->first();
+            ->select('balance')
+            ->get()
+            ->first();
 
         return response()->json($coin);
     }
@@ -55,9 +55,11 @@ class CoinController extends Controller
      */
     public function pendingBet($request)       //Master token som altid er der for programmet.
     {
-        //add to coin db
+
         Coin::where('coin_owner', $request->id)
-                    ->update(['coin_bet' => $request->coin_bet]);
+            ->update(['coin_bet' => $request->coin_bet]);
+        //add to coin db
+
 
     }
 
@@ -65,32 +67,29 @@ class CoinController extends Controller
     {
         //TODO: Sørg for man ikke kan bette mere end man har
         $coin_bet = Coin::where('coin_owner', $id)
-                            ->select('coin_bet')
-                            ->get()
-                            ->first();
+            ->select('coin_bet')
+            ->get()
+            ->first();
         $coin_balance = Coin::where('coin_owner', $id)
-                            ->select('balance')
-                            ->get()
-                            ->first();
+            ->select('balance')
+            ->get()
+            ->first();
 
-        if($addOrSubtract == 'add')
-        {
+        if ($addOrSubtract == 'add') {
             $new_balance = $coin_balance->balance + $coin_bet->coin_bet;
             Coin::where('coin_owner', $id)
                 ->update(['balance' => $new_balance]);
             Coin::where('coin_owner', $id)
                 ->update(['coin_bet' => 0]);
         }
-        if($addOrSubtract == 'subtract')
-        {
+        if ($addOrSubtract == 'subtract') {
             $new_balance = $coin_balance->balance - $coin_bet->coin_bet;
             Coin::where('coin_owner', $id)
                 ->update(['balance' => $new_balance]);
             Coin::where('coin_owner', $id)
                 ->update(['coin_bet' => 0]);
         }
-        if($addOrSubtract == 'draw')
-        {
+        if ($addOrSubtract == 'draw') {
             Coin::where('coin_owner', $id)
                 ->update(['coin_bet' => 0]);
         }

@@ -39,7 +39,6 @@ namespace BlackjackAPI.Controllers
                 if (player.value == 21)
                 {
                     //update gamestatus
-                    db.UpdateGameStatus(id, "blackjack");
                     game.GameStatus = "blackjack";
                     db.GameStart(game.PlayerId, shflDeck, player.hand, dealer.hand, game.GameStatus);
                     return Ok(ReturnGame(game));
@@ -73,21 +72,18 @@ namespace BlackjackAPI.Controllers
             if (value == 21)
             {
                 //update gamestatus
-                db.HitGame(id, game.Deck, game.Player);
-                //TODO: ÆNDRE ALLE DE HER METODER: TIL AT DERES STATUS BLIVER OPDATERET I HIT OG STAND I STEDET.
-                db.UpdateGameStatus(id, "blackjack");
                 game.GameStatus = "blackjack";
+                db.HitGame(id, game.Deck, game.Player, game.GameStatus);
                 return Ok(ReturnGame(game));
             }
             if (value > 21)
             {
                 //update gamestatus
-                db.HitGame(id, game.Deck, game.Player);
-                db.UpdateGameStatus(id, "bust");
                 game.GameStatus = "bust";
+                db.HitGame(id, game.Deck, game.Player, game.GameStatus);
                 return Ok(ReturnGame(game));
             }
-            db.HitGame(id, game.Deck, game.Player);
+            db.HitGame(id, game.Deck, game.Player, game.GameStatus);
             return Ok(ReturnGame(game));
         }
 
@@ -106,58 +102,57 @@ namespace BlackjackAPI.Controllers
             }
             var playerValue = player.GetValue(game.Player);
             var dealerValue = dealer.GetValue(game.Dealer);
-            while (dealerValue <= 17)
+            while (dealerValue <= 17 && dealerValue < playerValue)
             {
                 var hand = dealer.Hit(1, game.Deck, game.Dealer);
                 game.Deck = dealer.GetDeck;
                 game.Dealer = hand;
                 dealerValue = dealer.GetValue(hand);
-                db.StandGame(id, game.Deck, game.Dealer);
+                db.StandGame(id, game.Deck, game.Dealer, game.GameStatus);
             }
             if (dealerValue == 21)
             {
-                db.StandGame(id, game.Deck, game.Dealer);
-                db.UpdateGameStatus(id, "dealer blackjack");
                 game.GameStatus = "dealer blackjack";
+                db.StandGame(id, game.Deck, game.Dealer, game.GameStatus);
                 return Ok(ReturnGame(game));
             }
             if (dealerValue > 21)
             {
-                db.StandGame(id, game.Deck, game.Dealer);
-                db.UpdateGameStatus(id, "dealer bust");
-                game.GameStatus = "dealer bust";
+                game.GameStatus = "player win";
+                db.StandGame(id, game.Deck, game.Dealer, game.GameStatus);
                 return Ok(ReturnGame(game));
             }
             if (dealerValue > playerValue)
             {
-                db.StandGame(id, game.Deck, game.Dealer);
-                db.UpdateGameStatus(id, "dealer win");
                 game.GameStatus = "dealer win";
+                db.StandGame(id, game.Deck, game.Dealer, game.GameStatus);
                 return Ok(ReturnGame(game));
             }
             if (dealerValue < playerValue)
             {
-                db.StandGame(id, game.Deck, game.Dealer);
-                db.UpdateGameStatus(id, "player win");
                 game.GameStatus = "player win";
+                db.StandGame(id, game.Deck, game.Dealer, game.GameStatus);
                 return Ok(ReturnGame(game));
             }
             if (dealerValue == playerValue)
             {
-                db.StandGame(id, game.Deck, game.Dealer);
-                db.UpdateGameStatus(id, "draw");
                 game.GameStatus = "draw";
+                db.StandGame(id, game.Deck, game.Dealer, game.GameStatus);
                 return Ok(ReturnGame(game));
             }
-            return Ok(ReturnGame(game));
+            return BadRequest("Something went wrong");
         }
         public GameInfo ReturnGame(Game game)
         {
+            var dealer = new Player();
+            var player = new Player();
             GameInfo gameInfo = new GameInfo();
             //return game
             gameInfo.GameStatus = game.GameStatus;
             gameInfo.Player = game.Player;
             gameInfo.Dealer = game.Dealer;
+            gameInfo.playerValue = player.GetValue(game.Player);
+            gameInfo.dealerValue = dealer.GetValue(game.Dealer);
             return gameInfo;
 
         }

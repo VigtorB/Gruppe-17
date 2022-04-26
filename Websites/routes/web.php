@@ -37,8 +37,10 @@ Route::get('editprofile', [HomeController::class, 'editProfilePage'])->name('edi
 
 // Games pages
 Route::get('games', [GamesController::class, 'index'])->name('games');
-Route::get('games/blackjack', [GamesController::class, 'startBlackjack'])->name('blackjack');
-Route::get('games/hit', [GamesController::class, 'hitBlackjack'])->name('blackjack.hit');
+Route::get('games/blackjack/blackjack', [GamesController::class, 'blackjack'])->name('blackjack');
+Route::get('games/blackjack/startgame', [GamesController::class, 'startBlackjack'])->name('blackjack.start');
+Route::get('games/blackjack/hit', [GamesController::class, 'hitBlackjack'])->name('blackjack.hit');
+Route::get('games/blackjack/stand', [GamesController::class, 'standBlackjack'])->name('blackjack.stand');
 
 //Post/blog pages
 Route::resource('posts', PostController::class);

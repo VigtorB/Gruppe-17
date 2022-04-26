@@ -16,9 +16,23 @@ class GamesController extends Controller
     {
         return view('games.index');
     }
+    public function blackjack($result)
+    {
+        $playerCard = $this->returnPlayerCard($result['player']);
+        $dealerCard = $this->returnDealerCard($result['dealer']);
+        $playerValue = $result['playerValue'];
+        $dealerValue = $result['dealerValue'];
+        /* if($result['gameStatus'] != 'pending')
+        {
+            return view('games.blackjack.blackjack')->with('playerCard', $playerCard)->with('dealerCard', $dealerCard)->with('playerValue', $playerValue)->with('dealerValue', $dealerValue)->with('gameStatus', $result['gameStatus']);
+        } */
+
+        return view('games.blackjack.blackjack')->with('playerCard', $playerCard)->with('dealerCard', $dealerCard)->with('playerValue', $playerValue)->with('dealerValue', $dealerValue)->with('gameStatus', $result['gameStatus']);
+    }
 
     public function startBlackjack()
     {
+
         $coin_bet = 100; //TODO: Make this dynamic, based on users bet input
         $id = Auth::user()->id;
         $url = env('API_URL') . 'blackjack/';
@@ -34,35 +48,52 @@ class GamesController extends Controller
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $result = curl_exec($ch);
         curl_close($ch);
-        dd($result);
-        $result = json_decode($result, true);
-
         //dd($result);
-        return view('games.blackjack'); //TODO: husk with('result')
+        $result = json_decode($result, true);
+        /* $playerCard = $this->returnPlayerCard($result['player']);
+        $dealerCard = $this->returnDealerCard($result['dealer']);
+        $playerValue = $result['playerValue'];
+        $dealerValue = $result['dealerValue'];
+         return view('games.blackjack.blackjack')->with('playerCard', $playerCard)->with('dealerCard', $dealerCard)->with('playerValue', $playerValue)->with('dealerValue', $dealerValue); */
+        return $this->blackjack($result);
     }
     public function hitBlackjack()
     {
-        $card = new Card();
-        $game = new Game();
-
         $id = Auth::user()->id;
-        $url = env('API_URL') . 'blackjack/'.$id.'/hit';
+        $url = env('API_URL') . 'blackjack/' . $id . '/hit';
         $result = Http::get($url)->json();
-        $game->GameStatus = $result['gameStatus'];
-        $game->Player = $result['player'];
-        $game->Dealer = $result['dealer'];
-
-        dd(compact('game'));
-        //return redirect()->route('blackjack')->with($result); //TODO: husk with('result')
+        /* $playerCard = $this->returnPlayerCard($result['player']);
+        $dealerCard = $this->returnDealerCard($result['dealer']);
+        $playerValue = $result['playerValue'];
+        $dealerValue = $result['dealerValue'];
+        return redirect()->route('blackjack')->with('playerCard', $playerCard)->with('dealerCard', $dealerCard)->with('playerValue', $playerValue)->with('dealerValue', $dealerValue); */
+        return $this->blackjack($result);
     }
 
     public function standBlackjack()
     {
         $id = Auth::user()->id;
-        $url = env('API_URL') . 'blackjack/'.$id.'stand';
+        $url = env('API_URL') . 'blackjack/' . $id . '/stand';
         $result = Http::get($url)->json();
-
-        dd($result);
-        //return view('games.blackjack')->with($result);
+        /* $playerCard = $this->returnPlayerCard($result['player']);
+        $dealerCard = $this->returnDealerCard($result['dealer']);
+        $playerValue = $result['playerValue'];
+        $dealerValue = $result['dealerValue'];
+        return redirect()->route('blackjack')->with('playerCard', $playerCard)->with('dealerCard', $dealerCard)->with('playerValue', $playerValue)->with('dealerValue', $dealerValue); */
+        return $this->blackjack($result);
+    }
+    public function returnPlayerCard($card)
+    {
+        foreach ($card as $player) {
+            $playerCard[] = $player['rank'] . "_of_" . $player['suit'];
+        }
+        return $playerCard;
+    }
+    public function returnDealerCard($card)
+    {
+        foreach ($card as $dealer) {
+            $dealerCard[] = $dealer['rank'] . "_of_" . $dealer['suit'];
+        }
+        return $dealerCard;
     }
 }

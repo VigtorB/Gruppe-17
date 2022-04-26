@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Spatie\FlareClient\Http\Exceptions\BadResponse;
 
 class BlackjackController extends Controller
 {
@@ -14,6 +15,8 @@ class BlackjackController extends Controller
 
         //initiate bet
         $CoinController->pendingBet($request);
+
+        //TODO: Gør det umuligt at spille, hvis der ikke er nok penge tilbage
 
         //launch game and receive $game
         $id = $request->id;
@@ -38,7 +41,6 @@ class BlackjackController extends Controller
         //hit game and receive $game
         $url = env('BAPI_URL') . 'blackjack/'.$id.'/hit';
         $response = Http::get($url)->json();
-
 
         //updateBet
         if($response['gameStatus'] == 'blackjack'){

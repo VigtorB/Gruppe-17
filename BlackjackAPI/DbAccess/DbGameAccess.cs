@@ -10,6 +10,7 @@ namespace BlackjackAPI.DbAccess
     {
         public void GameStart(int id, Card[] deck, Card[] player, Card[] dealer, string gameStatus)
         {
+            //TODO: Få de her metoder til at ske et andet sted, så de ikke konstant skal gentages:
             var client = new MongoClient("mongodb+srv://vigtor:Password1@cluster0.7xgxe.mongodb.net/test");
             var database = client.GetDatabase("blackjackapi");
             var collection = database.GetCollection<BsonDocument>("blackjack");
@@ -56,7 +57,7 @@ namespace BlackjackAPI.DbAccess
             var update = Builders<BsonDocument>.Update.Set("deck", ArrayConverter(shflDeck));
         }
 
-        public void HitGame(int id, Card[] deck, Card[] player)
+        public void HitGame(int id, Card[] deck, Card[] player, string gameStatus)
         {
             var client = new MongoClient("mongodb+srv://vigtor:Password1@cluster0.7xgxe.mongodb.net/test");
             var database = client.GetDatabase("blackjackapi");
@@ -68,9 +69,11 @@ namespace BlackjackAPI.DbAccess
             collection.UpdateOne(filter, update);
             var update2 = Builders<BsonDocument>.Update.Set("deck", ArrayConverter(deck));
             collection.UpdateOne(filter, update2);
+            UpdateGameStatus(id, gameStatus);
+            
         }
         //TODO: Overvej at kombinere metoderne og lave nogle if statements
-        public void StandGame(int id, Card[] deck, Card[] dealer)
+        public void StandGame(int id, Card[] deck, Card[] dealer, string gameStatus)
         {
             var client = new MongoClient("mongodb+srv://vigtor:Password1@cluster0.7xgxe.mongodb.net/test");
             var database = client.GetDatabase("blackjackapi");
@@ -82,6 +85,7 @@ namespace BlackjackAPI.DbAccess
             collection.UpdateOne(filter, update);
             var update2 = Builders<BsonDocument>.Update.Set("deck", ArrayConverter(deck));
             collection.UpdateOne(filter, update2);
+            UpdateGameStatus(id, gameStatus);
         }
         
         public Game GetGame(int id)
