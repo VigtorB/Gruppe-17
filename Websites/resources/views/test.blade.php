@@ -1,2 +1,1 @@
-
-{{ $friends->distinct()->count() }}
+{{ $result }}

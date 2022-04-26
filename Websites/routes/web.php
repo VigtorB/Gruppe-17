@@ -89,4 +89,4 @@ Route::middleware('auth')->group(function () {
 
 
 //TEST PAGE!
-Route::get('test', [FriendController::class, 'getFriends'])->name('test');
+Route::get('test', [GamesController::class, 'hitBlackjack'])->name('test');

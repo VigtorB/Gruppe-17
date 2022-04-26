@@ -39,12 +39,15 @@ class GamesController extends Controller
     }
     public function hitBlackjack()
     {
+
+
         $id = Auth::user()->id;
         $url = env('API_URL') . 'blackjack/'.$id.'/hit';
         $result = Http::get($url)->json();
 
-        //dd($result);
-        return view('games.blackjack'); //TODO: husk with('result')
+
+        dd($result);
+        //return redirect()->route('blackjack')->with($result); //TODO: husk with('result')
     }
 
     public function standBlackjack()
