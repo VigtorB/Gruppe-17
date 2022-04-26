@@ -156,8 +156,8 @@ namespace BlackjackAPI.Controllers
             GameInfo gameInfo = new GameInfo();
             //return game
             gameInfo.GameStatus = game.GameStatus;
-            gameInfo.Player = game.Player["rank"] + "_of_" + game.Player["suit"];
-            gameInfo.Dealer = game.Dealer["rank"] + "_of_" + game.Dealer["suit"];
+            gameInfo.Player = game.Player;
+            gameInfo.Dealer = game.Dealer;
             return gameInfo;
 
         }
