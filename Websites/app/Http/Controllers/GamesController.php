@@ -34,10 +34,10 @@ class GamesController extends Controller
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $result = curl_exec($ch);
         curl_close($ch);
-        //dd($result);
+        dd($result);
         $result = json_decode($result, true);
 
-        //dd($result[]);
+        //dd($result);
         return view('games.blackjack'); //TODO: husk with('result')
     }
     public function hitBlackjack()
@@ -52,7 +52,7 @@ class GamesController extends Controller
         $game->Player = $result['player'];
         $game->Dealer = $result['dealer'];
 
-        dd($result['gameStatus']);
+        dd(compact('game'));
         //return redirect()->route('blackjack')->with($result); //TODO: husk with('result')
     }
 
