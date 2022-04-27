@@ -42,9 +42,9 @@ class CoinController extends Controller
             ->select('balance')
             ->get()
             ->first();
-
         return response()->json($coin);
     }
+
 
     /**
      * A token of the user is sent here, and amount $request is also sent from the game api
@@ -55,12 +55,16 @@ class CoinController extends Controller
      */
     public function pendingBet($request)       //Master token som altid er der for programmet.
     {
-
         Coin::where('coin_owner', $request->id)
             ->update(['coin_bet' => $request->coin_bet]);
-        //add to coin db
-
-
+    }
+    public function getCoinBalance($id)
+    {
+        $coin = Coin::where('coin_owner', $id)
+            ->select('balance')
+            ->get()
+            ->first();
+        return $coin->balance;
     }
 
     public function updateCoin($id, $addOrSubtract)

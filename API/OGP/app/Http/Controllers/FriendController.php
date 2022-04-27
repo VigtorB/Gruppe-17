@@ -10,25 +10,12 @@ use GrahamCampbell\ResultType\Success;
 class FriendController extends Controller
 {
     //add friend
-    public function addFriend(Request $request)
+    public function addFriend($id, $friend_id)
     {
         try {
             $friend = Friend::create([
-                'sender_id' => $request->user_id,
-                'receiver_id' => $request->friend_id,
-            ]);
-            return response()->json(['success' => true]);
-        } catch (\Exception $e) {
-            return response()->json(['success' => false]);
-        }
-    }
-    //accept friend
-    public function acceptFriend(Request $request)
-    {
-        try {
-            $friend = Friend::create([
-                'sender_id' => $request->user_id,
-                'receiver_id' => $request->friend_id,
+                'sender_id' => $id,
+                'receiver_id' => $friend_id,
             ]);
             return response()->json(['success' => true]);
         } catch (\Exception $e) {
@@ -48,16 +35,70 @@ class FriendController extends Controller
                 $friends[] = $userController->getUsername($friend);
             }
             return response()->json(['success' => true, 'friend' => $friends]);
-
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'friend' => ['friendless pig']]);
         }
     }
+    //is friend
+    public function isFriend($id, $friend_id)
+    {
+        //if $id and $friend_id have each other on the friend table
+        if (
+            Friend::where('sender_id', $id)
+            ->where('receiver_id', $friend_id)
+            ->exists() &&
+            Friend::where('sender_id', $friend_id)
+            ->where('receiver_id', $id)
+            ->exists()
+        ) {
+            return response()->json([
+                'success' => true,
+                'isFriend' => 2
+            ]);
+        }
+        if (
+            !Friend::where('sender_id', $id)
+                ->where('receiver_id', $friend_id)
+                ->exists() &&
+            Friend::where('sender_id', $friend_id)
+                ->where('receiver_id', $id)
+                ->exists()
+        ) {
+            return response()->json([
+                'success' => true,
+                'isFriend' => 1
+            ]);
+        }
+        if (
+            !Friend::where('sender_id', $id)
+                ->where('receiver_id', $friend_id)
+                ->exists() &&
+            !Friend::where('sender_id', $friend_id)
+                ->where('receiver_id', $id)
+                ->exists()
+        ) {
+            return response()->json([
+                'success' => true,
+                'isFriend' => 0
+            ]);
+        }
+    }
+
 
     //delete friend
-    public function deleteFriend(Request $request)
+    public function deleteFriend($id, $friend_id)
     {
-        $friend = Friend::where('sender_id', $request->user_id)->where('receiver_id', $request->friend_id)->delete();
-        return response()->json(['success' => true]);
+        //delete friend by id
+        try {
+            Friend::where('sender_id', $id)
+                ->where('receiver_id', $friend_id)
+                ->delete();
+            Friend::where('sender_id', $friend_id)
+                ->where('receiver_id', $id)
+                ->delete();
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false]);
+        }
     }
 }

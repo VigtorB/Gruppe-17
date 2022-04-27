@@ -18,16 +18,28 @@ class GamesController extends Controller
     }
     public function blackjack($result)
     {
-        $playerCard = $this->returnPlayerCard($result['player']);
-        $dealerCard = $this->returnDealerCard($result['dealer']);
-        $playerValue = $result['playerValue'];
-        $dealerValue = $result['dealerValue'];
-        /* if($result['gameStatus'] != 'pending')
+        if ($result['status'] == 'success') {
+            $game = $result['game'];
+            $playerCard = $this->returnPlayerCard($game['player']);
+            $dealerCard = $this->returnDealerCard($game['dealer']);
+            $playerValue = $game['playerValue'];
+            $dealerValue = $game['dealerValue'];
+            $gameStatus = $game['gameStatus'];
+
+            /* if($result['gameStatus'] != 'pending')
         {
             return view('games.blackjack.blackjack')->with('playerCard', $playerCard)->with('dealerCard', $dealerCard)->with('playerValue', $playerValue)->with('dealerValue', $dealerValue)->with('gameStatus', $result['gameStatus']);
         } */
-
-        return view('games.blackjack.blackjack')->with('playerCard', $playerCard)->with('dealerCard', $dealerCard)->with('playerValue', $playerValue)->with('dealerValue', $dealerValue)->with('gameStatus', $result['gameStatus']);
+            return view('games.blackjack.blackjack')
+                    ->with('playerCard', $playerCard)
+                    ->with('dealerCard', $dealerCard)
+                    ->with('playerValue', $playerValue)
+                    ->with('dealerValue', $dealerValue)
+                    ->with('gameStatus', $gameStatus);
+        }
+        if ($result['status'] == 'error') {
+            return redirect()->route('games')->with(['result' => $result]);
+        }
     }
 
     public function startBlackjack()
@@ -48,8 +60,8 @@ class GamesController extends Controller
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $result = curl_exec($ch);
         curl_close($ch);
-        //dd($result);
         $result = json_decode($result, true);
+        //dd($result);
         /* $playerCard = $this->returnPlayerCard($result['player']);
         $dealerCard = $this->returnDealerCard($result['dealer']);
         $playerValue = $result['playerValue'];

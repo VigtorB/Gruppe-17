@@ -31,23 +31,25 @@ Route::get('/', [HomeController::class, 'index'])->name('home')->middleware(Auth
                                                                                                    //      en for brugere der ikke er logget ind. <---- Ikke logget ind her
 
 // Profile pages
-Route::get('profile', [HomeController::class, 'profilePage'])->name('profile'); //De her skal nok skifte til ProfileController.
 Route::get('userprofile', [HomeController::class, 'userProfilePage'])->name('userprofile'); //TODO: Authenticate
 Route::get('editprofile', [HomeController::class, 'editProfilePage'])->name('editprofile'); //TODO: Authenticate
 
 // Games pages
-Route::get('games', [GamesController::class, 'index'])->name('games');
-Route::get('games/blackjack/blackjack', [GamesController::class, 'blackjack'])->name('blackjack');
-Route::get('games/blackjack/startgame', [GamesController::class, 'startBlackjack'])->name('blackjack.start');
-Route::get('games/blackjack/hit', [GamesController::class, 'hitBlackjack'])->name('blackjack.hit');
-Route::get('games/blackjack/stand', [GamesController::class, 'standBlackjack'])->name('blackjack.stand');
+Route::get('games', [GamesController::class, 'index'])->name('games')->middleware(Authenticate::class);
+Route::get('games/blackjack/blackjack', [GamesController::class, 'blackjack'])->name('blackjack')->middleware(Authenticate::class);
+Route::get('games/blackjack/startgame', [GamesController::class, 'startBlackjack'])->name('blackjack.start')->middleware(Authenticate::class);
+Route::get('games/blackjack/hit', [GamesController::class, 'hitBlackjack'])->name('blackjack.hit')->middleware(Authenticate::class);
+Route::get('games/blackjack/stand', [GamesController::class, 'standBlackjack'])->name('blackjack.stand')->middleware(Authenticate::class);
 
 //Post/blog pages
 Route::resource('posts', PostController::class);
 Route::get('posts.index', [PostController::class, 'index'])->name('blog.index');
 
-//FriendController routes metoder
-Route::post('/', [FriendController::class, 'addFriend'])->name('addFriend')->middleware(Authenticate::class); //TODO: Istedet for '/' skal vi skifte den til sidebar.
+//FriendController
+ //TODO: Istedet for '/' skal vi skifte den til sidebar.
+Route::get('profile/{friend_id}/addFriend', [FriendController::class, 'addFriend'])->name('addFriend')->middleware(Authenticate::class); //TODO: Istedet for '/' skal vi skifte den til sidebar.
+Route::get('profile/{friend_id}/deleteFriend', [FriendController::class, 'deleteFriend'])->name('deleteFriend')->middleware(Authenticate::class);
+Route::get('profile/{username}', [FriendController::class, 'getFriend'])->name('friendprofile')->middleware(Authenticate::class);; //De her skal nok skifte til ProfileController.
 
 
 // Login og authentication

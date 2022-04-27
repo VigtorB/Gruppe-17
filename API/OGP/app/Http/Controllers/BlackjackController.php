@@ -10,27 +10,51 @@ class BlackjackController extends Controller
 {
     public function startBlackjack(Request $request)
     {
+        $id = $request->id;
+        $coin_bet = $request->coin_bet;
 
-        $CoinController = new CoinController();
+        $coinController = new CoinController();
+
+        $balance = $coinController->getCoinBalance($id);
+        if($balance < $coin_bet)
+        {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'You do not have enough coins to play this game.'
+            ], 400);
+            /* return $result = [
+                'status' => 'error',
+                'message' => 'You do not have enough coins to play this game.'
+            ]; */
+
+        }
 
         //initiate bet
-        $CoinController->pendingBet($request);
+        $coinController->pendingBet($request);
 
         //TODO: Gør det umuligt at spille, hvis der ikke er nok penge tilbage
 
         //launch game and receive $game
-        $id = $request->id;
         $url = env('BAPI_URL') . 'blackjack/'.$id;
         $response = Http::get($url)->json();
         //updateBet
         if($response['gameStatus'] == 'pending'){
-            return $response;
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Game is pending',
+                'game' => $response
+            ], 200);
+            /* return response($response)->json(['success' => 'Game is already in progress'], 200); */
         }
         if($response['gameStatus'] == 'blackjack'){
             $addOrSubtract = 'add';
-            $CoinController->updateCoin($id, $addOrSubtract);
-            return $response;
-        }
+            $coinController->updateCoin($id, $addOrSubtract);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'You won the game',
+                'game' => $response
+            ], 200);
+    }
         /* dd($response); */
     }
 
@@ -51,7 +75,11 @@ class BlackjackController extends Controller
             $addOrSubtract = 'subtract';
             $CoinController->updateCoin($id, $addOrSubtract);
         }
-        return $response;
+        return response()->json([
+            'status' => 'success',
+            'message' => 'You hit',
+            'game' => $response
+        ], 200);
     }
     public function stand($id)
     {
@@ -74,7 +102,11 @@ class BlackjackController extends Controller
             $addOrSubtract = 'draw';
             $CoinController->updateCoin($id, $addOrSubtract);
         }
-        return $response;
+        return response()->json([
+            'status' => 'success',
+            'message' => 'You stand',
+            'game' => $response
+        ], 200);
     }
 
 

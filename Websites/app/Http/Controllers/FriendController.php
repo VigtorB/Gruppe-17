@@ -8,51 +8,17 @@ use Illuminate\Support\Facades\Http;
 
 class FriendController extends Controller
 {
-    public function addFriend($username)
+    public function addFriend($friend_id)
     {
         $id = Auth::user()->id;
-        $user = env('API_URL') .'users/'.$username;
-        $friend_id = $user['id'];
-                                                        // TODO: En if else statement til at tjekke om brugeren allerede er tilføjet som ven.
-                                                        // Herefter returner den ven, så den kan blive vist på siden.
-        $url = env('API_URL') . 'friend/addFriend/';
-        $ch = curl_init($url);
-        $data = array(
-            'sender_id' => $id,
-            'receiver_id' => $friend_id,
-        );
-
-        $payload = json_encode($data);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $result = curl_exec($ch);
-        curl_close($ch);
-        return $result;
-    }
-    public function acceptFriend($username)
-    {
-        $id = Auth::user()->id;
-        $user = env('API_URL') . 'users/'.$username;
-        $friend_id = $user['id'];
-        $url = env('API_URL') . 'friend/acceptFriend/';
-        $ch = curl_init($url);
-        $data = array(
-            'sender_id' => $id,
-            'receiver_id' => $friend_id,
-        );
-        $payload = json_encode($data);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $result = curl_exec($ch);
-        curl_close($ch);
-        return $result;
+        $url = env('API_URL') . 'friends/addfriend/'.$id.'/'.$friend_id;
+        $response = Http::get($url)->json();
+        return redirect()->route('home');
     }
     public function getFriends()
     {
         $id = Auth::user()->id;
-        $url = env('API_URL') . 'friends/'.$id;
+        $url = env('API_URL') . 'friends/getfriends/'.$id;
         $friends = Http::get($url)->json();
         if($friends == null)
         {
@@ -65,11 +31,22 @@ class FriendController extends Controller
         return $friends['friend'];
         //tihi
     }
-    public function deleteFriend($username)
+    public function getFriend($username)
     {
-        $user = env('API_URL') . 'users/'.$username;
-        $friend_id = $user['id'];
-        $url = env('API_URL') . 'friend/deleteFriend/'.$friend_id;
-        return Http::delete($url);
+        $url = env('API_URL') . 'user/'.$username;
+        $result = Http::get($url)->json();
+        $friend_id = $result['id'];
+        $id = Auth::user()->id;
+        $url = env('API_URL') . 'friends/isfriend/'.$id.'/'.$friend_id;
+        $result2 = Http::get($url)->json();
+        return view('profile.friendprofile', ['user' => $result], ['isFriend' => $result2]);
+        //TODO: GØR SÅ DER KUN ER 1 RESULT
+    }
+    public function deleteFriend($friend_id)
+    {
+        $id = Auth::user()->id;
+        $url = env('API_URL') . 'friends/deletefriend/'.$id.'/'.$friend_id;
+        $response = Http::get($url)->json();
+        return redirect()->route('home');
     }
 }
