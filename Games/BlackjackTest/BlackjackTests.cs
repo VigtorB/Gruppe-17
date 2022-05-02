@@ -79,6 +79,12 @@ namespace BlackjackTest
                                     status = "end";
                                     break;
                                 }
+                                if(player.GetValue(game.Player) > 21)
+                                {
+                                    dealerWin++;
+                                    status = "end";
+                                    break;
+                                }
                                 else
                                 {
                                     status = "stand";
