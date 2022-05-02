@@ -53,6 +53,19 @@ class FriendController extends Controller
         ) {
             return response()->json([
                 'success' => true,
+                'isFriend' => 3
+            ]);
+        }
+        if (
+            Friend::where('sender_id', $id)
+                ->where('receiver_id', $friend_id)
+                ->exists() &&
+            !Friend::where('sender_id', $friend_id)
+                ->where('receiver_id', $id)
+                ->exists()
+        ) {
+            return response()->json([
+                'success' => true,
                 'isFriend' => 2
             ]);
         }

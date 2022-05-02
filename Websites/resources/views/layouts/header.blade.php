@@ -43,13 +43,14 @@
             @auth
                 <div class="space-x-4">
                     <div class="flex items-center space-x-4">
-                        <img class="w-10 h-10 rounded-full" src="/docs/images/people/profile-picture-5.jpg" alt="">
+                        <img class="w-10 h-10 rounded-full" src="" alt="">
                         <div class="space-y-1 font-medium dark:text-gray-400">
                             <div>
                                 {{ Auth::user()->username }}
                             </div>
-                            <div class="text-sm text-gray-500 dark:text-gray-400">
-                                Balance: {{ $coins }}
+                            <div class="text-sm text-gray-500 dark:text-gray-400" id="coins">
+                                <script src="/js/ajax.js"></script>
+                                Balance: <span id="coins-value"></span>
                             </div>
                         </div>
                     </div>

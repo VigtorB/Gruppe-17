@@ -24,12 +24,13 @@
         <!-- Scripts -->
         <script src="{{ url(mix('js/app.js')) }}" defer></script>
         <script src="/node_modules/flowbite/dist/flowbite.js"></script>
+        <script src="/js/ajax.js"></script>
 
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
     </head>
 
-    <body>
+    <body onload="getCoins()">
         @yield('body')
 
         @livewireScripts

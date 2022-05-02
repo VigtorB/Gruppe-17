@@ -7,8 +7,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Redirect;
 
-use App\Models\BlackjackModels\Card;
-use App\Models\BlackjackModels\Game;
 
 class GamesController extends Controller
 {
@@ -19,24 +17,15 @@ class GamesController extends Controller
     public function blackjack($result)
     {
         if ($result['status'] == 'success') {
-            $game = $result['game'];
-            $playerCard = $this->returnPlayerCard($game['player']);
-            $dealerCard = $this->returnDealerCard($game['dealer']);
-            $playerValue = $game['playerValue'];
-            $dealerValue = $game['dealerValue'];
-            $gameStatus = $game['gameStatus'];
-
-            /* if($result['gameStatus'] != 'pending')
-        {
-            return view('games.blackjack.blackjack')->with('playerCard', $playerCard)->with('dealerCard', $dealerCard)->with('playerValue', $playerValue)->with('dealerValue', $dealerValue)->with('gameStatus', $result['gameStatus']);
-        } */
-            return view('games.blackjack.blackjack')
-                    ->with('playerCard', $playerCard)
-                    ->with('dealerCard', $dealerCard)
-                    ->with('playerValue', $playerValue)
-                    ->with('dealerValue', $dealerValue)
-                    ->with('gameStatus', $gameStatus);
+            $jsonGame = $result['game'];
+            $game['playerCard'] = $this->returnPlayerCard($jsonGame['player']);
+            $game['dealerCard'] = $this->returnDealerCard($jsonGame['dealer']);
+            $game['playerValue'] =  $jsonGame['playerValue'];
+            $game['dealerValue'] = $jsonGame['dealerValue'];
+            $game['gameStatus'] = $jsonGame['gameStatus'];
+            return $game;
         }
+
         if ($result['status'] == 'error') {
             return redirect()->route('games')->with(['result' => $result]);
         }
@@ -44,7 +33,6 @@ class GamesController extends Controller
 
     public function startBlackjack()
     {
-
         $coin_bet = 100; //TODO: Make this dynamic, based on users bet input
         $id = Auth::user()->id;
         $url = env('API_URL') . 'blackjack/';
@@ -62,12 +50,26 @@ class GamesController extends Controller
         curl_close($ch);
         $result = json_decode($result, true);
         //dd($result);
-        /* $playerCard = $this->returnPlayerCard($result['player']);
+        /* $playerCard = $this->returnPlayerCard($result['player']);P
         $dealerCard = $this->returnDealerCard($result['dealer']);
         $playerValue = $result['playerValue'];
         $dealerValue = $result['dealerValue'];
          return view('games.blackjack.blackjack')->with('playerCard', $playerCard)->with('dealerCard', $dealerCard)->with('playerValue', $playerValue)->with('dealerValue', $dealerValue); */
-        return $this->blackjack($result);
+        /* return $result; */
+        /* $this->blackjack($result); */
+        if ($result['status'] == 'success') {
+            $jsonGame = $result['game'];
+            $game['playerCard'] = $this->convertPlayerCard($jsonGame['player']);
+            $game['dealerCard'] = $this->convertDealerCard($jsonGame['dealer']);
+            $game['playerValue'] =  $jsonGame['playerValue'];
+            $game['dealerValue'] = $jsonGame['dealerValue'];
+            $game['gameStatus'] = $jsonGame['gameStatus'];
+            return view('games.blackjack.blackjack')
+                ->with('game', $game);
+        }
+        if ($result['status'] == 'error') {
+            return redirect()->route('games')->with(['result' => $result]);
+        }
     }
     public function hitBlackjack()
     {
@@ -79,7 +81,19 @@ class GamesController extends Controller
         $playerValue = $result['playerValue'];
         $dealerValue = $result['dealerValue'];
         return redirect()->route('blackjack')->with('playerCard', $playerCard)->with('dealerCard', $dealerCard)->with('playerValue', $playerValue)->with('dealerValue', $dealerValue); */
-        return $this->blackjack($result);
+        if ($result['status'] == 'success') {
+            $jsonGame = $result['game'];
+            $game['playerCard'] = $this->convertPlayerCard($jsonGame['player']);
+            $game['dealerCard'] = $this->convertDealerCard($jsonGame['dealer']);
+            $game['playerValue'] =  $jsonGame['playerValue'];
+            $game['dealerValue'] = $jsonGame['dealerValue'];
+            $game['gameStatus'] = $jsonGame['gameStatus'];
+            return $game;
+        }
+
+        if ($result['status'] == 'error') {
+            return redirect()->route('games')->with(['result' => $result]);
+        }
     }
 
     public function standBlackjack()
@@ -92,16 +106,17 @@ class GamesController extends Controller
         $playerValue = $result['playerValue'];
         $dealerValue = $result['dealerValue'];
         return redirect()->route('blackjack')->with('playerCard', $playerCard)->with('dealerCard', $dealerCard)->with('playerValue', $playerValue)->with('dealerValue', $dealerValue); */
-        return $this->blackjack($result);
+
+        return $result;
     }
-    public function returnPlayerCard($card)
+    public function convertPlayerCard($card)
     {
         foreach ($card as $player) {
             $playerCard[] = $player['rank'] . "_of_" . $player['suit'];
         }
         return $playerCard;
     }
-    public function returnDealerCard($card)
+    public function convertDealerCard($card)
     {
         foreach ($card as $dealer) {
             $dealerCard[] = $dealer['rank'] . "_of_" . $dealer['suit'];

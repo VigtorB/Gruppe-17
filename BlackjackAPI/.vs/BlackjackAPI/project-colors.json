@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "06cfda4c-6615-4b3d-9002-e082c22fbd7e": {
+      "ProjectGuid": "06cfda4c-6615-4b3d-9002-e082c22fbd7e",
+      "DisplayName": "BlackjackAPI",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}

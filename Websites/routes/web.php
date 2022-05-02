@@ -51,6 +51,8 @@ Route::get('profile/{friend_id}/addFriend', [FriendController::class, 'addFriend
 Route::get('profile/{friend_id}/deleteFriend', [FriendController::class, 'deleteFriend'])->name('deleteFriend')->middleware(Authenticate::class);
 Route::get('profile/{username}', [FriendController::class, 'getFriend'])->name('friendprofile')->middleware(Authenticate::class);; //De her skal nok skifte til ProfileController.
 
+//CoinController
+Route::get('coins', [CoinController::class, 'getCoins'])->name('coins')->middleware(Authenticate::class);
 
 // Login og authentication
 Route::middleware('guest')->group(function () {

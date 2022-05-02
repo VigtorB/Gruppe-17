@@ -1,34 +1,45 @@
 @extends('layouts.app')
 
 @section('content')
+@isset($game)
+
+
         <div class="center-block">
+            <script src="/js/ajax.js"></script>
             <div class="container">
                 <p>Dealer Cards</p>
-                    @foreach ($dealerCard as $card)
+                    @foreach ($game['dealerCard'] as $card)
                         <img class="img-cards" src="{{ asset('img/deck/' . $card . '.png') }}" class="img-responsive">
                     @endforeach
                 </div>
-                <p>Dealer Score: {{ $dealerValue }}</p>
+                <div id="game">
+
+                </div>
+                <p>Dealer Score: {{ $game['dealerValue'] }}</p>
             <div class="container">
             <p>Your Cards</p>
-                    @foreach ($playerCard as $card)
+            <div id="player-cards">
+
+            </div>
+                    {{-- @foreach ($game['playerCard'] as $card)
                         <img class="img-cards" src="{{ asset('img/deck/' . $card . '.png') }}" class="img-responsive">
-                    @endforeach
+                    @endforeach --}}
                 </div>
-                    <p>Your Score: {{ $playerValue }}</p>
-            @if ($gameStatus == 'pending')
+                    <p>Your Score: {{ $game['playerValue'] }}</p>
+            @if ($game['gameStatus'] == 'pending')
                 <div class="column">
-                    <a href="{{ route('blackjack.hit') }}"
+                    <button id="hit" onclick="hitGame()"
                         class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
                         Hit
-                    </a>
-                    <a href="{{ route('blackjack.stand') }}"
+                    </button>
+                    <button id="stand" onclick="standGame()"
                         class="ml-4 font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
                         Stand
+                    </button>
                 </div>
             @endif
             <div>
-                @if ($gameStatus != 'pending')
+                @if ($game['gameStatus'] != 'pending')
                     <a href="{{ route('blackjack.start') }}"
                         class="ml-4 font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
                         Play Again
@@ -36,4 +47,5 @@
                 @endif
             </div>
         </div>
+@endisset
 @endsection
