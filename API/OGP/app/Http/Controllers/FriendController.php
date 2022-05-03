@@ -17,6 +17,15 @@ class FriendController extends Controller
                 'sender_id' => $id,
                 'receiver_id' => $friend_id,
             ]);
+            if(Friend::where('receiver_id', $id)->where('sender_id', $friend_id)->first() != null)
+            {
+                Friend::where('receiver_id', $id)
+                ->where('sender_id', $friend_id)
+                ->update(['is_accepted' => 1]) &&
+                Friend::where('sender_id', $id)
+                ->where('receiver_id', $friend_id)
+                ->update(['is_accepted' => 1]);
+            }
             return response()->json(['success' => true]);
         } catch (\Exception $e) {
             return response()->json(['success' => false]);
@@ -28,8 +37,11 @@ class FriendController extends Controller
     {
         $userController = new UserController();
         try {
-            $friend_ids = Friend::where('sender_id', $id)->select('receiver_id')->get();
-
+            $friend_ids = Friend::where('sender_id', $id)
+                ->where('is_accepted', 1)
+                ->select('receiver_id')
+                ->get();
+            //TODO: Kun dem hvor begge er venner
             foreach ($friend_ids as $friend_id) {
                 $friend = $friend_id->receiver_id;
                 $friends[] = $userController->getUsername($friend);
@@ -39,10 +51,31 @@ class FriendController extends Controller
             return response()->json(['success' => false, 'friend' => ['friendless pig']]);
         }
     }
+
+    //get pending friends
+    public function getFriendRequests($id)
+    {
+        $userController = new UserController();
+        try {
+            $friend_ids = Friend::where('receiver_id', $id)
+                ->where('is_accepted', 0)
+                ->select('sender_id')
+                ->get();
+            //TODO: Kun dem hvor de er venner med brugeren, men brugeren ikke venner med dem
+            foreach ($friend_ids as $friend_id) {
+                $friend = $friend_id->sender_id;
+                $friends[] = $userController->getUsername($friend);
+            }
+            return response()->json(['success' => true, 'friend' => $friends]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'friend' => ['no pending friends']]);
+        }
+    }
+
     //is friend
     public function isFriend($id, $friend_id)
     {
-        //if $id and $friend_id have each other on the friend table
+        //Both are friends
         if (
             Friend::where('sender_id', $id)
             ->where('receiver_id', $friend_id)
@@ -56,6 +89,7 @@ class FriendController extends Controller
                 'isFriend' => 3
             ]);
         }
+        //I have requested a friend
         if (
             Friend::where('sender_id', $id)
                 ->where('receiver_id', $friend_id)
@@ -69,6 +103,7 @@ class FriendController extends Controller
                 'isFriend' => 2
             ]);
         }
+        //Other person has requested me
         if (
             !Friend::where('sender_id', $id)
                 ->where('receiver_id', $friend_id)
@@ -82,6 +117,7 @@ class FriendController extends Controller
                 'isFriend' => 1
             ]);
         }
+        //Not friends
         if (
             !Friend::where('sender_id', $id)
                 ->where('receiver_id', $friend_id)
@@ -96,6 +132,8 @@ class FriendController extends Controller
             ]);
         }
     }
+
+
 
 
     //delete friend

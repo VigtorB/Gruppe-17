@@ -8,6 +8,6 @@ class Friend extends Model
 {
     protected $table = 'friendlist';
     protected $fillable = [
-        'sender_id', 'receiver_id'
+        'sender_id', 'receiver_id', 'is_accepted'
     ];
 }

@@ -45,16 +45,12 @@
                     <div class="flex items-center space-x-4">
                         <img class="w-10 h-10 rounded-full" src="" alt="">
                         <div class="space-y-1 font-medium dark:text-gray-400">
-                            <div>
+                            <div id="username">
                                 {{ Auth::user()->username }}
                             </div>
                             <div class="text-sm text-gray-500 dark:text-gray-400" id="coins">
-                                <script src="/js/ajax.js" type="text/javascript">
-                                    window.onload = function() {
-                                        getCoins();
-                                    }
-                                </script>
-                                Balance: <span id="coins-value"></span>
+
+                                Balance: <span id="coins-value">{{ $coins }}</span>
                             </div>
                         </div>
                     </div>

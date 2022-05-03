@@ -20,7 +20,10 @@ return new class extends Migration
             $table->bigInteger('receiver_id')
                     ->foreignIdFor('users', 'id')
                     ->onDelete('cascade');
+            $table->boolean('is_accepted')
+                    ->default(false);
             $table->primary(['sender_id', 'receiver_id']);
+
             $table->timestamps();
         });
     }

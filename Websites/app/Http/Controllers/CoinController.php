@@ -17,7 +17,7 @@ class CoinController extends Controller
         $id = Auth::user()->id;
         $url = env('API_URL') . 'coins/' . $id;
         $coins = Http::get($url);
-        //$coin->coins_amount = $coins['balance'];
-        return $coins;
+        $coin->coins_amount = $coins['balance'];
+        return $coins['balance'];
     }
 }

@@ -14,8 +14,14 @@
 @endif
 @if(Auth::user()->id != $user['id'] && $isFriend['isFriend'] == 1)
 <a href="{{ route('addFriend', $user['id']) }}" type="submit" class="btn btn-primary">Accept Friend</a>
+<a href="{{ route('deleteFriend', $user['id']) }}" type="submit" class="btn btn-primary">Decline</a>
+
 @endif
 @if(Auth::user()->id != $user['id'] && $isFriend['isFriend'] == 2)
+Pending friend
+<a href="{{ route('deleteFriend', $user['id']) }}" type="submit" class="btn btn-primary">Cancel request</a>
+@endif
+@if(Auth::user()->id != $user['id'] && $isFriend['isFriend'] == 3)
     <a href="{{ route('deleteFriend', $user['id']) }}" type="submit" class="btn btn-primary">Delete Friend</a>
 @endif
 

@@ -50,6 +50,8 @@ Route::get('posts.index', [PostController::class, 'index'])->name('blog.index');
 Route::get('profile/{friend_id}/addFriend', [FriendController::class, 'addFriend'])->name('addFriend')->middleware(Authenticate::class); //TODO: Istedet for '/' skal vi skifte den til sidebar.
 Route::get('profile/{friend_id}/deleteFriend', [FriendController::class, 'deleteFriend'])->name('deleteFriend')->middleware(Authenticate::class);
 Route::get('profile/{username}', [FriendController::class, 'getFriend'])->name('friendprofile')->middleware(Authenticate::class);; //De her skal nok skifte til ProfileController.
+Route::get('getfriends', [FriendController::class, 'getFriends'])->name('getFriends')->middleware(Authenticate::class);
+Route::get('getfriendrequests', [FriendController::class, 'getFriendRequests'])->name('getFriendRequests')->middleware(Authenticate::class);
 
 //CoinController
 Route::get('coins', [CoinController::class, 'getCoins'])->name('coins')->middleware(Authenticate::class);

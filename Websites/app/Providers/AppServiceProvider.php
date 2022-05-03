@@ -40,5 +40,12 @@ class AppServiceProvider extends ServiceProvider
 
             return $view->with('friends', $friends);
         });
+
+        View::composer('layouts.sidebar', function ($view) {
+            $friendController = new FriendController();
+            $friendRequests = $friendController->getFriendRequests();
+
+            return $view->with('friendRequests', $friendRequests);
+        });
     }
 }

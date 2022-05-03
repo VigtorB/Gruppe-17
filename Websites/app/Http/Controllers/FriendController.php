@@ -20,15 +20,14 @@ class FriendController extends Controller
         $id = Auth::user()->id;
         $url = env('API_URL') . 'friends/getfriends/'.$id;
         $friends = Http::get($url)->json();
-        if($friends == null)
-        {
-            return $friends['No friends :('];
-        }
-        else
-        {
-            return $friends['friend'];
-        }
-        return $friends['friend'];
+        return $friends;
+    }
+    public function getFriendRequests()
+    {
+        $id = Auth::user()->id;
+        $url = env('API_URL') . 'friends/getfriendrequests/'.$id;
+        $friendRequests = Http::get($url)->json();
+        return $friendRequests['friend'];
     }
     public function getFriend($username)
     {
