@@ -3,10 +3,9 @@
 @section('content')
     <div class="container">
     <div class="center-block img-blackjack">
-        <img src="/img/deck/1_of_diamonds.png">
         <a href="{{ route('blackjack') }}"
                 class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
-                Blackjack
+                <img src="/img/buttons/button(blackjack).png">
             </a>
         </div>
         <div class="mt-4">

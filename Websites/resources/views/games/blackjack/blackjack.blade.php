@@ -18,18 +18,18 @@
             </div>
         </div>
 
-                <div class="column">
+                <div class="column img-blackjack">
 
-                    <button id="game-value" onclick="getGame('hit')"  name="hit"
+                    <button id="game-value" img src="/src/img/buttons/button(hit)" onclick="getGame('hit')"  name="hit"
                         class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
-                        Hit
+                        <img src="/img/buttons/button(hit).png">
                     </button>
-                    <button id="game-value" onclick="getGame('stand')" name="stand"
+                    <button id="game-value"  onclick="getGame('stand')" name="stand"
                         class="ml-4 font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
-                        Stand
+                        <img src="/img/buttons/button(stand).png">
                     </button>
-                    <button id="game-value" onclick="getGame()"name = "start">
-                        Play Again!
+                    <button id="game-value" img src="/src/img/buttons/button(playagain)" onclick="getGame()"name = "start">
+                        <img src="/img/buttons/button(playagain).png">
                     </button>
                 </div>
             <div>
