@@ -8,7 +8,7 @@ function hitGame(){
     fetch('http://127.0.0.1:8001/games/blackjack/hit')
     .then(response => response.json())
     .then(data => data.playerCard)
-    .then(data => document.getElementById('game').innerHTML = data);
+    .then(data => document.getElementById('game').innerHTML = data)
 
 }
 
@@ -29,7 +29,8 @@ function getCoins(){
     fetch('http://127.0.0.1:8001/coins')
     .then(response => response.json())
     .then(data => data.balance)
-    .then(data => document.getElementById('coins-value').innerHTML = data);
+    .then(data => document.getElementById('coins-value').innerHTML = data)
+    .then(document.onload = getCoins());
 }
 
 
