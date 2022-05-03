@@ -6,7 +6,9 @@
                     <x-logo class="w-8 h-10 text-indigo-600" />
                 </a>
                 <h1 class="text-sm font-extrabold tracking-wider text-center text-gray-600">
-                    {{ config('app.name') }}
+                    {{-- {{ config('app.name') }} --}}
+                    Online Gaming Platform
+
                 </h1>
 
                 <ul class="list-reset">

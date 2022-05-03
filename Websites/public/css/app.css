@@ -1734,6 +1734,10 @@ input:invalid, textarea:invalid, select:invalid {
         text-align: center;
         width: 34%;
     }
+    .img-logo {
+        text-align: center;
+        width: 19%;
+    }
 
     .img-blackjack img {
         display: block;
