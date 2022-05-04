@@ -28,7 +28,7 @@
                 class="ml-4 font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
                 <img src="/img/buttons/button(stand).png">
             </button>
-            <button id="newGame" onclick="getGame('newGame')" name="start">
+            <button id="newGame" onclick="getGame('newGame')" this.onclick=null; name="start">
                 <img src="/img/buttons/button(playagain).png">
             </button>
         </div>

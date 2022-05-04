@@ -4,11 +4,9 @@
 
 
 
-{{$user['username']}}
-
 {{-- add friend button --}}
 
-@if(Auth::user()->id != $user['id'] && $isFriend['isFriend'] == 0)
+{{-- @if(Auth::user()->id != $user['id'] && $isFriend['isFriend'] == 0)
 <a href="{{ route('addFriend', $user['id']) }}" type="submit" class="btn btn-primary img-blackjack"><img src="/img/buttons/button(add).png"></a>
 
 @endif
@@ -23,8 +21,9 @@ Pending friend
 @endif
 @if(Auth::user()->id != $user['id'] && $isFriend['isFriend'] == 3)
     <a href="{{ route('deleteFriend', $user['id']) }}" type="submit" class="btn btn-primary img-blackjack"><img src="/img/buttons/button(remove).png"></a>
-@endif
-
-
-
+@endif --}}
+<div></div>
+<div id="otheruser" class="hidden">{{ $username }}</div>
+<script src="/js/ajax.js"></script>
+<script>getProfile()</script>
 @endsection

@@ -13,18 +13,17 @@ class FriendController extends Controller
     public function addFriend($id, $friend_id)
     {
         try {
-            $friend = Friend::create([
+            Friend::create([
                 'sender_id' => $id,
                 'receiver_id' => $friend_id,
             ]);
-            if(Friend::where('receiver_id', $id)->where('sender_id', $friend_id)->first() != null)
-            {
+            if (Friend::where('receiver_id', $id)->where('sender_id', $friend_id)->first() != null) {
                 Friend::where('receiver_id', $id)
-                ->where('sender_id', $friend_id)
-                ->update(['is_accepted' => 1]) &&
-                Friend::where('sender_id', $id)
-                ->where('receiver_id', $friend_id)
-                ->update(['is_accepted' => 1]);
+                    ->where('sender_id', $friend_id)
+                    ->update(['is_accepted' => 1]) &&
+                    Friend::where('sender_id', $id)
+                    ->where('receiver_id', $friend_id)
+                    ->update(['is_accepted' => 1]);
             }
             return response()->json(['success' => true]);
         } catch (\Exception $e) {
@@ -41,36 +40,63 @@ class FriendController extends Controller
                 ->where('is_accepted', 1)
                 ->select('receiver_id')
                 ->get();
-            //TODO: Kun dem hvor begge er venner
-            foreach ($friend_ids as $friend_id) {
-                $friend = $friend_id->receiver_id;
-                $friends[] = $userController->getUsername($friend);
+            if ($friend_ids->isEmpty()) {
+                $friends = ['friendless pig'];
+            } else {
+                foreach ($friend_ids as $friend_id) {
+                    $friend = $friend_id->receiver_id;
+                    $friends[] = $userController->getUsername($friend);
+                }
             }
-            return response()->json(['success' => true, 'friend' => $friends]);
-        } catch (\Exception $e) {
-            return response()->json(['success' => false, 'friend' => ['friendless pig']]);
-        }
-    }
-
-    //get pending friends
-    public function getFriendRequests($id)
-    {
-        $userController = new UserController();
-        try {
             $friend_ids = Friend::where('receiver_id', $id)
                 ->where('is_accepted', 0)
                 ->select('sender_id')
                 ->get();
-            //TODO: Kun dem hvor de er venner med brugeren, men brugeren ikke venner med dem
-            foreach ($friend_ids as $friend_id) {
-                $friend = $friend_id->sender_id;
-                $friends[] = $userController->getUsername($friend);
+
+            if ($friend_ids->isEmpty()) {
+                $friendRequests = ['no friend requests you fuck'];
+            } else {
+                foreach ($friend_ids as $friend_id) {
+                    $friend = $friend_id->sender_id;
+                    $friendRequests[] = $userController->getUsername($friend);
+                }
             }
-            return response()->json(['success' => true, 'friend' => $friends]);
+            $data = [
+                'friends' => $friends,
+                'friendRequests' => $friendRequests,
+            ];
+
+
+            return response()->json(['success' => true, 'friend' => $data]);
         } catch (\Exception $e) {
-            return response()->json(['success' => false, 'friend' => ['no pending friends']]);
+            $data = [
+                'friends' => ['friendless pig'],
+                'friendRequests' => ['no friend requests you fuck'],
+            ];
+            return response()->json(['success' => false, 'friend' => $data]);
         }
     }
+
+    //get friend
+    public function getOtherUser($id, $username)
+    {
+        try {
+            $userController = new UserController();
+            $otherUser = $userController->getUser($username);
+            $isFriend = $this->isFriend($id, $otherUser->id);
+            $data = [
+                'user' => $otherUser,
+                'isFriend' => $isFriend
+            ];
+            if ($otherUser == null) {
+                return response()->json(['success' => false]);
+            }
+            return response()->json(['success' => true, 'friend' => $data]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false]);
+        }
+    }
+
 
     //is friend
     public function isFriend($id, $friend_id)
@@ -84,24 +110,22 @@ class FriendController extends Controller
             ->where('receiver_id', $id)
             ->exists()
         ) {
-            return response()->json([
+            return 3;
+            /* return response()->json([
                 'success' => true,
                 'isFriend' => 3
-            ]);
+            ]); */
         }
         //I have requested a friend
         if (
             Friend::where('sender_id', $id)
-                ->where('receiver_id', $friend_id)
-                ->exists() &&
+            ->where('receiver_id', $friend_id)
+            ->exists() &&
             !Friend::where('sender_id', $friend_id)
                 ->where('receiver_id', $id)
                 ->exists()
         ) {
-            return response()->json([
-                'success' => true,
-                'isFriend' => 2
-            ]);
+            return 2;
         }
         //Other person has requested me
         if (
@@ -109,13 +133,10 @@ class FriendController extends Controller
                 ->where('receiver_id', $friend_id)
                 ->exists() &&
             Friend::where('sender_id', $friend_id)
-                ->where('receiver_id', $id)
-                ->exists()
+            ->where('receiver_id', $id)
+            ->exists()
         ) {
-            return response()->json([
-                'success' => true,
-                'isFriend' => 1
-            ]);
+            return 1;
         }
         //Not friends
         if (
@@ -126,10 +147,7 @@ class FriendController extends Controller
                 ->where('receiver_id', $id)
                 ->exists()
         ) {
-            return response()->json([
-                'success' => true,
-                'isFriend' => 0
-            ]);
+            return 0;
         }
     }
 

@@ -13,38 +13,28 @@ class FriendController extends Controller
         $id = Auth::user()->id;
         $url = env('API_URL') . 'friends/addfriend/'.$id.'/'.$friend_id;
         $response = Http::get($url)->json();
-        return redirect()->route('home');
+        return $response;
     }
     public function getFriends()
     {
         $id = Auth::user()->id;
         $url = env('API_URL') . 'friends/getfriends/'.$id;
         $friends = Http::get($url)->json();
-        return $friends;
+        return $friends['friend'];
     }
-    public function getFriendRequests()
+
+    public function getUser($username)
     {
         $id = Auth::user()->id;
-        $url = env('API_URL') . 'friends/getfriendrequests/'.$id;
-        $friendRequests = Http::get($url)->json();
-        return $friendRequests['friend'];
-    }
-    public function getFriend($username)
-    {
-        $url = env('API_URL') . 'user/'.$username;
+        $url = env('API_URL') . 'friends/getOtherUser/'.$id.'/'.$username;
         $result = Http::get($url)->json();
-        $friend_id = $result['id'];
-        $id = Auth::user()->id;
-        $url = env('API_URL') . 'friends/isfriend/'.$id.'/'.$friend_id;
-        $result2 = Http::get($url)->json();
-        return view('profile.friendprofile', ['user' => $result], ['isFriend' => $result2]);
-        //TODO: GØR SÅ DER KUN ER 1 RESULT
+        return $result['friend'];
     }
     public function deleteFriend($friend_id)
     {
         $id = Auth::user()->id;
         $url = env('API_URL') . 'friends/deletefriend/'.$id.'/'.$friend_id;
         $response = Http::get($url)->json();
-        return redirect()->route('home');
+        return $response;
     }
 }

@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlackjackController;
+use App\Http\Controllers\FriendController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,4 +15,4 @@ use App\Http\Controllers\BlackjackController;
 */
 
 Route::view('/', 'welcome')->name('home');
-Route::get('test', [BlackjackController::class, 'startBlackjack'])->name('test');
+Route::get('test', [FriendController::class, 'getOtherUser'])->name('test');

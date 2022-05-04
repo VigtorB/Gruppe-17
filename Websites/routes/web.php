@@ -6,6 +6,7 @@ use App\Http\Controllers\CoinController; //TODO: Denne skal vi sætte ind, for a
 use App\Http\Controllers\GamesController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Livewire\Auth\Login;
 use App\Http\Livewire\Auth\Passwords\Confirm;
@@ -31,8 +32,10 @@ Route::get('/', [HomeController::class, 'index'])->name('home')->middleware(Auth
                                                                                                    //      en for brugere der ikke er logget ind. <---- Ikke logget ind her
 
 // Profile pages
-Route::get('userprofile', [HomeController::class, 'userProfilePage'])->name('userprofile'); //TODO: Authenticate
-Route::get('editprofile', [HomeController::class, 'editProfilePage'])->name('editprofile'); //TODO: Authenticate
+
+
+//UserController
+Route::get('profile/{username}', [UserController::class, 'userProfile'])->name('profile')->middleware(Authenticate::class);
 
 // Games pages
 Route::get('games', [GamesController::class, 'index'])->name('games')->middleware(Authenticate::class);
@@ -47,11 +50,10 @@ Route::get('posts.index', [PostController::class, 'index'])->name('blog.index');
 
 //FriendController
  //TODO: Istedet for '/' skal vi skifte den til sidebar.
-Route::get('profile/{friend_id}/addFriend', [FriendController::class, 'addFriend'])->name('addFriend')->middleware(Authenticate::class); //TODO: Istedet for '/' skal vi skifte den til sidebar.
-Route::get('profile/{friend_id}/deleteFriend', [FriendController::class, 'deleteFriend'])->name('deleteFriend')->middleware(Authenticate::class);
-Route::get('profile/{username}', [FriendController::class, 'getFriend'])->name('friendprofile')->middleware(Authenticate::class);; //De her skal nok skifte til ProfileController.
+Route::get('profile/{friend_id}/addfriend', [FriendController::class, 'addFriend'])->name('addFriend')->middleware(Authenticate::class); //TODO: Istedet for '/' skal vi skifte den til sidebar.
+Route::get('profile/{friend_id}/deletefriend', [FriendController::class, 'deleteFriend'])->name('deleteFriend')->middleware(Authenticate::class);
+Route::get('getuser/{username}', [FriendController::class, 'getUser'])->name('friendprofile')->middleware(Authenticate::class); //De her skal nok skifte til ProfileController.
 Route::get('getfriends', [FriendController::class, 'getFriends'])->name('getFriends')->middleware(Authenticate::class);
-Route::get('getfriendrequests', [FriendController::class, 'getFriendRequests'])->name('getFriendRequests')->middleware(Authenticate::class);
 
 //CoinController
 Route::get('coins', [CoinController::class, 'getCoins'])->name('coins')->middleware(Authenticate::class);
@@ -97,5 +99,5 @@ Route::middleware('auth')->group(function () {
 
 
 //TEST PAGE!
-Route::get('test', [FriendController::class, 'getFriends'])->name('test');
-Route::get('test2', [FriendController::class, 'getFriends'])->name('test2');
+/* Route::get('test', [FriendController::class, 'getFriends'])->name('test'); */
+/* Route::get('test2', [FriendController::class, 'getFriends'])->name('test2'); */

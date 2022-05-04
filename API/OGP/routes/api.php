@@ -41,9 +41,10 @@ Route::delete("coins/{id}",[CoinController::class,'destroyCoin']);
 
 //Friend End-points
 Route::get("friends/addfriend/{id}/{friend_id}",[FriendController::class,'addFriend']);
-Route::get("friends/getfriendrequests/{id}",[FriendController::class,'getFriendRequests']);
+
 Route::get("friends/isfriend/{id}/{friend_id}",[FriendController::class,'isFriend']);
 Route::get("friends/getfriends/{id}",[FriendController::class,'getFriends']);
+Route::get("friends/getOtherUser/{id}/{username}",[FriendController::class,'getOtherUser']);
 Route::get("friends/deletefriend/{id}/{friend_id}",[FriendController::class,'deleteFriend']);
 //Friend End-points
 

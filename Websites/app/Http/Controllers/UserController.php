@@ -14,6 +14,11 @@ class UserController extends Controller
         return view('users.index', compact('users'));
     }
     */
+
+    public function userProfile($username)
+    {
+        return view('profile.profile')->with('username', $username);
+    }
     public function getUser($info)
     {
         $user = Http::get(env('API_URL') . $info)->json();

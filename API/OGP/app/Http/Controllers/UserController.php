@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Coin;
+use App\Http\Controllers\FriendController;
 
 class UserController extends Controller
 {
@@ -76,6 +77,7 @@ class UserController extends Controller
      */
     public function getUser($info)
     {
+        $friendController = new FriendController;
         //find user
         try {
             if(is_numeric($info)){
@@ -85,7 +87,7 @@ class UserController extends Controller
             else
             {
                 $user = User::where('username', $info)->first();
-                return response($user, 200);
+                return $user;
             }
         } catch (\Exception $e) {
             return response([

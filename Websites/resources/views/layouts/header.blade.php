@@ -22,7 +22,7 @@
                         <a href="{{ route('blog.index') }}"
                             class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
                             News
-                        </a>
+                    </a>
                     </li>
                     <li class="inline px-4">
                         <a href=""
@@ -47,6 +47,9 @@
                     <div class="flex items-center space-x-4">
                         <img class="w-10 h-10 rounded-full" src="" alt="">
                         <div class="space-y-1 font-medium dark:text-gray-400">
+                            <div id="myuser-id" class="hidden">
+                                {{ Auth::user()->id }}
+                            </div>
                             <div id="username">
                                 {{ Auth::user()->username }}
                             </div>
