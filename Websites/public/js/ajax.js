@@ -1,4 +1,4 @@
-//TODO: FIX DENNE! Lige nu tilføjer den altid de samme kort på siden. Så den gentager kortene.
+//TODO: Få kanpperne til at blive smidt fra js filen ind i html, i stedet for at knapperne er hardcoded i blade filen.
 function getGame(value) {
 
 
@@ -63,42 +63,6 @@ function clearPage() {
 }
 
 
-/* function hitGame() {
-    fetch('http://127.0.0.1:8001/games/blackjack/hit')
-        .then(response => response.json())
-        .then(data => {
-            data.dealerCard.forEach(dealerCard => document.getElementById('dealer-hand').innerHTML += `<img class="img-cards" src="/img/deck/${dealerCard}.png" class="img-responsive">`);
-            document.getElementById('player-value').innerHTML = data.playerValue;
-            document.getElementById('dealer-value').innerHTML = data.dealerValue;
-            data.playerCard.forEach(playerCard => document.getElementById('player-hand').innerHTML += `<img class="img-cards" src="/img/deck/${playerCard}.png" class="img-responsive">`);
-        })
-        .then(data => console.log(data))
-    /* data.playerValue.forEach(playerValue => document.getElementById('player-value').innerHTML = data.playerValue);
-            data.dealerValue.forEach(dealerValue => document.getElementById('dealer-value').innerHTML = data.dealerValue); */
-
-/* const json_data = JSON.parse(data);
-console.log(json_data);
-} */
-
-
-/* function standGame() {
-    fetch('http://127.0.0.1:8001/games/blackjack/stand')
-        .then(response => response.json())
-        .then(data => {
-            data.dealerCard.forEach(dealerCard => document.getElementById('dealer-hand').innerHTML += `<img class="img-cards" src="/img/deck/${dealerCard}.png" class="img-responsive">`);
-            document.getElementById('player-value').innerHTML = data.playerValue;
-            document.getElementById('dealer-value').innerHTML = data.dealerValue;
-            data.playerCard.forEach(playerCard => document.getElementById('player-hand').innerHTML += `<img class="img-cards" src="/img/deck/${playerCard}.png" class="img-responsive">`);
-        })
-
-} */
-/* $jsonGame = $result['game'];
-            $game['playerCard'] = $this->returnPlayerCard($jsonGame['player']);
-            $game['dealerCard'] = $this->returnDealerCard($jsonGame['dealer']);
-            $game['playerValue'] =  $jsonGame['playerValue'];
-            $game['dealerValue'] = $jsonGame['dealerValue'];
-            $game['gameStatus'] = $jsonGame['gameStatus']; */
-
 function getCoins() {
     fetch('http://127.0.0.1:8001/coins')
         .then(response => response.json())
@@ -110,21 +74,21 @@ function getFriends() {
     fetch('http://127.0.0.1:8001/getfriends')
         .then(response => response.json())
         .then(data => data.friend)
-        .then(data => {
-            if (data[0] === 'friendless pig') { document.getElementById('friends').innerHTML = 'You have no friends!'; }
-            else {
-                data => data.forEach(friend => document.getElementById('friends').innerHTML += friend);
-            }
-        })
+        .then(data =>
+            data.forEach(friend => document.getElementById('friends')
+            .innerHTML += `<a href="profile/${friend}" class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150 center">${friend}</a>`))
 }
 
 function getFriendRequests() {
     fetch('http://127.0.0.1:8001/getfriendrequests')
         .then(response => response.json())
         .then(data => console.log(data))
-        .then(data => data.forEach(friend => document.getElementById('friend').innerHTML += friend))
+        .then(data => data.forEach(friend => document.getElementById('friendrequests').innerHTML += friend))
         .then(data => console.log(data))
 }
+function addFriend(friend) {
 
-
-        //let htmlSegment = `<img src="${card}" alt="">`;
+    fetch('http://127.0.0.1:8001/profile/${friend}/addFriend')
+        .then(response => response.json())
+        .then(data => console.log(data))
+}
