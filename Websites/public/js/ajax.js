@@ -40,7 +40,6 @@ function getGame(value) {
         })
 }
 
-getGame("startGame");
 
 /* function hitGame() {
     fetch('http://127.0.0.1:8001/games/blackjack/hit')
@@ -81,16 +80,21 @@ getGame("startGame");
 function getCoins() {
     fetch('http://127.0.0.1:8001/coins')
         .then(response => response.json())
-        .then(data => data.balance)
+        .then(data => data)
         .then(data => document.getElementById('coins-value').innerHTML = data)
-        .then(data => console.log(data))
 }
 
 function getFriends() {
     fetch('http://127.0.0.1:8001/getfriends')
         .then(response => response.json())
         .then(data => data.friend)
-        .then(data => data.forEach(friend => document.getElementById('friends').innerHTML += friend))
+        .then(data => {
+            if(data[0] === 'friendless pig')
+            { document.getElementById('friends').innerHTML = 'You have no friends!'; }
+            else {
+            data => data.forEach(friend => document.getElementById('friends').innerHTML += friend);
+            }
+        })
 }
 
 function getFriendRequests() {

@@ -97,5 +97,5 @@ Route::middleware('auth')->group(function () {
 
 
 //TEST PAGE!
-Route::get('test', [GamesController::class, 'startBlackjack'])->name('test');
-Route::get('test2', [GamesController::class, 'hitBlackjack'])->name('test2');
+Route::get('test', [FriendController::class, 'getFriends'])->name('test');
+Route::get('test2', [FriendController::class, 'getFriends'])->name('test2');

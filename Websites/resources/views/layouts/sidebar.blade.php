@@ -2,14 +2,14 @@
     <div class="absolute top-0 right-0 mt-sidebar border border-gray-300">
         <h2 class="text-3xl font-semibold text-center text-blue-600">Friend list</h2>
         <div class="flex flex-col justify-between mt-4">
-            <script>
-                window.onload = function() {
+            <script src="/js/ajax.js">
+                /* window.onload = function() {
                     fetch('http://127.0.0.1:8001/getfriends')
                         .then(response => response.json())
                         .then(data => data.friend)
                         .then(data => data.forEach(friend => document.createElement('friends').innerHTML += friend))
                         .then(data => console.log(data))
-                }
+                } */
             </script>
             <aside>
                 <ul>
@@ -22,7 +22,7 @@
                     </li>
                 </ul>
             </aside>
-            <div class="friends"></div>
+            <div id="friends"></div>
         </p>
         </ol>
         -----------------------------
@@ -43,4 +43,6 @@
         </aside>
     </div>
     </div>
+    <script src="/js/ajax.js"></script>
+    <script>getFriends()</script>
 @endif

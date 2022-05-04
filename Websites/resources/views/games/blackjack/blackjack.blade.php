@@ -29,7 +29,7 @@
                         class="ml-4 font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
                         <img src="/img/buttons/button(stand).png">
                     </button>
-                    <button id="game-value" onclick="getGame()"name = "start">
+                    <button id="game-value" onclick="getGame('startGame')"name = "start">
                         <img src="/img/buttons/button(playagain).png">
                     </button>
                 </div>
@@ -37,4 +37,5 @@
 
             </div>
         </div>
+        <script>getGame("startGame");</script>
 @endsection
