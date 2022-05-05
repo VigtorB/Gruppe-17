@@ -111,10 +111,6 @@ class FriendController extends Controller
             ->exists()
         ) {
             return 3;
-            /* return response()->json([
-                'success' => true,
-                'isFriend' => 3
-            ]); */
         }
         //I have requested a friend
         if (

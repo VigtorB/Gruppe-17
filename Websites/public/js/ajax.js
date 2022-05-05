@@ -1,4 +1,9 @@
 //TODO: Få knapperne til at blive smidt fra js filen ind i html, i stedet for at knapperne er hardcoded i blade filen.
+function loadingStart(){
+
+}
+
+
 function getGame(value) {
     /*    var loading = document.createElement("div");
        loading.id = "loading";
@@ -149,7 +154,6 @@ function getCoins() {
     coins.id = "balance";
     fetch("http://127.0.0.1:8001/coins")
         .then((response) => response.json())
-        .then((data) => console.log(data))
         .then((data) => {
             coins.innerHTML = `<p>Balance: ${data}</p>`;
             document.getElementById("coins").appendChild(coins)
@@ -160,7 +164,8 @@ function getFriends() {
     var userSearch = document.createElement("div");
     userSearch.id = "usersearch";
     userSearch.innerHTML = `<input type="text" id="usersearchinput" placeholder="Search for a user...">`;
-    document.getElementById("sidebar").appendChild(userSearch);
+
+
     userSearch.addEventListener("keypress", function (event) {
         if (event.key === 'Enter') {
             event.preventDefault();
@@ -184,8 +189,9 @@ function getFriends() {
     fetch("http://127.0.0.1:8001/getfriends")
         .then((response) => response.json())
         .then(function (data) {
-            if (document.getElementById("getfriends") !== null) {
+            if (document.getElementById("getfriends") !== null && document.getElementById("usersearchinput") !== null) {
                 document.getElementById("getfriends").remove();
+                document.getElementById("usersearchinput").remove();
             }
             getFriendsAndFriendRequests.id = "getfriends";
             if(data.friends === null) {
@@ -196,7 +202,7 @@ function getFriends() {
                 .innerHTML += `<a href="/profile/${friend}"
                                 class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150 center">${friend}</a>`);
             }
-            getFriendsAndFriendRequests.innerHTML += `<p class="center">-----------------------------</p>`;
+            getFriendsAndFriendRequests.innerHTML += `<p class="center">---------------------------------</p>`;
             if(data.friendRequests === null) {
                 getFriendsAndFriendRequests.innerHTML += `<p class="center">You have no friend requests!</p>`;
             }
@@ -205,6 +211,7 @@ function getFriends() {
                 .innerHTML += `<a href="/profile/${friendRequest}"
                                 class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150 center">${friendRequest}</a>`);
             }
+            document.getElementById("sidebar").appendChild(userSearch);
             document.getElementById("sidebar").appendChild(getFriendsAndFriendRequests);
         });
 }
@@ -357,3 +364,6 @@ function friendAction(action, otherUserId) {
     getFriends();
 }
 
+function loadingEnd(){
+
+}

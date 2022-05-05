@@ -25,6 +25,8 @@
     <!-- Scripts -->
     <script src="{{ url(mix('js/app.js')) }}" defer></script>
     <script src="/js/ajax.js" defer></script>
+    <script>getCoins()</script>
+    <script>getFriends()</script>
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
