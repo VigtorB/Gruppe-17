@@ -41,7 +41,7 @@ class FriendController extends Controller
                 ->select('receiver_id')
                 ->get();
             if ($friend_ids->isEmpty()) {
-                $friends = ['friendless pig'];
+                $friends = null;
             } else {
                 foreach ($friend_ids as $friend_id) {
                     $friend = $friend_id->receiver_id;
@@ -54,7 +54,7 @@ class FriendController extends Controller
                 ->get();
 
             if ($friend_ids->isEmpty()) {
-                $friendRequests = ['no friend requests you fuck'];
+                $friendRequests = null;
             } else {
                 foreach ($friend_ids as $friend_id) {
                     $friend = $friend_id->sender_id;

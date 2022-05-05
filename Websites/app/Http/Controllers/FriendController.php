@@ -28,7 +28,7 @@ class FriendController extends Controller
         $id = Auth::user()->id;
         $url = env('API_URL') . 'friends/getOtherUser/'.$id.'/'.$username;
         $result = Http::get($url)->json();
-        return $result['friend'];
+        return $result;
     }
     public function deleteFriend($friend_id)
     {

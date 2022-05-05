@@ -38,11 +38,17 @@ class CoinController extends Controller
     public function getCoins($id)
     {
         //show current amount of coins
-        $coin = Coin::where('coin_owner', $id)
+        try{
+            $coin = Coin::where('coin_owner', $id)
             ->select('balance')
             ->get()
             ->first();
-        return response()->json($coin);
+            return response()->json($coin);
+        }
+        catch(Exception $e){
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+
     }
 
 

@@ -54,8 +54,6 @@
                                 {{ Auth::user()->username }}
                             </div>
                             <div class="text-sm text-gray-500 dark:text-gray-400" id="coins">
-
-                                Balance: <span id="coins-value"></span>
                             </div>
                         </div>
                     </div>

@@ -64,7 +64,7 @@ class GamesController extends Controller
             return $game;
         }
         if ($result['status'] == 'error') {
-            return redirect()->route('games')->with(['result' => $result]);
+            return $result;
         }
     }
     public function hitBlackjack()

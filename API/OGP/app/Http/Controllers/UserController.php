@@ -77,7 +77,6 @@ class UserController extends Controller
      */
     public function getUser($info)
     {
-        $friendController = new FriendController;
         //find user
         try {
             if(is_numeric($info)){
