@@ -119,19 +119,20 @@ function getGame(value) {
                     hit.hidden = true;
                     stand.disabled = true;
                     stand.hidden = true;
-                    getCoins();
 
                     //TODO: fix if-sætninger og få siden til at vise gameStatus
                     if (data.gameStatus === "blackjack" ||
                         data.gameStatus === "player win" ||
                         data.gameStatus === "dealer bust") {
                         gameStatus.innerHTML = "You " + data.gameStatus + "!";
+                        getCoins();
                     }
 
                     if (data.gameStatus === "dealer win" ||
                         data.gameStatus === "bust" ||
                         data.gameStatus === "dealer blackjack") {
                         gameStatus.innerHTML = "You " + data.gameStatus + "!";
+                        getCoins();
                     }
                     if (data.gameStatus === "draw") {
                         gameStatus.innerHTML = "You " + data.gameStatus + "!";
@@ -152,6 +153,7 @@ function getGame(value) {
 function getCoins() {
     var coins = document.createElement("div");
     coins.id = "balance";
+
     fetch("http://127.0.0.1:8001/coins")
         .then((response) => response.json())
         .then((data) => {
