@@ -83,6 +83,9 @@ class FriendController extends Controller
         try {
             $userController = new UserController();
             $otherUser = $userController->getUser($username);
+            if($id == $otherUser->id){
+                return response()->json(['success' => false]);
+            }
             $isFriend = $this->isFriend($id, $otherUser->id);
             $data = [
                 'user' => $otherUser,
@@ -101,51 +104,52 @@ class FriendController extends Controller
     //is friend
     public function isFriend($id, $friend_id)
     {
-        //Both are friends
-        if (
-            Friend::where('sender_id', $id)
+        //make empty arrays
+        /* $friend = [];
+        $friend2 = []; */
+        $friendStatus = [];
+
+        //db call thga
+        $friendStatus1 = Friend::where('sender_id', $id)
             ->where('receiver_id', $friend_id)
-            ->exists() &&
-            Friend::where('sender_id', $friend_id)
+            ->get();
+
+        $friendStatus2 = Friend::where('sender_id', $friend_id)
             ->where('receiver_id', $id)
-            ->exists()
-        ) {
-            return 3;
-        }
-        //I have requested a friend
-        if (
-            Friend::where('sender_id', $id)
-            ->where('receiver_id', $friend_id)
-            ->exists() &&
-            !Friend::where('sender_id', $friend_id)
-                ->where('receiver_id', $id)
-                ->exists()
-        ) {
-            return 2;
-        }
-        //Other person has requested me
-        if (
-            !Friend::where('sender_id', $id)
-                ->where('receiver_id', $friend_id)
-                ->exists() &&
-            Friend::where('sender_id', $friend_id)
-            ->where('receiver_id', $id)
-            ->exists()
-        ) {
-            return 1;
-        }
-        //Not friends
-        if (
-            !Friend::where('sender_id', $id)
-                ->where('receiver_id', $friend_id)
-                ->exists() &&
-            !Friend::where('sender_id', $friend_id)
-                ->where('receiver_id', $id)
-                ->exists()
-        ) {
+            ->get();
+
+
+
+        if ($friendStatus1->isEmpty() && $friendStatus2->isEmpty()) {
             return 0;
         }
+        if($friendStatus1->isEmpty() && !$friendStatus2->isEmpty()){
+            return 1;
+        }
+        else{
+            return 2;
+        }
+        return 3;
+
+        /* $friendStatus = Friend::where(function($query) use($id, $friend_id) {
+                $query->where("sender_id", $id)->where("receiver_id", $friend_id);
+              })->andWhere(function($query) use($id, $friend_id) {
+                $query->where("receiver_id", $id)->where("sender_id", $friend_id);
+              });
+              if($friendStatus->count() > 0){
+                    if($friendStatus->count() == 2){
+                        return 3;
+                    }
+                    if($friendStatus[0]['sender_id'] == $id){
+                        return 2;
+                    }
+                    if($friendStatus[0]['receiver_id'] == $friend_id){
+                        return 1;
+                    }
+                }
+                return 0; */
     }
+
 
 
 
