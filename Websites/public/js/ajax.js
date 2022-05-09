@@ -1,3 +1,12 @@
+var urlGameStart = "http://127.0.0.1:8001/games/blackjack/startgame";
+var urlGameStand = "http://127.0.0.1:8001/games/blackjack/stand";
+var urlGameHit = "http://127.0.0.1:8001/games/blackjack/hit";
+var urlGetProfile = "";
+var urlGetCoins = "http://127.0.0.1:8001/coins";
+var urlGetFriends = "http://127.0.0.1:8001/getfriends";
+var urlGetUserAndProfile = "http://127.0.0.1:8001/getuser/";
+var imageSrc = '<img src="/img/';
+
 //TODO: Få knapperne til at blive smidt fra js filen ind i html, i stedet for at knapperne er hardcoded i blade filen.
 function loadingStart(){
 //TODO: Start gif her, og slut gif i slutningen af dokument, bagefter appender vi den på footeren, så man kan se at siden loader.
@@ -5,14 +14,6 @@ function loadingStart(){
 
 
 function getGame(value) {
-    /*    var loading = document.createElement("div");
-       loading.id = "loading";
-       loading.innerHTML = `<img src="/img/logo/logo(load).gif" class="img-blackjack"/>`;
-       document.getElementById("center").appendChild(loading); */
-
-
-    var coins = getCoins();
-
     var game = document.createElement("div");
     game.id = "game";
     game.hidden = true;
@@ -27,24 +28,32 @@ function getGame(value) {
     dealer.classList.add("container");
     dealer.id = "dealer";
     var dealerHand = document.createElement("div");
+    dealerHand.classList.add("container");
+    dealerHand.id = "dealerhand";
     var dealerValue = document.createElement("div");
+    dealerValue.id = "dealervalue";
     var player = document.createElement("div");
     player.classList.add("container");
     player.id = "player";
     var playerHand = document.createElement("div");
+    playerHand.classList.add("container");
+    playerHand.id = "playerhand";
     var playerValue = document.createElement("div");
+    playerValue.id = "playerValue";
+    var valueClass = "class=font-medium text-3xl ";
+    var cardClass = 'class="img-responsive"';
 
 
 
     var url = "";
     if (value === "hit") {
-        url = "http://127.0.0.1:8001/games/blackjack/hit";
+        url = urlGameHit;
     }
     if (value === "stand") {
-        url = "http://127.0.0.1:8001/games/blackjack/stand";
+        url = urlGameStand;
     }
     if (value === "newGame" || value === "startGame") {
-        url = "http://127.0.0.1:8001/games/blackjack/startgame";
+        url = urlGameStart;
     }
 
     //TODO: 1. Få knapperne til at blive kreeret herinde. 2. Bedre løsning for at fjerne knapperne.
@@ -66,35 +75,28 @@ function getGame(value) {
 
                 data.dealerCard.forEach((dealerCard) =>
                     dealerHand.innerHTML +=
-                    `<img class="img-cards" src="/img/deck/${dealerCard}.png"
-             class="img-responsive">`);
-                document.getElementById("dealer").appendChild(dealerHand);
+                    `<img class="img-cards" ${imageSrc}deck/${dealerCard}.png" ${cardClass}>`);
+                dealer.appendChild(dealerHand);
                 dealerValue.innerHTML =
-                    `<p>dealer value = ${data.dealerValue}</p>`;
-                document.getElementById("dealer").appendChild(dealerValue);
+                    `<p ${valueClass}>dealer value = ${data.dealerValue}</p>`;
+                dealer.appendChild(dealerValue);
 
                 data.playerCard.forEach((playerCard) =>
                     playerHand.innerHTML +=
-                    `<img class="img-cards" src="/img/deck/${playerCard}.png"
-             class="img-responsive">`);
-                document.getElementById("player").appendChild(playerHand);
+                    `<img class="img-cards" ${imageSrc}deck/${playerCard}.png" ${cardClass}>`);
+                player.appendChild(playerHand);
 
                 playerValue.innerHTML =
-                    `<p>player value = ${data.playerValue}</p>`;
-                document.getElementById("player").appendChild(playerValue);
+                    `<p ${valueClass}>player value = ${data.playerValue}</p>`;
+                player.appendChild(playerValue);
 
 
-
-
-
-                hit.innerHTML = `<button id="hit" onclick="getGame('hit')" name="hit"
-                                class="img-logo">
-                                <img src="/img/buttons/button(hit).png"></button>`;
+                hit.innerHTML = `<button id="hit" onclick="getGame('hit')" name="hit" class="flex justify-center img-buttons">
+                                ${imageSrc}buttons/button(hit).png"></button>`;
                 document.getElementById("game").appendChild(hit);
 
-                stand.innerHTML = `<button id="stand" onclick="getGame('stand')" name="stand"
-                                class="img-logo">
-                                <img src="/img/buttons/button(stand).png">
+                stand.innerHTML = `<button id="stand" onclick="getGame('stand')" name="stand" class="flex justify-center img-buttons">
+                                    ${imageSrc}buttons/button(stand).png">
                                 </button>`;
                 document.getElementById("game").appendChild(stand);
 
@@ -109,16 +111,16 @@ function getGame(value) {
 
 
                 if (data.gameStatus !== "pending") {
-                    newGame.innerHTML = `<button id="newGame" onclick="getGame('newGame')" this.onclick=null; name="start"
-                                        class = "img-logo">
-                                        <img src="/img/buttons/button(playagain).png">
-                                        </button> `;
-                    document.getElementById("game").appendChild(newGame);
-                    newGame.hidden = false;
                     hit.disabled = true;
                     hit.hidden = true;
                     stand.disabled = true;
                     stand.hidden = true;
+                    newGame.innerHTML = `<button id="newGame" onclick="getGame('newGame')" this.onclick=null; name="start"
+                                        class = "img-buttons">
+                                        <img src="/img/buttons/button(playagain).png">
+                                        </button> `;
+                    document.getElementById("game").appendChild(newGame);
+                    newGame.hidden = false;
                     getCoins();
 
                     //TODO: fix if-sætninger og få siden til at vise gameStatus
@@ -152,11 +154,10 @@ function getGame(value) {
 function getCoins() {
     var coins = document.createElement("div");
     coins.id = "balance";
-    fetch("http://127.0.0.1:8001/coins")
+    fetch(urlGetCoins)
         .then((response) => response.json())
         .then((data) => {
-            coins.innerHTML = `<p>Balance: ${data}</p>`;
-            document.getElementById("coins").appendChild(coins)
+            document.getElementById("coins").innerHTML = `<p>Balance: ${data}</p>`;
         });
 }
 
@@ -170,7 +171,7 @@ function getFriends() {
         if (event.key === 'Enter') {
             event.preventDefault();
             var user = document.getElementById("usersearchinput").value;
-            fetch("http://127.0.0.1:8001/getuser/" + user)
+            fetch(urlGetUserAndProfile + user)
                 .then((response) => response.json())
                 .then(function (data) {
                     if(data.success === true) {
@@ -185,22 +186,24 @@ function getFriends() {
     });
 
     var getFriendsAndFriendRequests = document.createElement("div");
+    var getFriendsAndClass = `font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150 center`;
+    getFriendsAndFriendRequests.id = "getfriends";
+
     //TODO: If(cach) der tjekker på om vennelisten er opdateret.
-    fetch("http://127.0.0.1:8001/getfriends")
+    fetch(urlGetFriends)
         .then((response) => response.json())
         .then(function (data) {
             if (document.getElementById("getfriends") !== null && document.getElementById("usersearchinput") !== null) {
                 document.getElementById("getfriends").remove();
                 document.getElementById("usersearchinput").remove();
             }
-            getFriendsAndFriendRequests.id = "getfriends";
             if(data.friends === null) {
                 getFriendsAndFriendRequests.innerHTML = `<p class="center">You have no friends!</p>`;
             }
             else {
             data.friends.forEach((friend) => getFriendsAndFriendRequests
                 .innerHTML += `<a href="/profile/${friend}"
-                                class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150 center">${friend}</a>`);
+                                class="${getFriendsAndClass}">${friend}</a>`);
             }
             getFriendsAndFriendRequests.innerHTML += `<p class="center">---------------------------------</p>`;
             if(data.friendRequests === null) {
@@ -209,7 +212,7 @@ function getFriends() {
             else {
             data.friendRequests.forEach((friendRequest) => getFriendsAndFriendRequests
                 .innerHTML += `<a href="/profile/${friendRequest}"
-                                class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150 center">${friendRequest}</a>`);
+                                class="${getFriendsAndClass}">${friendRequest}</a>`);
             }
             document.getElementById("sidebar").appendChild(userSearch);
             document.getElementById("sidebar").appendChild(getFriendsAndFriendRequests);
@@ -225,7 +228,10 @@ function getProfile() {
     var acceptFriend = document.createElement("div");
     var cancelFriend = document.createElement("div");
     var deleteFriend = document.createElement("div");
-    fetch("http://127.0.0.1:8001/getuser/" + username)
+
+    var buttonFriendClass = 'class="btn btn-primary img-blackjack">';
+
+    fetch(urlGetUserAndProfile + username)
         .then((response) => response.json())
         .then(function (data) {
             var otherUserId = data.friend.user.id;
@@ -244,9 +250,7 @@ function getProfile() {
                 /* addFriend.classList.add(""); */
                 addFriend.innerHTML = `<button id="add"
                                         onclick='friendAction("add", ${otherUserId})'
-                                        type="submit"
-                                        class="btn btn-primary img-blackjack">
-                                        <img src="/img/buttons/button(add).png"></button>`;
+                                        type="submit" ${buttonFriendClass} ${imageSrc}buttons/button(add).png"></button>`;
                 document.getElementById("profileInfo").appendChild(addFriend);
             }
             else if (data.friend.isFriend === 1) {
@@ -256,14 +260,11 @@ function getProfile() {
 
                 acceptFriend.innerHTML = `<button id="accept"
                                              onclick='friendAction("accept", ${otherUserId})'
-                                             type="submit" class="btn btn-primary img-blackjack">
-                                             <img src="/img/buttons/button(accept).png">
+                                             type="submit" ${buttonFriendClass} ${imageSrc}buttons/button(accept).png">
                                              </button>`;
                 declineFriend.innerHTML = `<button id= "decline"
                                             onclick='friendAction("decline", ${otherUserId})'
-                                            type="submit"
-                                            class="btn btn-primary img-blackjack">
-                                            <img src="/img/buttons/button(decline).png">
+                                            type="submit" ${buttonFriendClass} ${imageSrc}buttons/button(decline).png">
                                             </button>`;
                 document.getElementById("profileInfo").appendChild(acceptFriend);
                 document.getElementById("profileInfo").appendChild(declineFriend);
@@ -274,8 +275,7 @@ function getProfile() {
                 cancelFriend.innerHTML = `<button id="cancel"
                                             onclick='friendAction("cancel", ${otherUserId})'
                                             type="submit"
-                                            class="btn btn-primary img-blackjack">
-                                            <img src="/img/buttons/button(cancel).png">
+                                            ${buttonFriendClass} ${imageSrc}buttons/button(cancel).png">
                                             </button>`;
                 document.getElementById("profileInfo").appendChild(cancelFriend);
             }
@@ -285,8 +285,7 @@ function getProfile() {
                 deleteFriend.innerHTML = `<button id="delete"
                                             onclick='friendAction("delete", ${otherUserId})'
                                             type="submit"
-                                            class="btn btn-primary img-blackjack">
-                                            <img src="/img/buttons/button(remove).png">
+                                            ${buttonFriendClass} ${imageSrc}buttons/button(remove).png">
                                             </button>`;
                 document.getElementById("profileInfo").appendChild(deleteFriend);
             }
