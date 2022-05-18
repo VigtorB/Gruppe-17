@@ -78,13 +78,6 @@ class FriendController extends Controller
         catch (\Exception $e) {
             return response()->json(['success' => false]);
         }
-        /* catch (\Exception $e) {
-            $data = [
-                'friends' => ['No friends :('],
-                'friendRequests' => ['no friend requests :('],
-            ];
-            return response()->json(['success' => false, 'friend' => $data]);
-        } */
     }
 
     //get other user
@@ -111,14 +104,14 @@ class FriendController extends Controller
     }
 
 
-    //is friend
+    //is friend?
     public function isFriend($id, $friend_id)
     {
         //db calls that grabs both users if they exist.
-        $friendStatus1 = Friend::where('sender_id', $id)
+        $friendReveiverStatus = Friend::where('sender_id', $id)
             ->where('receiver_id', $friend_id)
             ->get();
-        $friendStatus2 = Friend::where('sender_id', $friend_id)
+        $friendSenderStatus = Friend::where('sender_id', $friend_id)
             ->where('receiver_id', $id)
             ->get();
 
@@ -127,12 +120,13 @@ class FriendController extends Controller
         //2 = user is friend, other user is not, pending friend
         //1 = other user is friend, user is not, friend request
         //0 = neither are friends
-        if ($friendStatus1->isEmpty() && $friendStatus2->isEmpty()) {
+        if ($friendReveiverStatus->isEmpty() && $friendSenderStatus->isEmpty()) {
             return 0;
         }
-        if ($friendStatus1->isEmpty() && !$friendStatus2->isEmpty()) {
+        if ($friendReveiverStatus->isEmpty() && !$friendSenderStatus->isEmpty()) {
             return 1;
-        } else {
+        }
+        if(!$friendReveiverStatus->isEmpty() && $friendSenderStatus->isEmpty()) {
             return 2;
         }
         return 3;

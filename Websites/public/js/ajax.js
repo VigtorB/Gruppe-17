@@ -7,10 +7,7 @@ var urlGetFriends = "http://127.0.0.1:8001/getfriends";
 var urlGetUserAndProfile = "http://127.0.0.1:8001/getuser/";
 var imageSrc = '<img src="/img/';
 
-//TODO: Få knapperne til at blive smidt fra js filen ind i html, i stedet for at knapperne er hardcoded i blade filen.
-function loadingStart(){
-//TODO: Start gif her, og slut gif i slutningen af dokument, bagefter appender vi den på footeren, så man kan se at siden loader.
-}
+
 
 
 function getGame(value) {
@@ -361,8 +358,4 @@ function friendAction(action, otherUserId) {
     }
     getProfile();
     getFriends();
-}
-
-function loadingEnd(){
-
 }
