@@ -6,7 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CoinController;
 use App\Http\Controllers\FriendController;
 use App\Http\Controllers\BlackjackController;
-
+use App\Http\Controllers\PostController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -53,3 +53,10 @@ Route::post("blackjack",[BlackjackController::class,'startBlackjack']);
 Route::get("blackjack/{id}/hit",[BlackjackController::class,'hit']);
 Route::get("blackjack/{id}/stand",[BlackjackController::class,'stand']);
 //Games End-points
+
+//Post End-points
+Route::get("comments/{user_id}",[PostController::class,'getComments']);
+Route::post("comments",[PostController::class,'addComment']);
+Route::put("comments/{id}",[PostController::class,'updateComment']);
+Route::delete("comments/{id}",[PostController::class,'deleteComment']);
+//Post End-points

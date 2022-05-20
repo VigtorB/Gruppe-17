@@ -58,6 +58,13 @@ Route::get('getfriends', [FriendController::class, 'getFriends'])->name('getFrie
 //CoinController
 Route::get('coins', [CoinController::class, 'getCoins'])->name('coins')->middleware(Authenticate::class);
 
+//PostController
+Route::get('comment/{user_id}', [PostController::class, 'getComments'])->name('getComments')->middleware(Authenticate::class);
+Route::post('comment/', [PostController::class, 'addComment'])->name('addComment')->middleware(Authenticate::class);
+Route::post('comment/', [PostController::class, 'updateComment'])->name('updateComment')->middleware(Authenticate::class);
+Route::get('comment/{comment_id}', [PostController::class, 'deleteComment'])->name('deleteComment')->middleware(Authenticate::class);
+
+
 // Login og authentication
 Route::middleware('guest')->group(function () {
     Route::get('login', Login::class)

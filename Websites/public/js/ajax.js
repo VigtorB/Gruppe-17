@@ -1,16 +1,37 @@
-var urlGameStart = "http://127.0.0.1:8001/games/blackjack/startgame";
-var urlGameStand = "http://127.0.0.1:8001/games/blackjack/stand";
-var urlGameHit = "http://127.0.0.1:8001/games/blackjack/hit";
-var urlGetProfile = "";
 var urlGetCoins = "http://127.0.0.1:8001/coins";
 var urlGetFriends = "http://127.0.0.1:8001/getfriends";
 var urlGetUserAndProfile = "http://127.0.0.1:8001/getuser/";
+var urlComments = "http://127.0.0.1:8001/comments/";
 var imageSrc = '<img src="/img/';
 
+function getComments(){
 
+    var id = document.getElementById("otheruser").textContent;
+    fetch(urlComments+id)
+        .then((response) => response.json())
+        .then(function (data) {
+            var comments = document.createElement("div");
+            comments.id = "comments";
+            data.comments.forEach((comment) => comments.innerHTML += `<p>${comment}</p>`);
+            document.getElementById("commentSection").appendChild(comments);
+        });
+
+}
+function addComment(){
+
+}
+function editComment(){
+
+}
+function deleteComment(){
+
+}
 
 
 function getGame(value) {
+    var urlGameStart = "http://127.0.0.1:8001/games/blackjack/startgame";
+    var urlGameStand = "http://127.0.0.1:8001/games/blackjack/stand";
+    var urlGameHit = "http://127.0.0.1:8001/games/blackjack/hit";
     var game = document.createElement("div");
     game.id = "game";
     game.hidden = true;
@@ -356,6 +377,4 @@ function friendAction(action, otherUserId) {
             });
 
     }
-    getProfile();
-    getFriends();
 }
