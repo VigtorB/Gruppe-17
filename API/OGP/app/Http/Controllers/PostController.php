@@ -10,8 +10,14 @@ class PostController extends Controller
     // get all comments
     public function getComments($user_id)
     {
-        $comments = Comment::where('user_receiver_id', $user_id)->get();
-        return response()->json($comments);
+        try {
+            $comments = Comment::where('user_receiver_id', $user_id)
+                ->orderBy('created_at', 'desc')
+                ->get();
+            return response()->json(['success' => true, 'comments' => $comments]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false]);
+        }
     }
 
     // add comment
