@@ -24,6 +24,8 @@ Pending friend
 @endif --}}
 <div></div>
 <div id="otheruser" class="hidden">{{ $username }}</div>
+<div id="commentsection"></div>
 <script src="/js/ajax.js"></script>
 <script>getProfile()</script>
+<script>getComments()</script>
 @endsection

@@ -1,25 +1,60 @@
 var urlGetCoins = "http://127.0.0.1:8001/coins";
 var urlGetFriends = "http://127.0.0.1:8001/getfriends";
 var urlGetUserAndProfile = "http://127.0.0.1:8001/getuser/";
-var urlComments = "http://127.0.0.1:8001/comments/";
+var urlComments = "http://127.0.0.1:8001/comment/";
 var imageSrc = '<img src="/img/';
 
 function getComments(){
+    var commentSectionHeader = document.createElement("div");
+    commentSectionHeader.id = "commentSectionHeader";
+    commentSectionHeader.innerHTML = `<h2>Comments</h2>`;
+    document.getElementById("commentsection").appendChild(commentSectionHeader);
+    var textArea = document.createElement("div");
+    textArea.id = "addcomment";
+    textArea.innerHTML = `<textarea id="comment" placeholder="Write a comment..."></textarea>`;
+    var addCommentButton = document.createElement("div");
+    addCommentButton.id = "addcommentbutton";
+    addCommentButton.innerHTML = `<button id="addcommentbutton" onclick="addComment()">Add comment</button>`;
+    document.getElementById("commentsection").appendChild(textArea);
+    document.getElementById("commentsection").appendChild(addCommentButton);
 
-    var id = document.getElementById("otheruser").textContent;
+    var id = document.getElementById("myuser-id").textContent;
     fetch(urlComments+id)
         .then((response) => response.json())
+        .then(data => console.log(data))
         .then(function (data) {
             var comments = document.createElement("div");
             comments.id = "comments";
-            data.comments.forEach((comment) => comments.innerHTML += `<p>${comment}</p>`);
-            document.getElementById("commentSection").appendChild(comments);
+            data.content.forEach((comment) => comments.innerHTML += `<p>${comment}</p>`);
+            document.getElementById("commentsection").appendChild(comments);
         });
 
 }
-function addComment(){
+async function addComment(){
+    var id = document.getElementById("otheruser").textContent;
+    var comment = document.getElementById("comment").value;
+    var data = {
+        "id": id,
+        "comment": comment
+    };
+    // Default options are marked with *
+    const response = await fetch(urlComments, {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      mode: 'cors', // no-cors, *cors, same-origin
+      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: 'same-origin', // include, *same-origin, omit
+      headers: {
+        'Content-Type': 'application/json'
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      redirect: 'follow', // manual, *follow, error
+      referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      body: JSON.stringify(data) // body data type must match "Content-Type" header
+    });
+    return response.json(); // parses JSON response into native JavaScript objects
+  }
 
-}
+
 function editComment(){
 
 }
