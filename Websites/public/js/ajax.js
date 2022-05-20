@@ -4,65 +4,6 @@ var urlGetUserAndProfile = "http://127.0.0.1:8001/getuser/";
 var urlComments = "http://127.0.0.1:8001/comment/";
 var imageSrc = '<img src="/img/';
 
-function getComments(){
-    var commentSectionHeader = document.createElement("div");
-    commentSectionHeader.id = "commentSectionHeader";
-    commentSectionHeader.innerHTML = `<h2>Comments</h2>`;
-    document.getElementById("commentsection").appendChild(commentSectionHeader);
-    var textArea = document.createElement("div");
-    textArea.id = "addcomment";
-    textArea.innerHTML = `<textarea id="comment" placeholder="Write a comment..."></textarea>`;
-    var addCommentButton = document.createElement("div");
-    addCommentButton.id = "addcommentbutton";
-    addCommentButton.innerHTML = `<button id="addcommentbutton" onclick="addComment()">Add comment</button>`;
-    document.getElementById("commentsection").appendChild(textArea);
-    document.getElementById("commentsection").appendChild(addCommentButton);
-
-    var id = document.getElementById("myuser-id").textContent;
-    fetch(urlComments+id)
-        .then((response) => response.json())
-        .then(data => console.log(data))
-        .then(function (data) {
-            var comments = document.createElement("div");
-            comments.id = "comments";
-            data.content.forEach((comment) => comments.innerHTML += `<p>${comment}</p>`);
-            document.getElementById("commentsection").appendChild(comments);
-        });
-
-}
-async function addComment(){
-    var id = document.getElementById("otheruser").textContent;
-    var comment = document.getElementById("comment").value;
-    var data = {
-        "id": id,
-        "comment": comment
-    };
-    // Default options are marked with *
-    const response = await fetch(urlComments, {
-      method: 'POST', // *GET, POST, PUT, DELETE, etc.
-      mode: 'cors', // no-cors, *cors, same-origin
-      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-      credentials: 'same-origin', // include, *same-origin, omit
-      headers: {
-        'Content-Type': 'application/json'
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      redirect: 'follow', // manual, *follow, error
-      referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-      body: JSON.stringify(data) // body data type must match "Content-Type" header
-    });
-    return response.json(); // parses JSON response into native JavaScript objects
-  }
-
-
-function editComment(){
-
-}
-function deleteComment(){
-
-}
-
-
 function getGame(value) {
     var urlGameStart = "http://127.0.0.1:8001/games/blackjack/startgame";
     var urlGameStand = "http://127.0.0.1:8001/games/blackjack/stand";
@@ -288,6 +229,7 @@ function getProfile() {
         .then((response) => response.json())
         .then(function (data) {
             var otherUserId = data.friend.user.id;
+            getComments(otherUserId);
             if (document.getElementById("profileInfo") !== null) {
                 document.getElementById("profileInfo").remove();
             }
@@ -295,8 +237,9 @@ function getProfile() {
             profile.id = "profileInfo";
             profile.innerHTML += `<span class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150"
             >${data.friend.user.username}</span>`;
+            profile.innerHTML += `<p id="otheruserid" class="hidden">${otherUserId}</p>`;
 
-            document.body.appendChild(profile);
+            document.getElementById("profile").appendChild(profile);
 
             if (data.friend.isFriend === 0) {
 
@@ -412,4 +355,83 @@ function friendAction(action, otherUserId) {
             });
 
     }
+}
+
+function getComments(otherUserId){
+    var commentSectionHeader = document.createElement("div");
+    commentSectionHeader.id = "commentSectionHeader";
+    commentSectionHeader.innerHTML = `<h2>Comments</h2>`;
+    document.getElementById("commentsection").appendChild(commentSectionHeader);
+    var textArea = document.createElement("div");
+    textArea.id = "addcomment";
+    textArea.innerHTML = `<textarea id="comment" placeholder="Write a comment..."></textarea>`;
+    var addCommentButton = document.createElement("div");
+    addCommentButton.id = "addcommentbutton";
+    addCommentButton.innerHTML = `<button id="addcommentbutton" onclick="addComment()">Add comment</button>`;
+
+    if(document.getElementById("username").textContent !== document.getElementById("otheruser").textContent) {
+    document.getElementById("commentsection").appendChild(textArea);
+    document.getElementById("commentsection").appendChild(addCommentButton);
+    }
+
+    fetch(urlComments+otherUserId)
+        .then((response) => response.json())
+        .then(function (data) {
+            var comments = document.createElement("div");
+            comments.id = "comments";
+            comments.className = "container";
+
+            data.forEach((comment) => comments.innerHTML += `
+             <p>${comment.sender_username}</p>
+             <p>${comment.content}</p>
+             <p>${comment.created_at}</p>
+             <p>${comment.updated_at}</p>`
+             )
+
+             /* if(document.getElementById("username").textContent === comment.sender_username) {
+                    comments.innerHTML += `<button id="editcommentbutton" onclick="editComment()">Edit</button>
+                    <button id="deletecommentbutton" onclick="deleteComment()">Delete</button>`;
+                    comments.appendChild();
+                } */
+            document.getElementById("commentsection").appendChild(comments);
+        });
+}
+async function addComment(){
+
+    // Default options are marked with *
+    var content = document.getElementById("comment").value;
+    var otherUserId = document.getElementById("otheruserid").textContent;
+    //post request
+    const response = await fetch('http://127.0.0.1:8001/comment', {
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, *cors, same-origin
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'same-origin', // include, *same-origin, omit
+        headers: {
+            'Content-Type': 'application/json'
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        redirect: 'follow', // manual, *follow, error
+        referrer: 'no-referrer', // no-referrer, *client
+        body: JSON.stringify({
+            content: content,
+            otherUserId: otherUserId
+          }) // body data type must match "Content-Type" header
+    });
+    if (response.ok) {
+        alert("Comment added!");
+        location.reload();
+    }
+    else {
+        alert("Comment not added!");
+    }
+
+}
+
+
+function editComment(){
+
+}
+function deleteComment(){
+
 }

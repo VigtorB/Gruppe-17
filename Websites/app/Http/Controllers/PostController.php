@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\DataCollector\AjaxDataCollector;
 
 class PostController extends Controller
 {
@@ -13,25 +14,23 @@ class PostController extends Controller
     {
         $url = env('API_URL') . 'comments/'.$user_id;
         $comments = Http::get($url)->json();
-        return $comments;
+        return $comments['comments'];
     }
 
     // add comment
-    public function addComment($user_receiver_id, $sender_username, $content)
+    public function addComment(Request $request)
     {
+        $userReceiverId = $request->input('otherUserId');
+        $content = $request->input('content');
+        $userSenderName = Auth::user()->username;
+
         $url = env('API_URL') . 'comments/';
-        $ch = curl_init($url);
-        $data = array(
-            'user_receiver_id' => $user_receiver_id,
-            'sender_username' => $sender_username,
-            'content' => $content,
-        );
-        $payload = json_encode($data);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $result = curl_exec($ch);
-        return $result;
+        $comment = Http::post($url, [
+            'user_receiver_id' => $userReceiverId,
+            'sender_username' => $userSenderName,
+            'content' => $content
+        ])->json();
+        return $comment;
     }
 
     // update comment
@@ -40,7 +39,7 @@ class PostController extends Controller
         $url = env('API_URL') . 'comments/'.$comment_id;
         $ch = curl_init($url);
         $data = array(
-            'id' => $comment_id,
+            'comment_id' => $comment_id,
             'content' => $content,
         );
         $payload = json_encode($data);

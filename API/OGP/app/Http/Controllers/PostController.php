@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+
 use App\Models\Comment;
 
 
@@ -21,8 +23,11 @@ class PostController extends Controller
     }
 
     // add comment
-    public function addComment($user_receiver_id, $sender_username, $content)
+    public function addComment(Request $request)
     {
+        $sender_username = $request->input('sender_username');
+        $user_receiver_id = $request->input('user_receiver_id');
+        $content = $request->input('content');
         try {
             Comment::create([
                 'user_receiver_id' => $user_receiver_id,
@@ -35,10 +40,13 @@ class PostController extends Controller
         }
     }
     // edit comment
-    public function updateComment($id, $content)
+    public function updateComment(Request $request)
     {
+        $comment_id = $request->input('comment_id');
+        $content = $request->input('content');
         try {
-            Comment::where('id', $id)->update(['content' => $content]);
+            Comment::where('id', $comment_id)
+                ->update(['content' => $content]);
             return response()->json(['success' => true]);
         } catch (\Exception $e) {
             return response()->json(['success' => false]);
