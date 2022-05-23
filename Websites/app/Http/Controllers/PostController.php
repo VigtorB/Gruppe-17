@@ -34,20 +34,17 @@ class PostController extends Controller
     }
 
     // update comment
-    public function updateComment($comment_id, $content)
+    public function updateComment(Request $request)
     {
+        $comment_id = $request->input('comment_id');
+        $content = $request->input('content');
+        //put method
         $url = env('API_URL') . 'comments/'.$comment_id;
-        $ch = curl_init($url);
-        $data = array(
+        $comment = Http::put($url, [
             'comment_id' => $comment_id,
-            'content' => $content,
-        );
-        $payload = json_encode($data);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $result = curl_exec($ch);
-        return $result;
+            'content' => $content
+        ])->json();
+        return $comment;
     }
 
     // delete comment

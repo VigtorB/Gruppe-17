@@ -62,7 +62,7 @@ Route::get('coins', [CoinController::class, 'getCoins'])->name('coins')->middlew
 Route::get('comment/{user_id}', [PostController::class, 'getComments'])->name('getComments')->middleware(Authenticate::class);
 Route::post('comment', [PostController::class, 'addComment'])->name('addComment');
 Route::put('comment', [PostController::class, 'updateComment'])->name('updateComment')->middleware(Authenticate::class);
-Route::get('comment/{comment_id}', [PostController::class, 'deleteComment'])->name('deleteComment')->middleware(Authenticate::class);
+Route::get('comment/delete/{comment_id}', [PostController::class, 'deleteComment'])->name('deleteComment')->middleware(Authenticate::class);
 
 
 // Login og authentication

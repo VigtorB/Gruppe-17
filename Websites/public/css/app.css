@@ -1711,18 +1711,26 @@ input:invalid, textarea:invalid, select:invalid {
 
     .footer {
         position:fixed;
+        margin-top: auto;
         left:0px;
         bottom:0px;
-        height:100px;
         width:100%;
         background:#999;
      }
 
      #container{
-        position: absolute;
+        position:relative;
+        width:100%;
+        height:100%;
+        display:flex;
+        flex-direction: column;
+    }
+
+    .containerComments {
         width:100%;
         height: 100%;
         display:flex;
+        padding-bottom: 60%;
         flex-direction: column;
     }
 
@@ -1736,9 +1744,12 @@ input:invalid, textarea:invalid, select:invalid {
     }
 
     .img-buttons {
-        text-align: center;
-        width: 19%;
-        float: left;
+        display: block;
+        margin: 0 auto;
+        width: 5.5rem;
+        height: 5.5rem;
+        margin-left: 2rem;
+        text-align:center;
     }
 
     .img-blackjack img {
@@ -1761,4 +1772,15 @@ input:invalid, textarea:invalid, select:invalid {
         opacity: 0;
         -webkit-transition: opacity 0;
         transition: opacity 0;
+    }
+
+    .float-container {
+        padding: 2px;
+    }
+
+    .float-child {
+        width: 10%;
+        float: left;
+        padding: 2px;
+
     }

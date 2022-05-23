@@ -48,10 +48,10 @@
                         <img class="w-10 h-10 rounded-full" src="" alt="">
                         <div class="space-y-1 font-medium dark:text-gray-400">
                             <div id="myuser-id" class="hidden">
-                                {{ Auth::user()->id }}
+                                {{Auth::user()->id}}
                             </div>
                             <div id="username">
-                                {{ Auth::user()->username }}
+                                {{Auth::user()->username}}
                             </div>
                             <div class="text-sm text-gray-500 dark:text-gray-400" id="coins">
                             </div>

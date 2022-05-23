@@ -51,97 +51,97 @@ function getGame(value) {
     }
 
     //TODO: 1. Få knapperne til at blive kreeret herinde. 2. Bedre løsning for at fjerne knapperne.
-        fetch(url)
+    fetch(url)
 
 
-            .then((response) => response.json())
-            .then(function (data) {
-                if(data.status ==="error") {
-                    alert(data.message);
-                    window.location.href = "/"; //TODO: Lav en løsning for at få brugeren tilbage til betalingsside.
-                }
-                if (document.getElementById("game") !== null) {
-                    document.getElementById("game").remove();
-                }
-                document.getElementById("center").appendChild(game)
-                game.appendChild(dealer);
-                game.appendChild(player);
-                game.appendChild(button);
-                game.appendChild(gameStatus);
+        .then((response) => response.json())
+        .then(function (data) {
+            if (data.status === "error") {
+                alert(data.message);
+                window.location.href = "/"; //TODO: Lav en løsning for at få brugeren tilbage til betalingsside.
+            }
+            if (document.getElementById("game") !== null) {
+                document.getElementById("game").remove();
+            }
+            document.getElementById("center").appendChild(game)
+            game.appendChild(dealer);
+            game.appendChild(player);
+            game.appendChild(button);
+            game.appendChild(gameStatus);
 
-                data.dealerCard.forEach((dealerCard) =>
-                    dealerHand.innerHTML +=
-                    `<img class="img-cards" ${imageSrc}deck/${dealerCard}.png" ${cardClass}>`);
-                dealer.appendChild(dealerHand);
-                dealerValue.innerHTML =
-                    `<p ${valueClass}>dealer value = ${data.dealerValue}</p>`;
-                dealer.appendChild(dealerValue);
+            data.dealerCard.forEach((dealerCard) =>
+                dealerHand.innerHTML +=
+                `<img class="img-cards" ${imageSrc}deck/${dealerCard}.png" ${cardClass}>`);
+            dealer.appendChild(dealerHand);
+            dealerValue.innerHTML =
+                `<p ${valueClass}>dealer value = ${data.dealerValue}</p>`;
+            dealer.appendChild(dealerValue);
 
-                data.playerCard.forEach((playerCard) =>
-                    playerHand.innerHTML +=
-                    `<img class="img-cards" ${imageSrc}deck/${playerCard}.png" ${cardClass}>`);
-                player.appendChild(playerHand);
+            data.playerCard.forEach((playerCard) =>
+                playerHand.innerHTML +=
+                `<img class="img-cards" ${imageSrc}deck/${playerCard}.png" ${cardClass}>`);
+            player.appendChild(playerHand);
 
-                playerValue.innerHTML =
-                    `<p ${valueClass}>player value = ${data.playerValue}</p>`;
-                player.appendChild(playerValue);
+            playerValue.innerHTML =
+                `<p ${valueClass}>player value = ${data.playerValue}</p>`;
+            player.appendChild(playerValue);
 
 
-                hit.innerHTML = `<button id="hit" onclick="getGame('hit')" name="hit" class="flex justify-center img-buttons">
+            hit.innerHTML = `<button id="hit" onclick="getGame('hit')" name="hit" class="flex justify-center img-buttons">
                                 ${imageSrc}buttons/button(hit).png"></button>`;
-                button.appendChild(hit);
+            button.appendChild(hit);
 
-                stand.innerHTML = `<button id="stand" onclick="getGame('stand')" name="stand" class="flex justify-center img-buttons">
+            stand.innerHTML = `<button id="stand" onclick="getGame('stand')" name="stand" class="flex justify-center img-buttons">
                                     ${imageSrc}buttons/button(stand).png">
                                 </button>`;
-                button.appendChild(stand);
+            button.appendChild(stand);
 
 
 
-                if (data.gameStatus === "pending") {
-                    hit.disabled = false;
-                    hit.hidden = false;
-                    stand.disabled = false;
-                    stand.hidden = false;
-                }
+            if (data.gameStatus === "pending") {
+                hit.disabled = false;
+                hit.hidden = false;
+                stand.disabled = false;
+                stand.hidden = false;
+            }
 
 
-                if (data.gameStatus !== "pending") {
-                    hit.disabled = true;
-                    hit.hidden = true;
-                    stand.disabled = true;
-                    stand.hidden = true;
-                    newGame.innerHTML = `<button id="newGame" onclick="getGame('newGame')" this.onclick=null; name="start"
+            if (data.gameStatus !== "pending") {
+                hit.disabled = true;
+                hit.hidden = true;
+                stand.disabled = true;
+                stand.hidden = true;
+                newGame.innerHTML = `<button id="newGame" onclick="getGame('newGame')" this.onclick=null; name="start"
                                         class = "img-buttons">
                                         <img src="/img/buttons/button(playagain).png">
                                         </button> `;
-                    document.getElementById("game").appendChild(newGame);
-                    newGame.hidden = false;
-                    getCoins();
+                document.getElementById("game").appendChild(newGame);
+                newGame.hidden = false;
+                getCoins();
 
-                    //TODO: fix if-sætninger og få siden til at vise gameStatus
-                    if (data.gameStatus === "blackjack" ||
-                        data.gameStatus === "player win" ||
-                        data.gameStatus === "dealer bust") {
-                        gameStatus.innerHTML = "You " + data.gameStatus + "!";
-                    }
-
-                    if (data.gameStatus === "dealer win" ||
-                        data.gameStatus === "bust" ||
-                        data.gameStatus === "dealer blackjack") {
-                        gameStatus.innerHTML = "You " + data.gameStatus + "!";
-                    }
-                    if (data.gameStatus === "draw") {
-                        gameStatus.innerHTML = "You " + data.gameStatus + "!";
-                    }
-
+                //TODO: fix if-sætninger og få siden til at vise gameStatus
+                if (data.gameStatus === "blackjack" ||
+                    data.gameStatus === "player win" ||
+                    data.gameStatus === "dealer bust") {
+                    gameStatus.innerHTML = "You " + data.gameStatus + "!";
                 }
 
-                //
+                if (data.gameStatus === "dealer win" ||
+                    data.gameStatus === "bust" ||
+                    data.gameStatus === "dealer blackjack") {
+                    gameStatus.innerHTML = "You " + data.gameStatus + "!";
+                }
+                if (data.gameStatus === "draw") {
+                    gameStatus.innerHTML = "You " + data.gameStatus + "!";
+                }
 
-            });
-        /*         loading.remove(); */
-        game.hidden = false;;
+            }
+
+            //
+
+        });
+    /*         loading.remove(); */
+    game.hidden = false;;
 }
 
 
@@ -170,15 +170,15 @@ function getFriends() {
             fetch(urlGetUserAndProfile + user)
                 .then((response) => response.json())
                 .then(function (data) {
-                    if(data.success === true) {
+                    if (data.success === true) {
                         window.location.href = "/profile/" + user;
-                }
-                else {
-                    alert("User not found");
-                }
-            });
+                    }
+                    else {
+                        alert("User not found");
+                    }
+                });
 
-    }
+        }
     });
 
     var getFriendsAndFriendRequests = document.createElement("div");
@@ -193,21 +193,21 @@ function getFriends() {
                 document.getElementById("getfriends").remove();
                 document.getElementById("usersearchinput").remove();
             }
-            if(data.friends === null) {
+            if (data.friends === null) {
                 getFriendsAndFriendRequests.innerHTML = `<p class="center">You have no friends!</p>`;
             }
             else {
-            data.friends.forEach((friend) => getFriendsAndFriendRequests
-                .innerHTML += `<a href="/profile/${friend}"
+                data.friends.forEach((friend) => getFriendsAndFriendRequests
+                    .innerHTML += `<a href="/profile/${friend}"
                                 class="${getFriendsAndClass}">${friend}</a>`);
             }
             getFriendsAndFriendRequests.innerHTML += `<p class="center">---------------------------------</p>`;
-            if(data.friendRequests === null) {
+            if (data.friendRequests === null) {
                 getFriendsAndFriendRequests.innerHTML += `<p class="center">You have no friend requests!</p>`;
             }
             else {
-            data.friendRequests.forEach((friendRequest) => getFriendsAndFriendRequests
-                .innerHTML += `<a href="/profile/${friendRequest}"
+                data.friendRequests.forEach((friendRequest) => getFriendsAndFriendRequests
+                    .innerHTML += `<a href="/profile/${friendRequest}"
                                 class="${getFriendsAndClass}">${friendRequest}</a>`);
             }
             document.getElementById("sidebar").appendChild(userSearch);
@@ -287,7 +287,6 @@ function getProfile() {
                                             </button>`;
                 document.getElementById("profileInfo").appendChild(deleteFriend);
             }
-            /* var fuckface = data.user; */
 
         });
 }
@@ -359,7 +358,7 @@ function friendAction(action, otherUserId) {
     }
 }
 
-function getComments(otherUserId){
+function getComments(otherUserId) {
     var commentSectionHeader = document.createElement("div");
     commentSectionHeader.id = "commentSectionHeader";
     commentSectionHeader.innerHTML = `<h2>Comments</h2>`;
@@ -368,50 +367,62 @@ function getComments(otherUserId){
     textArea.id = "addcomment";
     textArea.innerHTML = `<textarea id="comment" placeholder="Write a comment..." rows="3" cols="50" ></textarea>`;
     var addCommentButton = document.createElement("div");
-    var buttonAddCClass = 'class="btn btn-primary img-blackjack">';
-    addCommentButton.id = "addcommentbutton";
-    addCommentButton.className = buttonAddCClass;
-    addCommentButton.innerHTML = `<button id="addcommentbutton" ${imageSrc}buttons/Button(addcomment)" onclick="addComment()">Add comment</button>`;
 
-    if(document.getElementById("username").textContent !== document.getElementById("otheruser").textContent) {
+    var buttonClass = 'class="img-buttons"';
+    addCommentButton.id = "addcommentbutton";
+    addCommentButton.innerHTML = `<button id="addcommentbutton" onclick="addComment()" ${buttonClass}>  ${imageSrc}buttons/Button(addcomment).png"></button>`;
     document.getElementById("commentsection").appendChild(textArea);
     document.getElementById("commentsection").appendChild(addCommentButton);
-    }
 
-    fetch(urlComments+otherUserId)
+    fetch(urlComments + otherUserId)
         .then((response) => response.json())
         .then(function (data) {
             var comments = document.createElement("div");
             comments.id = "comments";
-            comments.className = "container mt-4";
+            comments.className = "containerComments mt-4";
+            var commentsButton = document.createElement("div");
+            commentsButton.id = "commentsbutton";
 
-            data.forEach((comment) => comments.innerHTML += `
-             <p>From: ${comment.sender_username}</p>
+            if (data.length === 0) {
+                comments.innerHTML = `<p>No comments yet</p>`;
+            }
+            data.forEach(function (comment) {
+
+                //date
+                var createdDate = new Date(comment.created_at).toLocaleString();
+                var updatedDate = new Date(comment.updated_at).toLocaleString();
+
+
+                if (comment.sender_username === document.getElementById("username").textContent.trim()) {
+                    comments.innerHTML +=
+                        `<p id="senderusername">From: ${comment.sender_username}</p>
+             <p id=${comment.id}>${comment.content}</p>
+             <p>Created at: ${createdDate} Updated at: ${updatedDate}</p>
+             <div id="containerbuttons" class="float-container">
+                <div class= "float-child">
+                    <button id="editcommentbutton" onclick="editComment(${comment.id}, '${comment.content}')" > ${imageSrc}buttons/Button(editcomment).png"></button>
+                </div>
+                <div class= "float-child">
+                    <button id="deletecommentbutton" onclick="deleteComment(${comment.id})"> ${imageSrc}buttons/Button(deletecomment).png"></button>
+                </div>
+            </div>
+                <p>---------------------------------------------------------</p>`
+                }
+                else {
+                    comments.innerHTML += `
+             <p id="senderusername">From: ${comment.sender_username}</p>
              <p>${comment.content}</p>
-             <br>
-             <p>Created at: ${comment.created_at}</p>
+             <p>Created at: ${createdDate} Updated at: ${updatedDate}</p>
+             <p>---------------------------------------------------------</p>`
+                }
+            })
 
-             <p>Updated at: ${comment.updated_at}</p>
-
-
-             <br>`
-
-             )
-
-             data.forEach((comment) => comment.sender_username === document.getElementById("username").textContent)
-                comments.innerHTML += `<button id="deletecomment" onclick="deleteComment(${comment.id})" ${imageSrc}buttons/Button(deletecomment)" class="btn btn-primary img-blackjack">Delete comment</button>`;
-                comments.innerHTML += `<button id="editcomment" onclick="editComment(${comment.id})" ${imageSrc}buttons/Button(editcomment)" class="btn btn-primary img-blackjack">Edit comment</button>`;
-
-
-             /* if(document.getElementById("username").textContent === comment.sender_username) {
-                    comments.innerHTML += `<button id="editcommentbutton" onclick="editComment()">Edit</button>
-                    <button id="deletecommentbutton" onclick="deleteComment()">Delete</button>`;
-                    comments.appendChild();
-                } */
             document.getElementById("commentsection").appendChild(comments);
-        });
+
+        })
 }
-async function addComment(){
+
+async function addComment() {
 
     // Default options are marked with *
     var content = document.getElementById("comment").value;
@@ -431,7 +442,7 @@ async function addComment(){
         body: JSON.stringify({
             content: content,
             otherUserId: otherUserId
-          }) // body data type must match "Content-Type" header
+        }) // body data type must match "Content-Type" header
     });
     if (response.ok) {
         alert("Comment added!");
@@ -444,9 +455,53 @@ async function addComment(){
 }
 
 
-function editComment(){
+function editComment(comment_id, content) {
+    let comment = prompt("Your comment: ", content);
+    if (comment == null || comment == "" || comment == content) {
+        alert("Comment not edited!");
+    } else {
+        //update fetch
+        fetch(urlComments, {
+            method: 'PUT', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, *cors, same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'same-origin', // include, *same-origin, omit
+            headers: {
+                'Content-Type': 'application/json'
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            redirect: 'follow', // manual, *follow, error
+            referrer: 'no-referrer', // no-referrer, *client
+            body: JSON.stringify({
+                comment_id: comment_id,
+                content: comment
+            }) // body data type must match "Content-Type" header
+        })
+            .then(function (response) {
+                if (response.ok) {
+                    alert("Comment edited!");
+                    document.getElementById(comment_id).innerHTML = comment;
+                }
+                else {
+                    alert("Comment not edited!");
+                }
+            }
+            );
+    }
 
 }
-function deleteComment(){
 
+function deleteComment(comment_id) {
+    fetch(urlComments + 'delete/' + comment_id)
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.success === true) {
+                alert("Comment deleted!");
+                document.getElementById(comment_id).remove();
+            }
+            else {
+                alert("Comment not deleted!");
+            }
+        }
+        );
 }
