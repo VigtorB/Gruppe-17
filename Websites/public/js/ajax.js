@@ -13,7 +13,7 @@ function getGame(value) {
     game.hidden = true;
 
 
-
+    var button = document.createElement("button");
     var hit = document.createElement("div");
     var stand = document.createElement("div");
     var newGame = document.createElement("div");
@@ -63,9 +63,11 @@ function getGame(value) {
                 if (document.getElementById("game") !== null) {
                     document.getElementById("game").remove();
                 }
-                document.getElementById("center").appendChild(game);
+                document.getElementById("center").appendChild(game)
                 game.appendChild(dealer);
                 game.appendChild(player);
+                game.appendChild(button);
+                game.appendChild(gameStatus);
 
                 data.dealerCard.forEach((dealerCard) =>
                     dealerHand.innerHTML +=
@@ -87,12 +89,12 @@ function getGame(value) {
 
                 hit.innerHTML = `<button id="hit" onclick="getGame('hit')" name="hit" class="flex justify-center img-buttons">
                                 ${imageSrc}buttons/button(hit).png"></button>`;
-                document.getElementById("game").appendChild(hit);
+                button.appendChild(hit);
 
                 stand.innerHTML = `<button id="stand" onclick="getGame('stand')" name="stand" class="flex justify-center img-buttons">
                                     ${imageSrc}buttons/button(stand).png">
                                 </button>`;
-                document.getElementById("game").appendChild(stand);
+                button.appendChild(stand);
 
 
 
@@ -139,7 +141,7 @@ function getGame(value) {
 
             });
         /*         loading.remove(); */
-        game.hidden = false;
+        game.hidden = false;;
 }
 
 
@@ -364,10 +366,12 @@ function getComments(otherUserId){
     document.getElementById("commentsection").appendChild(commentSectionHeader);
     var textArea = document.createElement("div");
     textArea.id = "addcomment";
-    textArea.innerHTML = `<textarea id="comment" placeholder="Write a comment..."></textarea>`;
+    textArea.innerHTML = `<textarea id="comment" placeholder="Write a comment..." rows="3" cols="50" ></textarea>`;
     var addCommentButton = document.createElement("div");
+    var buttonAddCClass = 'class="btn btn-primary img-blackjack">';
     addCommentButton.id = "addcommentbutton";
-    addCommentButton.innerHTML = `<button id="addcommentbutton" onclick="addComment()">Add comment</button>`;
+    addCommentButton.className = buttonAddCClass;
+    addCommentButton.innerHTML = `<button id="addcommentbutton" ${imageSrc}buttons/Button(addcomment)" onclick="addComment()">Add comment</button>`;
 
     if(document.getElementById("username").textContent !== document.getElementById("otheruser").textContent) {
     document.getElementById("commentsection").appendChild(textArea);
@@ -379,14 +383,25 @@ function getComments(otherUserId){
         .then(function (data) {
             var comments = document.createElement("div");
             comments.id = "comments";
-            comments.className = "container";
+            comments.className = "container mt-4";
 
             data.forEach((comment) => comments.innerHTML += `
-             <p>${comment.sender_username}</p>
+             <p>From: ${comment.sender_username}</p>
              <p>${comment.content}</p>
-             <p>${comment.created_at}</p>
-             <p>${comment.updated_at}</p>`
+             <br>
+             <p>Created at: ${comment.created_at}</p>
+
+             <p>Updated at: ${comment.updated_at}</p>
+
+
+             <br>`
+
              )
+
+             data.forEach((comment) => comment.sender_username === document.getElementById("username").textContent)
+                comments.innerHTML += `<button id="deletecomment" onclick="deleteComment(${comment.id})" ${imageSrc}buttons/Button(deletecomment)" class="btn btn-primary img-blackjack">Delete comment</button>`;
+                comments.innerHTML += `<button id="editcomment" onclick="editComment(${comment.id})" ${imageSrc}buttons/Button(editcomment)" class="btn btn-primary img-blackjack">Edit comment</button>`;
+
 
              /* if(document.getElementById("username").textContent === comment.sender_username) {
                     comments.innerHTML += `<button id="editcommentbutton" onclick="editComment()">Edit</button>
