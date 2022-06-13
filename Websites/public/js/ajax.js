@@ -243,7 +243,6 @@ function getProfile() {
             }
             else {
                 otherUserId = data.id;
-
             }
             getComments(otherUserId);
             if (document.getElementById("profileInfo") !== null) {
@@ -422,7 +421,6 @@ function getComments(otherUserId) {
                 <p>---------------------------------------------------------</p>`
                 }
                 else if(comment.user_receiver_id === document.getElementById("myuser-id").textContent.trim()){
-                    console.log("you are here");
                     comments.innerHTML +=
                         `<p id="senderusername">From: ${comment.sender_username}</p>
              <p id=${comment.id}>${comment.content}</p>
@@ -449,10 +447,15 @@ function getComments(otherUserId) {
 }
 
 async function addComment() {
-
     // Default options are marked with *
     var content = document.getElementById("comment").value;
-    var otherUserId = document.getElementById("otheruserid").textContent;
+    try{
+        var otherUserId = document.getElementById("otheruserid").textContent;
+    }
+    catch(err){
+        var otherUserId = document.getElementById("myuser-id").textContent;
+    }
+
     //post request
     const response = await fetch('http://127.0.0.1:8001/comment', {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
