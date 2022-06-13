@@ -50,9 +50,9 @@
                             <div id="myuser-id" class="hidden">
                                 {{Auth::user()->id}}
                             </div>
-                            <div id="username">
+                            <a href="{{ route('profile', $username = Auth::user()->username) }}" id="username">
                                 {{Auth::user()->username}}
-                            </div>
+                            </a>
                             <div class="text-sm text-gray-500 dark:text-gray-400" id="coins">
                             </div>
                         </div>

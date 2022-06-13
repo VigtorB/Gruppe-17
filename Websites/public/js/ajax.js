@@ -1,6 +1,6 @@
 var urlGetCoins = "http://127.0.0.1:8001/coins";
 var urlGetFriends = "http://127.0.0.1:8001/getfriends";
-var urlGetProfile = "http://127.0.0.1:8001/getuser/";
+var urlGetUserAndProfile = "http://127.0.0.1:8001/getuser/";
 var urlComments = "http://127.0.0.1:8001/comment/";
 var imageSrc = '<img src="/img/';
 
@@ -14,27 +14,28 @@ function getGame(value) {
 
 
     var button = document.createElement("button");
+    button.classList.add("container", "px-10");
     var hit = document.createElement("div");
     var stand = document.createElement("div");
     var newGame = document.createElement("div");
     var gameStatus = document.createElement("div");
     var dealer = document.createElement("div");
-    dealer.classList.add("container");
+    dealer.classList.add("cardContainer");
     dealer.id = "dealer";
     var dealerHand = document.createElement("div");
-    dealerHand.classList.add("container");
+    dealerHand.classList.add("cardContainer");
     dealerHand.id = "dealerhand";
     var dealerValue = document.createElement("div");
     dealerValue.id = "dealervalue";
     var player = document.createElement("div");
-    player.classList.add("container");
+    player.classList.add("cardContainer");
     player.id = "player";
     var playerHand = document.createElement("div");
-    playerHand.classList.add("container");
+    playerHand.classList.add("cardContainer");
     playerHand.id = "playerhand";
     var playerValue = document.createElement("div");
     playerValue.id = "playerValue";
-    var valueClass = "class=font-medium text-3xl ";
+    var valueClass = 'class="fw-bold fs-3"';
     var cardClass = 'class="img-responsive"';
 
 
@@ -87,11 +88,12 @@ function getGame(value) {
             player.appendChild(playerValue);
 
 
-            hit.innerHTML = `<button id="hit" onclick="getGame('hit')" name="hit" class="flex justify-center img-buttons">
-                                ${imageSrc}buttons/button(hit).png"></button>`;
+            hit.innerHTML += `<button id="hit" onclick="getGame('hit')" name="hit" class="img-buttons float-start">
+                                ${imageSrc}buttons/button(hit).png">
+                                </button>`;
             button.appendChild(hit);
 
-            stand.innerHTML = `<button id="stand" onclick="getGame('stand')" name="stand" class="flex justify-center img-buttons">
+            stand.innerHTML += `<button id="stand" onclick="getGame('stand')" name="stand" class="img-buttons float-end">
                                     ${imageSrc}buttons/button(stand).png">
                                 </button>`;
             button.appendChild(stand);
@@ -167,7 +169,7 @@ function getFriends() {
         if (event.key === 'Enter') {
             event.preventDefault();
             var user = document.getElementById("usersearchinput").value;
-            fetch(urlGetProfile + user)
+            fetch(urlGetUserAndProfile + user)
                 .then((response) => response.json())
                 .then(function (data) {
                     if (data.success === true) {
@@ -227,26 +229,14 @@ function getProfile() {
 
     var buttonFriendClass = 'class="btn btn-primary img-blackjack">';
 
-
-    if(username === document.getElementById("username").textContent.trim()){
-        url = urlGetProfile;
-    }
-    else{
-        url = urlGetProfile + username;
-    }
-
-    fetch(url)
+    fetch(urlGetUserAndProfile + username)
         .then((response) => response.json())
         .then(function (data) {
-            if(username !== document.getElementById("username").textContent.trim()){
             var otherUserId = data.friend.user.id;
-            }
-            else {
-                otherUserId = data.id;
-            }
             getComments(otherUserId);
             if (document.getElementById("profileInfo") !== null) {
                 document.getElementById("profileInfo").remove();
+            }
             /* profile.classList.add(""); */
             profile.id = "profileInfo";
             profile.innerHTML += `<span class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150"
@@ -254,6 +244,7 @@ function getProfile() {
             profile.innerHTML += `<p id="otheruserid" class="hidden">${otherUserId}</p>`;
 
             document.getElementById("profile").appendChild(profile);
+
             if (data.friend.isFriend === 0) {
 
                 /* addFriend.classList.add(""); */
@@ -298,7 +289,6 @@ function getProfile() {
                                             </button>`;
                 document.getElementById("profileInfo").appendChild(deleteFriend);
             }
-        }
 
         });
 }
@@ -420,18 +410,6 @@ function getComments(otherUserId) {
             </div>
                 <p>---------------------------------------------------------</p>`
                 }
-                else if(comment.user_receiver_id === document.getElementById("myuser-id").textContent.trim()){
-                    comments.innerHTML +=
-                        `<p id="senderusername">From: ${comment.sender_username}</p>
-             <p id=${comment.id}>${comment.content}</p>
-             <p>Created at: ${createdDate} Updated at: ${updatedDate}</p>
-             <div id="containerbuttons" class="float-container">
-                <div class= "float-child">
-                    <button id="deletecommentbutton" onclick="deleteComment(${comment.id})"> ${imageSrc}buttons/Button(deletecomment).png"></button>
-                </div>
-            </div>
-                <p>---------------------------------------------------------</p>`
-                }
                 else {
                     comments.innerHTML += `
              <p id="senderusername">From: ${comment.sender_username}</p>
@@ -447,15 +425,10 @@ function getComments(otherUserId) {
 }
 
 async function addComment() {
+
     // Default options are marked with *
     var content = document.getElementById("comment").value;
-    try{
-        var otherUserId = document.getElementById("otheruserid").textContent;
-    }
-    catch(err){
-        var otherUserId = document.getElementById("myuser-id").textContent;
-    }
-
+    var otherUserId = document.getElementById("otheruserid").textContent;
     //post request
     const response = await fetch('http://127.0.0.1:8001/comment', {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
@@ -533,4 +506,15 @@ function deleteComment(comment_id) {
             }
         }
         );
+}
+
+//TODO: LAV DENNE!
+function coinBet() {
+    let coinAmount = prompt("How many coins do you want to bet?", "");
+    if (coinAmount == null || coinAmount == "" || coinAmount == 0 || coinAmount < 100) {
+        alert("Bet not placed!");
+    }
+    else {
+        location.href = "http://127.0.0.1:8001/games/blackjack/blackjack/"
+}
 }
