@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 
 class UserController extends Controller
@@ -19,11 +20,9 @@ class UserController extends Controller
     {
         return view('profile.profile')->with('username', $username);
     }
-    public function getUser($info)
+    public function getUser()
     {
-        $user = Http::get(env('API_URL') . $info)->json();
-        $user = json_decode(file_get_contents('php://input'), true);
-        return $user;
+        return $user = Auth::user();
     }
 
     /*public function register($username, $email, $password)

@@ -1,6 +1,6 @@
 var urlGetCoins = "http://127.0.0.1:8001/coins";
 var urlGetFriends = "http://127.0.0.1:8001/getfriends";
-var urlGetUserAndProfile = "http://127.0.0.1:8001/getuser/";
+var urlGetProfile = "http://127.0.0.1:8001/getuser/";
 var urlComments = "http://127.0.0.1:8001/comment/";
 var imageSrc = '<img src="/img/';
 
@@ -167,7 +167,7 @@ function getFriends() {
         if (event.key === 'Enter') {
             event.preventDefault();
             var user = document.getElementById("usersearchinput").value;
-            fetch(urlGetUserAndProfile + user)
+            fetch(urlGetProfile + user)
                 .then((response) => response.json())
                 .then(function (data) {
                     if (data.success === true) {
@@ -227,14 +227,27 @@ function getProfile() {
 
     var buttonFriendClass = 'class="btn btn-primary img-blackjack">';
 
-    fetch(urlGetUserAndProfile + username)
+
+    if(username === document.getElementById("username").textContent.trim()){
+        url = urlGetProfile;
+    }
+    else{
+        url = urlGetProfile + username;
+    }
+
+    fetch(url)
         .then((response) => response.json())
         .then(function (data) {
+            if(username !== document.getElementById("username").textContent.trim()){
             var otherUserId = data.friend.user.id;
+            }
+            else {
+                otherUserId = data.id;
+
+            }
             getComments(otherUserId);
             if (document.getElementById("profileInfo") !== null) {
                 document.getElementById("profileInfo").remove();
-            }
             /* profile.classList.add(""); */
             profile.id = "profileInfo";
             profile.innerHTML += `<span class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150"
@@ -242,7 +255,6 @@ function getProfile() {
             profile.innerHTML += `<p id="otheruserid" class="hidden">${otherUserId}</p>`;
 
             document.getElementById("profile").appendChild(profile);
-
             if (data.friend.isFriend === 0) {
 
                 /* addFriend.classList.add(""); */
@@ -287,6 +299,7 @@ function getProfile() {
                                             </button>`;
                 document.getElementById("profileInfo").appendChild(deleteFriend);
             }
+        }
 
         });
 }
@@ -402,6 +415,19 @@ function getComments(otherUserId) {
                 <div class= "float-child">
                     <button id="editcommentbutton" onclick="editComment(${comment.id}, '${comment.content}')" > ${imageSrc}buttons/Button(editcomment).png"></button>
                 </div>
+                <div class= "float-child">
+                    <button id="deletecommentbutton" onclick="deleteComment(${comment.id})"> ${imageSrc}buttons/Button(deletecomment).png"></button>
+                </div>
+            </div>
+                <p>---------------------------------------------------------</p>`
+                }
+                else if(comment.user_receiver_id === document.getElementById("myuser-id").textContent.trim()){
+                    console.log("you are here");
+                    comments.innerHTML +=
+                        `<p id="senderusername">From: ${comment.sender_username}</p>
+             <p id=${comment.id}>${comment.content}</p>
+             <p>Created at: ${createdDate} Updated at: ${updatedDate}</p>
+             <div id="containerbuttons" class="float-container">
                 <div class= "float-child">
                     <button id="deletecommentbutton" onclick="deleteComment(${comment.id})"> ${imageSrc}buttons/Button(deletecomment).png"></button>
                 </div>

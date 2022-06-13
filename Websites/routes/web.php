@@ -64,6 +64,9 @@ Route::post('comment', [PostController::class, 'addComment'])->name('addComment'
 Route::put('comment', [PostController::class, 'updateComment'])->name('updateComment')->middleware(Authenticate::class);
 Route::get('comment/delete/{comment_id}', [PostController::class, 'deleteComment'])->name('deleteComment')->middleware(Authenticate::class);
 
+//UserController
+Route::get('getuser', [UserController::class, 'getUser'])->name('getUser')->middleware(Authenticate::class);
+
 
 // Login og authentication
 Route::middleware('guest')->group(function () {
