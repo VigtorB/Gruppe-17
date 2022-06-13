@@ -13046,6 +13046,11 @@ input:invalid, textarea:invalid, select:invalid {
         text-align:center;
     }
 
+    .img-buttons img {
+        width: 75%;
+
+    }
+
     .img-blackjack img {
         display: block;
         margin: 0 auto;

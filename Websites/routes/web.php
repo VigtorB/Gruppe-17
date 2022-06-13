@@ -36,6 +36,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home')->middleware(Auth
 
 //UserController
 Route::get('profile/{username}', [UserController::class, 'userProfile'])->name('profile')->middleware(Authenticate::class);
+Route::get('getuser', [UserController::class, 'getUser'])->name('getUser')->middleware(Authenticate::class);
 
 // Games pages
 Route::get('games', [GamesController::class, 'index'])->name('games')->middleware(Authenticate::class);
@@ -64,8 +65,6 @@ Route::post('comment', [PostController::class, 'addComment'])->name('addComment'
 Route::put('comment', [PostController::class, 'updateComment'])->name('updateComment')->middleware(Authenticate::class);
 Route::get('comment/delete/{comment_id}', [PostController::class, 'deleteComment'])->name('deleteComment')->middleware(Authenticate::class);
 
-//UserController
-Route::get('getuser', [UserController::class, 'getUser'])->name('getUser')->middleware(Authenticate::class);
 
 
 // Login og authentication

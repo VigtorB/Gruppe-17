@@ -1,6 +1,6 @@
 var urlGetCoins = "http://127.0.0.1:8001/coins";
 var urlGetFriends = "http://127.0.0.1:8001/getfriends";
-var urlGetUserAndProfile = "http://127.0.0.1:8001/getuser/";
+var urlGetProfile = "http://127.0.0.1:8001/getuser/";
 var urlComments = "http://127.0.0.1:8001/comment/";
 var imageSrc = '<img src="/img/';
 
@@ -169,7 +169,7 @@ function getFriends() {
         if (event.key === 'Enter') {
             event.preventDefault();
             var user = document.getElementById("usersearchinput").value;
-            fetch(urlGetUserAndProfile + user)
+            fetch(urlGetProfile + user)
                 .then((response) => response.json())
                 .then(function (data) {
                     if (data.success === true) {
@@ -229,67 +229,81 @@ function getProfile() {
 
     var buttonFriendClass = 'class="btn btn-primary img-blackjack">';
 
-    fetch(urlGetUserAndProfile + username)
+    if (username === document.getElementById("username").textContent.trim()) {
+        url = urlGetProfile;
+    }
+    else {
+        url = urlGetProfile + username;
+    }
+
+    fetch(url)
         .then((response) => response.json())
         .then(function (data) {
-            var otherUserId = data.friend.user.id;
+            if (username !== document.getElementById("username").textContent.trim()) {
+                var otherUserId = data.friend.user.id;
+            }
+            else {
+                otherUserId = data.id;
+
+            }
             getComments(otherUserId);
             if (document.getElementById("profileInfo") !== null) {
                 document.getElementById("profileInfo").remove();
-            }
-            /* profile.classList.add(""); */
-            profile.id = "profileInfo";
-            profile.innerHTML += `<span class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150"
-            >${data.friend.user.username}</span>`;
-            profile.innerHTML += `<p id="otheruserid" class="hidden">${otherUserId}</p>`;
 
-            document.getElementById("profile").appendChild(profile);
+                /* profile.classList.add(""); */
+                profile.id = "profileInfo";
+                profile.innerHTML += `<span class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
+                                        ${data.friend.user.username}
+                                        </span>`;
+                profile.innerHTML += `<p id="otheruserid" class="hidden">${otherUserId}</p>`;
 
-            if (data.friend.isFriend === 0) {
+                document.getElementById("profile").appendChild(profile);
 
-                /* addFriend.classList.add(""); */
-                addFriend.innerHTML = `<button id="add"
+                if (data.friend.isFriend === 0) {
+
+                    /* addFriend.classList.add(""); */
+                    addFriend.innerHTML = `<button id="add"
                                         onclick='friendAction("add", ${otherUserId})'
                                         type="submit" ${buttonFriendClass} ${imageSrc}buttons/button(add).png"></button>`;
-                document.getElementById("profileInfo").appendChild(addFriend);
-            }
-            else if (data.friend.isFriend === 1) {
+                    document.getElementById("profileInfo").appendChild(addFriend);
+                }
+                else if (data.friend.isFriend === 1) {
 
-                /* declineFriend.classList.add("");
-                acceptFriend.classList.add(""); */
+                    /* declineFriend.classList.add("");
+                    acceptFriend.classList.add(""); */
 
-                acceptFriend.innerHTML = `<button id="accept"
+                    acceptFriend.innerHTML = `<button id="accept"
                                              onclick='friendAction("accept", ${otherUserId})'
                                              type="submit" ${buttonFriendClass} ${imageSrc}buttons/button(accept).png">
                                              </button>`;
-                declineFriend.innerHTML = `<button id= "decline"
+                    declineFriend.innerHTML = `<button id= "decline"
                                             onclick='friendAction("decline", ${otherUserId})'
                                             type="submit" ${buttonFriendClass} ${imageSrc}buttons/button(decline).png">
                                             </button>`;
-                document.getElementById("profileInfo").appendChild(acceptFriend);
-                document.getElementById("profileInfo").appendChild(declineFriend);
-            }
-            else if (data.friend.isFriend === 2) {
+                    document.getElementById("profileInfo").appendChild(acceptFriend);
+                    document.getElementById("profileInfo").appendChild(declineFriend);
+                }
+                else if (data.friend.isFriend === 2) {
 
-                /* pendingFriend.classList.add(""); */
-                cancelFriend.innerHTML = `<button id="cancel"
+                    /* pendingFriend.classList.add(""); */
+                    cancelFriend.innerHTML = `<button id="cancel"
                                             onclick='friendAction("cancel", ${otherUserId})'
                                             type="submit"
                                             ${buttonFriendClass} ${imageSrc}buttons/button(cancel).png">
                                             </button>`;
-                document.getElementById("profileInfo").appendChild(cancelFriend);
-            }
-            else if (data.friend.isFriend === 3) {
+                    document.getElementById("profileInfo").appendChild(cancelFriend);
+                }
+                else if (data.friend.isFriend === 3) {
 
-                /* deleteFriend.classList.add(""); */
-                deleteFriend.innerHTML = `<button id="delete"
+                    /* deleteFriend.classList.add(""); */
+                    deleteFriend.innerHTML = `<button id="delete"
                                             onclick='friendAction("delete", ${otherUserId})'
                                             type="submit"
                                             ${buttonFriendClass} ${imageSrc}buttons/button(remove).png">
                                             </button>`;
-                document.getElementById("profileInfo").appendChild(deleteFriend);
+                    document.getElementById("profileInfo").appendChild(deleteFriend);
+                }
             }
-
         });
 }
 function friendAction(action, otherUserId) {
@@ -402,10 +416,22 @@ function getComments(otherUserId) {
              <p>Created at: ${createdDate} Updated at: ${updatedDate}</p>
              <div id="containerbuttons" class="float-container">
                 <div class= "float-child">
-                    <button id="editcommentbutton" onclick="editComment(${comment.id}, '${comment.content}')" > ${imageSrc}buttons/Button(editcomment).png"></button>
+                    <button id="editcommentbutton" onclick="editComment(${comment.id}, '${comment.content}')" ${buttonClass}> ${imageSrc}buttons/Button(editcomment).png"></button>
                 </div>
                 <div class= "float-child">
-                    <button id="deletecommentbutton" onclick="deleteComment(${comment.id})"> ${imageSrc}buttons/Button(deletecomment).png"></button>
+                    <button id="deletecommentbutton" onclick="deleteComment(${comment.id})" ${buttonClass}> ${imageSrc}buttons/Button(deletecomment).png"></button>
+                </div>
+            </div>
+                <p>---------------------------------------------------------</p>`
+                }
+                else if (comment.user_receiver_id === document.getElementById("myuser-id").textContent.trim()) {
+                    comments.innerHTML +=
+                        `<p id="senderusername">From: ${comment.sender_username}</p>
+             <p id=${comment.id}>${comment.content}</p>
+             <p>Created at: ${createdDate} Updated at: ${updatedDate}</p>
+             <div id="containerbuttons" class="float-container">
+                <div class= "float-child">
+                    <button id="deletecommentbutton" onclick="deleteComment(${comment.id})" ${buttonClass}> ${imageSrc}buttons/Button(deletecomment).png"></button>
                 </div>
             </div>
                 <p>---------------------------------------------------------</p>`
@@ -428,7 +454,13 @@ async function addComment() {
 
     // Default options are marked with *
     var content = document.getElementById("comment").value;
-    var otherUserId = document.getElementById("otheruserid").textContent;
+    try{
+        var otherUserId = document.getElementById("otheruserid").textContent;
+    }
+    catch(err){
+        var otherUserId = document.getElementById("myuser-id").textContent;
+    }
+
     //post request
     const response = await fetch('http://127.0.0.1:8001/comment', {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
@@ -516,5 +548,5 @@ function coinBet() {
     }
     else {
         location.href = "http://127.0.0.1:8001/games/blackjack/blackjack/"
-}
+    }
 }
