@@ -11,14 +11,10 @@ function getGame(value) {
     var game = document.createElement("div");
     game.id = "game";
     game.hidden = true;
-
-
     var button = document.createElement("button");
     button.classList.add("container", "px-10");
-    var hit = document.createElement("div");
-    var stand = document.createElement("div");
     var newGame = document.createElement("div");
-    var gameStatus = document.createElement("div");
+    var gameStatus = document.getElementById("gamestatus");
     var dealer = document.createElement("div");
     dealer.classList.add("cardContainer");
     dealer.id = "dealer";
@@ -68,7 +64,6 @@ function getGame(value) {
             game.appendChild(dealer);
             game.appendChild(player);
             game.appendChild(button);
-            game.appendChild(gameStatus);
 
             data.dealerCard.forEach((dealerCard) =>
                 dealerHand.innerHTML +=
@@ -88,58 +83,65 @@ function getGame(value) {
             player.appendChild(playerValue);
 
 
-            hit.innerHTML += `<button id="hit" onclick="getGame('hit')" name="hit" class="img-buttons float-start">
-                                ${imageSrc}buttons/button(hit).png">
-                                </button>`;
-            button.appendChild(hit);
-
-            stand.innerHTML += `<button id="stand" onclick="getGame('stand')" name="stand" class="img-buttons float-end">
-                                    ${imageSrc}buttons/button(stand).png">
-                                </button>`;
-            button.appendChild(stand);
+            button.innerHTML += `<div class="row" id="hitandstand">
+                                <div class="col-4">
+                                    <button id="hit" onclick="getGame('hit')" name="hit" class="img-buttons float-start">
+                                        ${imageSrc}buttons/button(hit).png">
+                                    </button>
+                                </div>
+                                <div class="col-4">
+                                    <button id="stand" onclick="getGame('stand')" name="stand" class="img-buttons float-end">
+                                                ${imageSrc}buttons/button(stand).png">
+                                    </button>
+                                </div>
+                            </div>
+                                `;
 
 
 
             if (data.gameStatus === "pending") {
-                hit.disabled = false;
-                hit.hidden = false;
-                stand.disabled = false;
-                stand.hidden = false;
+                document.getElementById("hitandstand").hidden = false;
+                document.getElementById("hitandstand").disabled = false;
+                gameStatus.hidden = true;
             }
 
 
             if (data.gameStatus !== "pending") {
-                hit.disabled = true;
-                hit.hidden = true;
-                stand.disabled = true;
-                stand.hidden = true;
-                newGame.innerHTML = `<button id="newGame" onclick="getGame('newGame')" this.onclick=null; name="start"
-                                        class = "img-buttons">
-                                        <img src="/img/buttons/button(playagain).png">
-                                        </button> `;
+                document.getElementById("hitandstand").hidden = true;
+                document.getElementById("hitandstand").disabled = true;
+                newGame.innerHTML = `<div class="row" id="newgamebutton">
+                                        <div class="col-4">
+                                        </div>
+                                        <div class="col-4">
+                                            <button id="newGame" onclick="getGame('newGame')" this.onclick=null; name="start"
+                                                    class = "img-buttons">
+                                                    <img src="/img/buttons/button(playagain).png">
+                                            </button>
+                                        </div>
+                                    </div>`;
                 document.getElementById("game").appendChild(newGame);
                 newGame.hidden = false;
+                gameStatus.hidden = false;
                 getCoins();
+
 
                 //TODO: fix if-sætninger og få siden til at vise gameStatus
                 if (data.gameStatus === "blackjack" ||
                     data.gameStatus === "player win" ||
                     data.gameStatus === "dealer bust") {
-                    gameStatus.innerHTML = "You " + data.gameStatus + "!";
+                    gameStatus.innerHTML = `<h1 class="center">You won!</h1>`;
                 }
 
                 if (data.gameStatus === "dealer win" ||
                     data.gameStatus === "bust" ||
                     data.gameStatus === "dealer blackjack") {
-                    gameStatus.innerHTML = "You " + data.gameStatus + "!";
+                    gameStatus.innerHTML = `<h1 class="center">You lost!</h1>`;
                 }
                 if (data.gameStatus === "draw") {
-                    gameStatus.innerHTML = "You " + data.gameStatus + "!";
+                    gameStatus.innerHTML = `<h1 class="center">Draw!</h1>`;
                 }
 
             }
-
-            //
 
         });
     /*         loading.remove(); */
@@ -159,13 +161,8 @@ function getCoins() {
         });
 }
 
-function getFriends() {
-    var userSearch = document.createElement("div");
-    userSearch.id = "usersearch";
-    userSearch.innerHTML = `<input type="text" id="usersearchinput" placeholder="Search for a user...">`;
-
-
-    userSearch.addEventListener("keypress", function (event) {
+function searchUser() {
+    document.getElementById("usersearchinput").addEventListener("keydown", function (event) {
         if (event.key === 'Enter') {
             event.preventDefault();
             var user = document.getElementById("usersearchinput").value;
@@ -182,10 +179,10 @@ function getFriends() {
 
         }
     });
+}
 
-    var getFriendsAndFriendRequests = document.createElement("div");
-    var getFriendsAndClass = `font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150 center`;
-    getFriendsAndFriendRequests.id = "getfriends";
+function getFriends() {
+    var getFriendsAndFriendRequests = document.getElementById("friendlist");
 
     //TODO: If(cach) der tjekker på om vennelisten er opdateret.
     fetch(urlGetFriends)
@@ -200,20 +197,25 @@ function getFriends() {
             }
             else {
                 data.friends.forEach((friend) => getFriendsAndFriendRequests
-                    .innerHTML += `<a href="/profile/${friend}"
-                                class="${getFriendsAndClass}">${friend}</a>`);
-            }
-            getFriendsAndFriendRequests.innerHTML += `<p class="center">---------------------------------</p>`;
+                    .innerHTML += `<a href="/profile/${friend}" class="list-group-item list-group-item-action py-3 lh-tight" aria-current="true">
+                      <div class="d-flex w-100 align-items-center justify-content-between">
+                        <strong class="mb-1">${friend}</strong>
+                      </div>
+                      <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
+                    </a>`);
+            };
             if (data.friendRequests === null) {
                 getFriendsAndFriendRequests.innerHTML += `<p class="center">You have no friend requests!</p>`;
             }
             else {
                 data.friendRequests.forEach((friendRequest) => getFriendsAndFriendRequests
-                    .innerHTML += `<a href="/profile/${friendRequest}"
-                                class="${getFriendsAndClass}">${friendRequest}</a>`);
+                    .innerHTML += `<a href="/profile/${friendRequest}" class="list-group-item list-group-item-action friendrequests py-3 lh-tight" aria-current="true">
+                      <div class="d-flex w-100 align-items-center justify-content-between">
+                        <strong class="mb-1">${friendRequest}</strong>
+                      </div>
+                      <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
+                    </a>`);
             }
-            document.getElementById("sidebar").appendChild(userSearch);
-            document.getElementById("sidebar").appendChild(getFriendsAndFriendRequests);
         });
 }
 
@@ -221,13 +223,18 @@ function getFriends() {
 function getProfile() {
     var username = document.getElementById("otheruser").textContent;
     var profile = document.createElement("div");
+    document.getElementById("profile").appendChild(profile);
+    var friendButtons = document.createElement("div");
+    friendButtons.id = "friendbuttons";
     var addFriend = document.createElement("div");
     var declineFriend = document.createElement("div");
     var acceptFriend = document.createElement("div");
     var cancelFriend = document.createElement("div");
     var deleteFriend = document.createElement("div");
 
-    var buttonFriendClass = 'class="btn btn-primary img-blackjack">';
+    var buttonFriendClass = 'class="btn img-blackjack">';
+
+    var url = null;
 
     if (username === document.getElementById("username").textContent.trim()) {
         url = urlGetProfile;
@@ -246,9 +253,10 @@ function getProfile() {
                 otherUserId = data.id;
 
             }
-            getComments(otherUserId);
+            //getComments(otherUserId);
             if (document.getElementById("profileInfo") !== null) {
                 document.getElementById("profileInfo").remove();
+            }
 
                 /* profile.classList.add(""); */
                 profile.id = "profileInfo";
@@ -257,15 +265,14 @@ function getProfile() {
                                         </span>`;
                 profile.innerHTML += `<p id="otheruserid" class="hidden">${otherUserId}</p>`;
 
-                document.getElementById("profile").appendChild(profile);
 
                 if (data.friend.isFriend === 0) {
 
                     /* addFriend.classList.add(""); */
                     addFriend.innerHTML = `<button id="add"
-                                        onclick='friendAction("add", ${otherUserId})'
+                                        onclick='friendAction("add", ${otherUserId}); getProfile();'
                                         type="submit" ${buttonFriendClass} ${imageSrc}buttons/button(add).png"></button>`;
-                    document.getElementById("profileInfo").appendChild(addFriend);
+                                        friendButtons.appendChild(addFriend);
                 }
                 else if (data.friend.isFriend === 1) {
 
@@ -273,37 +280,38 @@ function getProfile() {
                     acceptFriend.classList.add(""); */
 
                     acceptFriend.innerHTML = `<button id="accept"
-                                             onclick='friendAction("accept", ${otherUserId})'
+                                             onclick='friendAction("accept", ${otherUserId}); getProfile();'
                                              type="submit" ${buttonFriendClass} ${imageSrc}buttons/button(accept).png">
                                              </button>`;
                     declineFriend.innerHTML = `<button id= "decline"
-                                            onclick='friendAction("decline", ${otherUserId})'
+                                            onclick='friendAction("decline", ${otherUserId}); getProfile();'
                                             type="submit" ${buttonFriendClass} ${imageSrc}buttons/button(decline).png">
                                             </button>`;
-                    document.getElementById("profileInfo").appendChild(acceptFriend);
-                    document.getElementById("profileInfo").appendChild(declineFriend);
+                                            friendButtons.appendChild(acceptFriend);
+                                            friendButtons.appendChild(declineFriend);
                 }
                 else if (data.friend.isFriend === 2) {
 
                     /* pendingFriend.classList.add(""); */
                     cancelFriend.innerHTML = `<button id="cancel"
-                                            onclick='friendAction("cancel", ${otherUserId})'
+                                            onclick='friendAction("cancel", ${otherUserId}); getProfile();'
                                             type="submit"
                                             ${buttonFriendClass} ${imageSrc}buttons/button(cancel).png">
                                             </button>`;
-                    document.getElementById("profileInfo").appendChild(cancelFriend);
+                                            friendButtons.appendChild(cancelFriend);
                 }
                 else if (data.friend.isFriend === 3) {
 
                     /* deleteFriend.classList.add(""); */
                     deleteFriend.innerHTML = `<button id="delete"
-                                            onclick='friendAction("delete", ${otherUserId})'
+                                            onclick='friendAction("delete", ${otherUserId}); getProfile();'
                                             type="submit"
                                             ${buttonFriendClass} ${imageSrc}buttons/button(remove).png">
                                             </button>`;
-                    document.getElementById("profileInfo").appendChild(deleteFriend);
+                                            friendButtons.appendChild(deleteFriend);
                 }
-            }
+                profile.appendChild(friendButtons);
+            getComments(otherUserId);
         });
 }
 function friendAction(action, otherUserId) {
@@ -395,7 +403,7 @@ function getComments(otherUserId) {
         .then(function (data) {
             var comments = document.createElement("div");
             comments.id = "comments";
-            comments.className = "containerComments mt-4";
+            comments.className = "containerComments";
             var commentsButton = document.createElement("div");
             commentsButton.id = "commentsbutton";
 
@@ -538,6 +546,11 @@ function deleteComment(comment_id) {
             }
         }
         );
+}
+
+function removeElement(e) {
+    var element = e;
+    element.remove();
 }
 
 //TODO: LAV DENNE!
