@@ -224,9 +224,6 @@ function getFriends() {
 function getProfile() {
     var otherUsername = document.getElementById("otheruser").textContent;
     var username = document.getElementById("username").textContent;
-    var profile = document.createElement("div");
-    profile.id = "profileInfo";
-    document.getElementById("profile").appendChild(profile);
     var friendButtons = document.createElement("div");
     friendButtons.id = "friendbuttons";
 
@@ -246,53 +243,49 @@ function getProfile() {
             if (data.success === true) {
                 var otherUserId = data.friend.user.id;
                 profile.innerHTML += `<p class="fs-1 ml-2">${data.friend.user.username}</p>`;
+                if (document.getElementById("profileInfo") !== null) {
+                    document.getElementById("profileInfo").remove();
+
+
+                    if (data.friend.isFriend === 0) {
+                        friendButtons.innerHTML = `<button id="add"
+                                                onclick='friendAction("add", ${otherUserId}); changeFriendButton(0);'
+                                                type="button" class="btn btn-success ml-2">Add Friend</button>`;
+                    }
+                    else if (data.friend.isFriend === 1) {
+
+                        friendButtons.innerHTML = `<button id="accept"
+                                                     onclick='friendAction("accept", ${otherUserId}); changeFriendButton(2);'
+                                                     type="submit" class="btn btn-success ml-2">Accept Friend</button>
+                                                    <button id= "decline"
+                                                    onclick='friendAction("decline", ${otherUserId}); changeFriendButton(1);'
+                                                    type="submit" class="btn btn-warning ml-2">Decline Friend Request</button>`;
+                    }
+                    else if (data.friend.isFriend === 2) {
+                        friendButtons.innerHTML = `<button id="cancel"
+                                                    onclick='friendAction("cancel", ${otherUserId}); changeFriendButton(1);'
+                                                    type="submit"
+                                                    class="btn btn-warning ml-2">Cancel Friend Request</button>`;
+                    }
+                    else if (data.friend.isFriend === 3) {
+
+                        friendButtons.innerHTML = `<button id="delete"
+                                                    onclick='friendAction("delete", ${otherUserId}); changeFriendButton(1);'
+                                                    type="submit"
+                                                    class="btn btn-danger">Delete Friend</button>
+                                                    <script>function changeButton()</script>`;
+                    }
+                    profile.appendChild(friendButtons);
+                }
+                else {
+                    otherUserId = document.getElementById("myuser-id").textContent.trim();
+                    profile.innerHTML += `<p class="fs-1 ml-2">${username}</p>`;
+
+                }
+
+            }
             else {
                 otherUserId = data.id;
-
-            }
-            if (document.getElementById("profileInfo") !== null) {
-                document.getElementById("profileInfo").remove();
-
-            profile.id = "profileInfo";
-            profile.innerHTML += `<p class="fs-1 ml-2">
-                                        ${data.friend.user.username}
-                                        </p>`;
-            profile.innerHTML += `<p id="otheruserid" class="hidden">${otherUserId}</p>`;
-
-
-                if (data.friend.isFriend === 0) {
-                    friendButtons.innerHTML = `<button id="add"
-                                            onclick='friendAction("add", ${otherUserId}); changeFriendButton(0);'
-                                            type="button" class="btn btn-success ml-2">Add Friend</button>`;
-                }
-                else if (data.friend.isFriend === 1) {
-
-                    friendButtons.innerHTML = `<button id="accept"
-                                                 onclick='friendAction("accept", ${otherUserId}); changeFriendButton(2);'
-                                                 type="submit" class="btn btn-success ml-2">Accept Friend</button>
-                                                <button id= "decline"
-                                                onclick='friendAction("decline", ${otherUserId}); changeFriendButton(1);'
-                                                type="submit" class="btn btn-warning ml-2">Decline Friend Request</button>`;
-                }
-                else if (data.friend.isFriend === 2) {
-                    friendButtons.innerHTML = `<button id="cancel"
-                                                onclick='friendAction("cancel", ${otherUserId}); changeFriendButton(1);'
-                                                type="submit"
-                                                class="btn btn-warning ml-2">Cancel Friend Request</button>`;
-                }
-                else if (data.friend.isFriend === 3) {
-
-                    friendButtons.innerHTML = `<button id="delete"
-                                                onclick='friendAction("delete", ${otherUserId}); changeFriendButton(1);'
-                                                type="submit"
-                                                class="btn btn-danger">Delete Friend</button>
-                                                <script>function changeButton()</script>`;
-                }
-                profile.appendChild(friendButtons);
-            }
-            else {
-                otherUserId = document.getElementById("myuser-id").textContent.trim();
-                profile.innerHTML += `<p class="fs-1 ml-2">${username}</p>`;
 
             }
             profile.innerHTML += `<p id="otheruserid" class="hidden">${otherUserId}</p>`;
@@ -474,7 +467,7 @@ function getComments(otherUserId) {
 }
 
 async function addComment() {
-    var comments = document.getElementById("comments");
+    var comment = document.getElementById("comments").value;
 
     // Default options are marked with *
     var content = document.getElementById("comment").value;
