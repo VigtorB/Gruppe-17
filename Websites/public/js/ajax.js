@@ -432,7 +432,7 @@ function getComments(otherUserId) {
                         <div class="card-body">
                         <h5 class="card-title" id="senderusername">From: ${comment.sender_username}</h5>
              <p class="card-text" id=${comment.id}>${comment.content}</p>
-             <h6 class="card-subtitle" mt-2 text-muted">Created at: ${createdDate} Updated at: ${updatedDate}</h6>
+             <h6 class="card-subtitle mt-2 text-muted">Created at: ${createdDate} Updated at: ${updatedDate}</h6>
              <div id="containerbuttons" class="float-container">
                 <div class= "float-child">
                     <button id="deletecommentbutton" onclick="deleteComment(${comment.id})" class="btn btn-danger">Delete</button>
@@ -446,7 +446,7 @@ function getComments(otherUserId) {
                     <div class="card-body">
                     <h5 class="card-title" id="senderusername">From: ${comment.sender_username}</h5>
          <p class="card-text" id=${comment.id}>${comment.content}</p>
-         <h6 class="card-subtitle" mt-2 text-muted">Created at: ${createdDate} Updated at: ${updatedDate}</h6>
+         <h6 class="card-subtitle mt-2 text-muted">Created at: ${createdDate} Updated at: ${updatedDate}</h6>
          <div id="containerbuttons" class="float-container">
             <div class= "float-child">
                 <button id="deletecommentbutton" onclick="deleteComment(${comment.id})" class="btn btn-danger">Delete</button>
