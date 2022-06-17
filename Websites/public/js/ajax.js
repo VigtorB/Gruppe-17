@@ -1,4 +1,4 @@
-var urlGetCoins = "http://127.0.0.1:8001/coins";
+var urlCoins = "http://127.0.0.1:8001/coins";
 var urlGetFriends = "http://127.0.0.1:8001/getfriends";
 var urlGetProfile = "http://127.0.0.1:8001/getuser/";
 var urlComments = "http://127.0.0.1:8001/comment/";
@@ -45,6 +45,7 @@ function getGame(value) {
     }
     if (value === "newGame" || value === "startGame") {
         url = urlGameStart;
+
     }
 
     //TODO: 1. Få knapperne til at blive kreeret herinde. 2. Bedre løsning for at fjerne knapperne.
@@ -145,7 +146,7 @@ function getGame(value) {
 
         });
     /*         loading.remove(); */
-    game.hidden = false;;
+    game.hidden = false;
 }
 
 
@@ -154,7 +155,7 @@ function getGame(value) {
 function getCoins() {
     var coins = document.createElement("div");
     coins.id = "balance";
-    fetch(urlGetCoins)
+    fetch(urlCoins)
         .then((response) => response.json())
         .then((data) => {
             document.getElementById("coins").innerHTML = `<p>Balance: ${data}</p>`;
@@ -226,11 +227,6 @@ function getProfile() {
     document.getElementById("profile").appendChild(profile);
     var friendButtons = document.createElement("div");
     friendButtons.id = "friendbuttons";
-    var addFriend = document.createElement("div");
-    var declineFriend = document.createElement("div");
-    var acceptFriend = document.createElement("div");
-    var cancelFriend = document.createElement("div");
-    var deleteFriend = document.createElement("div");
 
     var url = null;
 
@@ -243,6 +239,7 @@ function getProfile() {
 
     fetch(url)
         .then((response) => response.json())
+
         .then(function (data) {
             if (username !== document.getElementById("username").textContent.trim()) {
                 var otherUserId = data.friend.user.id;
@@ -251,12 +248,9 @@ function getProfile() {
                 otherUserId = data.id;
 
             }
-            //getComments(otherUserId);
             if (document.getElementById("profileInfo") !== null) {
                 document.getElementById("profileInfo").remove();
-            }
 
-            /* profile.classList.add(""); */
             profile.id = "profileInfo";
             profile.innerHTML += `<p class="fs-1 ml-2">
                                         ${data.friend.user.username}
@@ -265,49 +259,63 @@ function getProfile() {
 
 
             if (data.friend.isFriend === 0) {
-
-                /* addFriend.classList.add(""); */
-                addFriend.innerHTML = `<button id="add"
-                                        onclick='friendAction("add", ${otherUserId}); getProfile();'
+                friendButtons.innerHTML = `<button id="add"
+                                        onclick='friendAction("add", ${otherUserId}); changeFriendButton(0);'
                                         type="button" class="btn btn-success ml-2">Add Friend</button>`;
-                friendButtons.appendChild(addFriend);
             }
             else if (data.friend.isFriend === 1) {
 
-                /* declineFriend.classList.add("");
-                acceptFriend.classList.add(""); */
-
-                acceptFriend.innerHTML = `<button id="accept"
-                                             onclick='friendAction("accept", ${otherUserId}); getProfile();'
-                                             type="submit" class="btn btn-success ml-2">Accept Friend</button>`;
-                declineFriend.innerHTML = `<button id= "decline"
-                                            onclick='friendAction("decline", ${otherUserId}); getProfile();'
+                friendButtons.innerHTML = `<button id="accept"
+                                             onclick='friendAction("accept", ${otherUserId}); changeFriendButton(2);'
+                                             type="submit" class="btn btn-success ml-2">Accept Friend</button>
+                                            <button id= "decline"
+                                            onclick='friendAction("decline", ${otherUserId}); changeFriendButton(1);'
                                             type="submit" class="btn btn-warning ml-2">Decline Friend Request</button>`;
-                friendButtons.appendChild(acceptFriend);
-                friendButtons.appendChild(declineFriend);
             }
             else if (data.friend.isFriend === 2) {
-
-                /* pendingFriend.classList.add(""); */
-                cancelFriend.innerHTML = `<button id="cancel"
-                                            onclick='friendAction("cancel", ${otherUserId}); getProfile();'
+                friendButtons.innerHTML = `<button id="cancel"
+                                            onclick='friendAction("cancel", ${otherUserId}); changeFriendButton(1);'
                                             type="submit"
                                             class="btn btn-warning ml-2">Cancel Friend Request</button>`;
-                friendButtons.appendChild(cancelFriend);
             }
             else if (data.friend.isFriend === 3) {
 
-                /* deleteFriend.classList.add(""); */
-                deleteFriend.innerHTML = `<button id="delete"
-                                            onclick='friendAction("delete", ${otherUserId}); getProfile();'
+                friendButtons.innerHTML = `<button id="delete"
+                                            onclick='friendAction("delete", ${otherUserId}); changeFriendButton(1);'
                                             type="submit"
-                                            class="btn btn-danger">Delete Friend</button>`;
-                friendButtons.appendChild(deleteFriend);
+                                            class="btn btn-danger">Delete Friend</button>
+                                            <script>function changeButton()</script>`;
             }
             profile.appendChild(friendButtons);
+        }
             getComments(otherUserId);
         });
 }
+
+function changeFriendButton(i) {
+    var otherUserId = document.getElementById("otheruserid").textContent;
+    var friendButtons = document.getElementById("friendbuttons");
+    var i;
+    if (i === 0) {
+        friendButtons.innerHTML = `<button id="cancel"
+                                    onclick='friendAction("cancel", ${otherUserId}); changeFriendButton(1);'
+                                    type="submit"
+                                    class="btn btn-warning ml-2">Cancel Friend Request</button>`;
+    }
+    else if (i === 1) {
+        friendButtons.innerHTML = `<button id="add"
+        onclick='friendAction("add", ${otherUserId}); changeFriendButton(0);'
+        type="button" class="btn btn-success ml-2">Add Friend</button>`;
+    }
+    else if (i === 2) {
+        friendButtons.innerHTML = `<button id="delete"
+        onclick='friendAction("delete", ${otherUserId}); changeFriendButton(1);'
+        type="submit"
+        class="btn btn-danger">Delete Friend</button>`;
+    }
+}
+
+
 function friendAction(action, otherUserId) {
     if (action === "add") {
         fetch("/profile/" + otherUserId + "/addfriend")
@@ -447,10 +455,6 @@ function getComments(otherUserId) {
                     <h5 class="card-title" id="senderusername">From: ${comment.sender_username}</h5>
          <p class="card-text" id=${comment.id}>${comment.content}</p>
          <h6 class="card-subtitle mt-2 text-muted">Created at: ${createdDate} Updated at: ${updatedDate}</h6>
-         <div id="containerbuttons" class="float-container">
-            <div class= "float-child">
-                <button id="deletecommentbutton" onclick="deleteComment(${comment.id})" class="btn btn-danger">Delete</button>
-            </div>
         </div>
         </div>`
                 }
@@ -551,18 +555,20 @@ function deleteComment(comment_id) {
         );
 }
 
-function removeElement(e) {
-    var element = e;
-    element.remove();
-}
-
 //TODO: LAV DENNE!
-function coinBet() {
+/* function coinBet() {
     let coinAmount = prompt("How many coins do you want to bet?", "");
     if (coinAmount == null || coinAmount == "" || coinAmount == 0 || coinAmount < 100) {
         alert("Bet not placed!");
     }
     else {
+        var totalCoins = document.getElementById("coins").textContent;
+        totalCoins = totalCoins.replace('balance: ', '');
+        if(totalCoins < coinAmount) {
+            alert("You don't have enough coins!");
+        }
+        else {
+            fetch(urlGameStart, {)
         location.href = "http://127.0.0.1:8001/games/blackjack/blackjack/"
     }
-}
+} */
