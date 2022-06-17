@@ -29,12 +29,12 @@ class PostController extends Controller
         $user_receiver_id = $request->input('user_receiver_id');
         $content = $request->input('content');
         try {
-            $comment = Comment::create([
+            Comment::create([
                 'user_receiver_id' => $user_receiver_id,
                 'sender_username' => $sender_username,
                 'content' => $content,
             ]);
-            return response()->json(['success' => true, 'comment' => $comment]);
+            return response()->json(['success' => true]);
         } catch (\Exception $e) {
             return response()->json(['success' => false]);
         }
