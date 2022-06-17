@@ -5,7 +5,7 @@
 
         </div>
     </div> --}}
-    <div class="position-absolute d-flex flex-column align-items-stretch flex-shrink-0 bg-white mt-sidebar right-0 border" style="width: 300px;">
+    <div class="position-absolute d-flex flex-column align-items-stretch flex-shrink-0 bg-white mt-sidebar right-0 sticky-top border" style="width: 300px;">
     <div class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
       <span class="fs-5 fw-semibold center">Friendlist</span>
     </div>

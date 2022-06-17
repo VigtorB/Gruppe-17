@@ -3012,6 +3012,7 @@ textarea.form-control-lg {
   border-radius: 0.25rem;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
+
 @media (prefers-reduced-motion: reduce) {
   .btn {
     transition: none;
@@ -3094,6 +3095,7 @@ textarea.form-control-lg {
   background-color: #198754;
   border-color: #198754;
 }
+
 .btn-success:hover {
   color: #fff;
   background-color: #157347;
@@ -7881,6 +7883,11 @@ textarea.form-control-lg {
   background-color: rgba(var(--bs-body-bg-rgb), var(--bs-bg-opacity)) !important;
 }
 
+.bg-navbar {
+  background: rgb(166,166,166);
+background: linear-gradient(0deg, rgba(165,166,166,1) 0%, rgba(255,255,255,1) 29%);
+}
+
 .bg-transparent {
   --bs-bg-opacity: 1;
   background-color: transparent !important;
@@ -11443,43 +11450,6 @@ table {
   border-color: inherit; /* 2 */
   border-collapse: collapse; /* 3 */
 }
-/*
-1. Change the font styles in all browsers.
-2. Remove the margin in Firefox and Safari.
-3. Remove default padding in all browsers.
-*/
-button,
-input,
-optgroup,
-select,
-textarea {
-  font-family: inherit; /* 1 */
-  font-size: 100%; /* 1 */
-  line-height: inherit; /* 1 */
-  color: inherit; /* 1 */
-  margin: 0; /* 2 */
-  padding: 0; /* 3 */
-}
-/*
-Remove the inheritance of text transform in Edge and Firefox.
-*/
-button,
-select {
-  text-transform: none;
-}
-/*
-1. Correct the inability to style clickable types in iOS and Safari.
-2. Remove default button styles.
-*/
-button,
-[type='button'],
-[type='reset'],
-[type='submit'] {
-  -webkit-appearance: button; /* 1 */
-  background-color: transparent; /* 2 */
-  background-image: none; /* 2 */
-}
-/*
 Use the modern Firefox focus style for all focusable elements.
 */
 :-moz-focusring {
@@ -12195,9 +12165,15 @@ input:invalid, textarea:invalid, select:invalid {
 }
 
 .mt-sidebar {
-  margin-top: 100px;
+  margin-top: 97px;
   margin-left: auto;
-  margin-right: 10px;
+  margin-right: 2px;
+}
+
+@media (max-width: 1200px) {
+  .mt-sidebar {
+    margin-top: 123px;
+  }
 }
 
 .mt-4 {

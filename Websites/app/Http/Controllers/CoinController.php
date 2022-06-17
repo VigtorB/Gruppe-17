@@ -9,6 +9,10 @@ use App\Models\Coin;
 
 class CoinController extends Controller
 {
+    public function storeView()
+    {
+        return view('store.store');
+    }
 
     public function getCoins()
     {

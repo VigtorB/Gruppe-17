@@ -85,7 +85,7 @@ function getGame(value) {
 
             button.innerHTML += `<div class="row" id="hitandstand">
                                 <div class="col-4">
-                                    <button id="hit" onclick="getGame('hit')" name="hit" class="img-buttons float-start">
+                                    <button type="button" id="hit" onclick="getGame('hit')" name="hit" class="btn btn-primary float-start">
                                         ${imageSrc}buttons/button(hit).png">
                                     </button>
                                 </div>
@@ -232,8 +232,6 @@ function getProfile() {
     var cancelFriend = document.createElement("div");
     var deleteFriend = document.createElement("div");
 
-    var buttonFriendClass = 'class="btn img-blackjack">';
-
     var url = null;
 
     if (username === document.getElementById("username").textContent.trim()) {
@@ -258,59 +256,55 @@ function getProfile() {
                 document.getElementById("profileInfo").remove();
             }
 
-                /* profile.classList.add(""); */
-                profile.id = "profileInfo";
-                profile.innerHTML += `<span class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
+            /* profile.classList.add(""); */
+            profile.id = "profileInfo";
+            profile.innerHTML += `<p class="fs-1 ml-2">
                                         ${data.friend.user.username}
-                                        </span>`;
-                profile.innerHTML += `<p id="otheruserid" class="hidden">${otherUserId}</p>`;
+                                        </p>`;
+            profile.innerHTML += `<p id="otheruserid" class="hidden">${otherUserId}</p>`;
 
 
-                if (data.friend.isFriend === 0) {
+            if (data.friend.isFriend === 0) {
 
-                    /* addFriend.classList.add(""); */
-                    addFriend.innerHTML = `<button id="add"
+                /* addFriend.classList.add(""); */
+                addFriend.innerHTML = `<button id="add"
                                         onclick='friendAction("add", ${otherUserId}); getProfile();'
-                                        type="submit" ${buttonFriendClass} ${imageSrc}buttons/button(add).png"></button>`;
-                                        friendButtons.appendChild(addFriend);
-                }
-                else if (data.friend.isFriend === 1) {
+                                        type="button" class="btn btn-success ml-2">Add Friend</button>`;
+                friendButtons.appendChild(addFriend);
+            }
+            else if (data.friend.isFriend === 1) {
 
-                    /* declineFriend.classList.add("");
-                    acceptFriend.classList.add(""); */
+                /* declineFriend.classList.add("");
+                acceptFriend.classList.add(""); */
 
-                    acceptFriend.innerHTML = `<button id="accept"
+                acceptFriend.innerHTML = `<button id="accept"
                                              onclick='friendAction("accept", ${otherUserId}); getProfile();'
-                                             type="submit" ${buttonFriendClass} ${imageSrc}buttons/button(accept).png">
-                                             </button>`;
-                    declineFriend.innerHTML = `<button id= "decline"
+                                             type="submit" class="btn btn-success ml-2">Accept Friend</button>`;
+                declineFriend.innerHTML = `<button id= "decline"
                                             onclick='friendAction("decline", ${otherUserId}); getProfile();'
-                                            type="submit" ${buttonFriendClass} ${imageSrc}buttons/button(decline).png">
-                                            </button>`;
-                                            friendButtons.appendChild(acceptFriend);
-                                            friendButtons.appendChild(declineFriend);
-                }
-                else if (data.friend.isFriend === 2) {
+                                            type="submit" class="btn btn-warning ml-2">Decline Friend Request</button>`;
+                friendButtons.appendChild(acceptFriend);
+                friendButtons.appendChild(declineFriend);
+            }
+            else if (data.friend.isFriend === 2) {
 
-                    /* pendingFriend.classList.add(""); */
-                    cancelFriend.innerHTML = `<button id="cancel"
+                /* pendingFriend.classList.add(""); */
+                cancelFriend.innerHTML = `<button id="cancel"
                                             onclick='friendAction("cancel", ${otherUserId}); getProfile();'
                                             type="submit"
-                                            ${buttonFriendClass} ${imageSrc}buttons/button(cancel).png">
-                                            </button>`;
-                                            friendButtons.appendChild(cancelFriend);
-                }
-                else if (data.friend.isFriend === 3) {
+                                            class="btn btn-warning ml-2">Cancel Friend Request</button>`;
+                friendButtons.appendChild(cancelFriend);
+            }
+            else if (data.friend.isFriend === 3) {
 
-                    /* deleteFriend.classList.add(""); */
-                    deleteFriend.innerHTML = `<button id="delete"
+                /* deleteFriend.classList.add(""); */
+                deleteFriend.innerHTML = `<button id="delete"
                                             onclick='friendAction("delete", ${otherUserId}); getProfile();'
                                             type="submit"
-                                            ${buttonFriendClass} ${imageSrc}buttons/button(remove).png">
-                                            </button>`;
-                                            friendButtons.appendChild(deleteFriend);
-                }
-                profile.appendChild(friendButtons);
+                                            class="btn btn-danger">Delete Friend</button>`;
+                friendButtons.appendChild(deleteFriend);
+            }
+            profile.appendChild(friendButtons);
             getComments(otherUserId);
         });
 }
@@ -391,10 +385,8 @@ function getComments(otherUserId) {
     textArea.id = "addcomment";
     textArea.innerHTML = `<textarea id="comment" placeholder="Write a comment..." rows="3" cols="50" ></textarea>`;
     var addCommentButton = document.createElement("div");
-
-    var buttonClass = 'class="img-buttons"';
     addCommentButton.id = "addcommentbutton";
-    addCommentButton.innerHTML = `<button id="addcommentbutton" onclick="addComment()" ${buttonClass}>  ${imageSrc}buttons/Button(addcomment).png"></button>`;
+    addCommentButton.innerHTML = `<button id="addcommentbutton" onclick="addComment()" class="btn btn-success mt-2 ml-2 mb-2">Add Comment</button>`;
     document.getElementById("commentsection").appendChild(textArea);
     document.getElementById("commentsection").appendChild(addCommentButton);
 
@@ -419,37 +411,48 @@ function getComments(otherUserId) {
 
                 if (comment.sender_username === document.getElementById("username").textContent.trim()) {
                     comments.innerHTML +=
-                        `<p id="senderusername">From: ${comment.sender_username}</p>
-             <p id=${comment.id}>${comment.content}</p>
-             <p>Created at: ${createdDate} Updated at: ${updatedDate}</p>
+                        `<div class="card" style="width: 40rem;">
+                        <div class="card-body">
+                        <h5 class="card-title" id="senderusername">From: ${comment.sender_username}</h5>
+             <p class="card-text" id=${comment.id}>${comment.content}</p>
+             <h6 class="card-subtitle mt-2 text-muted">Created at: ${createdDate} Updated at: ${updatedDate}</h6>
              <div id="containerbuttons" class="float-container">
                 <div class= "float-child">
-                    <button id="editcommentbutton" onclick="editComment(${comment.id}, '${comment.content}')" ${buttonClass}> ${imageSrc}buttons/Button(editcomment).png"></button>
+                    <button id="editcommentbutton" onclick="editComment(${comment.id}, '${comment.content}')" class="btn btn-warning">Edit</button>
                 </div>
                 <div class= "float-child">
-                    <button id="deletecommentbutton" onclick="deleteComment(${comment.id})" ${buttonClass}> ${imageSrc}buttons/Button(deletecomment).png"></button>
+                    <button id="deletecommentbutton" onclick="deleteComment(${comment.id})" class="btn btn-danger">Delete</button>
                 </div>
             </div>
-                <p>---------------------------------------------------------</p>`
+            </div>`
                 }
                 else if (comment.user_receiver_id === document.getElementById("myuser-id").textContent.trim()) {
                     comments.innerHTML +=
-                        `<p id="senderusername">From: ${comment.sender_username}</p>
-             <p id=${comment.id}>${comment.content}</p>
-             <p>Created at: ${createdDate} Updated at: ${updatedDate}</p>
+                        `<div class="card" style="width: 40rem;">
+                        <div class="card-body">
+                        <h5 class="card-title" id="senderusername">From: ${comment.sender_username}</h5>
+             <p class="card-text" id=${comment.id}>${comment.content}</p>
+             <h6 class="card-subtitle" mt-2 text-muted">Created at: ${createdDate} Updated at: ${updatedDate}</h6>
              <div id="containerbuttons" class="float-container">
                 <div class= "float-child">
-                    <button id="deletecommentbutton" onclick="deleteComment(${comment.id})" ${buttonClass}> ${imageSrc}buttons/Button(deletecomment).png"></button>
+                    <button id="deletecommentbutton" onclick="deleteComment(${comment.id})" class="btn btn-danger">Delete</button>
                 </div>
             </div>
-                <p>---------------------------------------------------------</p>`
+            </div>`
                 }
                 else {
                     comments.innerHTML += `
-             <p id="senderusername">From: ${comment.sender_username}</p>
-             <p>${comment.content}</p>
-             <p>Created at: ${createdDate} Updated at: ${updatedDate}</p>
-             <p>---------------------------------------------------------</p>`
+                    <div class="card" style="width: 40rem;">
+                    <div class="card-body">
+                    <h5 class="card-title" id="senderusername">From: ${comment.sender_username}</h5>
+         <p class="card-text" id=${comment.id}>${comment.content}</p>
+         <h6 class="card-subtitle" mt-2 text-muted">Created at: ${createdDate} Updated at: ${updatedDate}</h6>
+         <div id="containerbuttons" class="float-container">
+            <div class= "float-child">
+                <button id="deletecommentbutton" onclick="deleteComment(${comment.id})" class="btn btn-danger">Delete</button>
+            </div>
+        </div>
+        </div>`
                 }
             })
 
@@ -462,10 +465,10 @@ async function addComment() {
 
     // Default options are marked with *
     var content = document.getElementById("comment").value;
-    try{
+    try {
         var otherUserId = document.getElementById("otheruserid").textContent;
     }
-    catch(err){
+    catch (err) {
         var otherUserId = document.getElementById("myuser-id").textContent;
     }
 
