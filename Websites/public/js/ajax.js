@@ -388,7 +388,7 @@ function getComments(otherUserId) {
     document.getElementById("commentsection").appendChild(commentSectionHeader);
     var textArea = document.createElement("div");
     textArea.id = "addcomment";
-    textArea.innerHTML = `<textarea id="comment" placeholder="Write a comment..." rows="3" cols="50" maxlenght="255" ></textarea>`;
+    textArea.innerHTML = `<textarea id="comment" placeholder="Write a comment..." rows="3" cols="50" maxlength="255" ></textarea>`;
     var addCommentButton = document.createElement("div");
     addCommentButton.id = "addcommentbutton";
     addCommentButton.innerHTML = `<button id="addcommentbutton" onclick="addComment()" class="btn btn-success mt-2 ml-2 mb-2">Add Comment</button>`;
