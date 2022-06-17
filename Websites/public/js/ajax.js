@@ -277,15 +277,11 @@ function getProfile() {
                     }
                     profile.appendChild(friendButtons);
                 }
-                else {
-                    otherUserId = document.getElementById("myuser-id").textContent.trim();
-                    profile.innerHTML += `<p class="fs-1 ml-2">${username}</p>`;
-
-                }
 
             }
             else {
-                otherUserId = data.id;
+                otherUserId = document.getElementById("myuser-id").textContent.trim();
+                profile.innerHTML += `<p class="fs-1 ml-2">${username}</p>`;
 
             }
             profile.innerHTML += `<p id="otheruserid" class="hidden">${otherUserId}</p>`;
@@ -392,7 +388,7 @@ function getComments(otherUserId) {
     document.getElementById("commentsection").appendChild(commentSectionHeader);
     var textArea = document.createElement("div");
     textArea.id = "addcomment";
-    textArea.innerHTML = `<textarea id="comment" placeholder="Write a comment..." rows="3" cols="50" ></textarea>`;
+    textArea.innerHTML = `<textarea id="comment" placeholder="Write a comment..." rows="3" cols="50" maxlenght="255" ></textarea>`;
     var addCommentButton = document.createElement("div");
     addCommentButton.id = "addcommentbutton";
     addCommentButton.innerHTML = `<button id="addcommentbutton" onclick="addComment()" class="btn btn-success mt-2 ml-2 mb-2">Add Comment</button>`;
@@ -467,7 +463,6 @@ function getComments(otherUserId) {
 }
 
 async function addComment() {
-    var comment = document.getElementById("comments").value;
 
     // Default options are marked with *
     var content = document.getElementById("comment").value;
@@ -501,7 +496,7 @@ async function addComment() {
             alert("Comment added!");
             var createdDate = new Date(data.comment.created_at).toLocaleString();
             var updatedDate = new Date(data.comment.updated_at).toLocaleString();
-            comments.innerHTML += `<div class="card" style="width: 40rem;"  id="${comment.id}">
+            comments.innerHTML += `<div class="card" style="width: 40rem;"  id="${data.comment.id}">
                         <div class="card-body">
                         <h5 class="card-title" id="senderusername">From: ${data.comment.sender_username}</h5>
              <p class="card-text" id="commentid-${data.comment.id}">${data.comment.content}</p>
