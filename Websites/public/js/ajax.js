@@ -411,10 +411,10 @@ function getComments(otherUserId) {
 
                 if (comment.sender_username === document.getElementById("username").textContent.trim()) {
                     comments.innerHTML +=
-                        `<div class="card" style="width: 40rem;">
+                        `<div class="card" style="width: 40rem;" id="${comment.id}">
                         <div class="card-body">
                         <h5 class="card-title" id="senderusername">From: ${comment.sender_username}</h5>
-             <p class="card-text" id=${comment.id}>${comment.content}</p>
+             <p class="card-text">${comment.content}</p>
              <h6 class="card-subtitle mt-2 text-muted">Created at: ${createdDate}</h6>
              <h6 class="card-subtitle mt-2 text-muted" id="updatedat">Updated at: ${updatedDate}</h6>
              <div id="containerbuttons" class="float-container">
@@ -429,10 +429,10 @@ function getComments(otherUserId) {
                 }
                 else if (comment.user_receiver_id === document.getElementById("myuser-id").textContent.trim()) {
                     comments.innerHTML +=
-                        `<div class="card" style="width: 40rem;">
+                        `<div class="card" style="width: 40rem;" id="${comment.id}">
                         <div class="card-body">
                         <h5 class="card-title" id="senderusername">From: ${comment.sender_username}</h5>
-             <p class="card-text" id=${comment.id}>${comment.content}</p>
+             <p class="card-text">${comment.content}</p>
              <h6 class="card-subtitle mt-2 text-muted">Created at: ${createdDate}</h6>
              <h6 class="card-subtitle mt-2 text-muted" id="updatedat">Updated at: ${updatedDate}</h6>
              <div id="containerbuttons" class="float-container">
@@ -444,10 +444,10 @@ function getComments(otherUserId) {
                 }
                 else {
                     comments.innerHTML += `
-                    <div class="card" style="width: 40rem;">
+                    <div class="card" style="width: 40rem;" id="${comment.id}">
                     <div class="card-body">
                     <h5 class="card-title" id="senderusername">From: ${comment.sender_username}</h5>
-         <p class="card-text" id=${comment.id}>${comment.content}</p>
+         <p class="card-text" id="commentid-${comment.id}">${comment.content}</p>
          <h6 class="card-subtitle mt-2 text-muted">Created at: ${createdDate}</h6>
          <h6 class="card-subtitle mt-2 text-muted" id="updatedat">Updated at: ${updatedDate}</h6>
         </div>
@@ -497,7 +497,7 @@ async function addComment() {
             comments.innerHTML += `<div class="card" style="width: 40rem;"  id="${data.comment.id}">
                         <div class="card-body">
                         <h5 class="card-title" id="senderusername">From: ${data.comment.sender_username}</h5>
-             <p class="card-text" id="commentid-${data.comment.id}">${data.comment.content}</p>
+             <p class="card-text">${data.comment.content}</p>
              <h6 class="card-subtitle mt-2 text-muted">Created at: ${createdDate}</h6>
              <h6 class="card-subtitle mt-2 text-muted" id="updatedat">Updated at: ${updatedDate}</h6>
              <div id="containerbuttons" class="float-container">
