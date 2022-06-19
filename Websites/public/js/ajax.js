@@ -1,4 +1,4 @@
-var urlCoins = "http://127.0.0.1:8001/coins";
+var urlCoins = "http://127.0.0.1:8001/coins/";
 var urlGetFriends = "http://127.0.0.1:8001/getfriends";
 var urlGetProfile = "http://127.0.0.1:8001/getuser/";
 var urlComments = "http://127.0.0.1:8001/comment/";
@@ -86,13 +86,11 @@ function getGame(value) {
 
             button.innerHTML += `<div class="row" id="hitandstand">
                                 <div class="col-4">
-                                    <button type="button" id="hit" onclick="getGame('hit')" name="hit" class="btn btn-primary float-start">
-                                        ${imageSrc}buttons/button(hit).png">
+                                    <button type="button" id="hit" onclick="getGame('hit')" name="hit" class="btn-lg btn-primary float-start">Hit
                                     </button>
                                 </div>
                                 <div class="col-4">
-                                    <button id="stand" onclick="getGame('stand')" name="stand" class="img-buttons float-end">
-                                                ${imageSrc}buttons/button(stand).png">
+                                    <button type="button" id="stand" onclick="getGame('stand')" name="stand" class="btn-lg btn-primary float-end">Stand
                                     </button>
                                 </div>
                             </div>
@@ -114,9 +112,8 @@ function getGame(value) {
                                         <div class="col-4">
                                         </div>
                                         <div class="col-4">
-                                            <button id="newGame" onclick="getGame('newGame')" this.onclick=null; name="start"
-                                                    class = "img-buttons">
-                                                    <img src="/img/buttons/button(playagain).png">
+                                            <button type="button" id="newGame" onclick="getGame('newGame')" this.onclick=null; name="start"
+                                                    class="btn btn-primary ml-2">New Game
                                             </button>
                                         </div>
                                     </div>`;
@@ -243,8 +240,6 @@ function getProfile() {
             if (data.success === true) {
                 var otherUserId = data.friend.user.id;
                 profile.innerHTML += `<p class="fs-1 ml-2">${data.friend.user.username}</p>`;
-                if (document.getElementById("profileInfo") !== null) {
-                    document.getElementById("profileInfo").remove();
 
 
                     if (data.friend.isFriend === 0) {
@@ -272,13 +267,13 @@ function getProfile() {
                         friendButtons.innerHTML = `<button id="delete"
                                                     onclick='friendAction("delete", ${otherUserId}); changeFriendButton(1);'
                                                     type="submit"
-                                                    class="btn btn-danger">Delete Friend</button>
+                                                    class="btn btn-danger ml-2">Delete Friend</button>
                                                     <script>function changeButton()</script>`;
                     }
                     profile.appendChild(friendButtons);
                 }
 
-            }
+
             else {
                 otherUserId = document.getElementById("myuser-id").textContent.trim();
                 profile.innerHTML += `<p class="fs-1 ml-2">${username}</p>`;
@@ -308,7 +303,7 @@ function changeFriendButton(i) {
         friendButtons.innerHTML = `<button id="delete"
                                     onclick='friendAction("delete", ${otherUserId}); changeFriendButton(1);'
                                     type="submit"
-                                    class="btn btn-danger">Delete Friend</button>`;
+                                    class="btn btn-danger ml-2">Delete Friend</button>`;
     }
 }
 
@@ -420,7 +415,8 @@ function getComments(otherUserId) {
                         <div class="card-body">
                         <h5 class="card-title" id="senderusername">From: ${comment.sender_username}</h5>
              <p class="card-text" id=${comment.id}>${comment.content}</p>
-             <h6 class="card-subtitle mt-2 text-muted">Created at: ${createdDate} Updated at: ${updatedDate}</h6>
+             <h6 class="card-subtitle mt-2 text-muted">Created at: ${createdDate}</h6>
+             <h6 class="card-subtitle mt-2 text-muted" id="updatedat">Updated at: ${updatedDate}</h6>
              <div id="containerbuttons" class="float-container">
                 <div class= "float-child">
                     <button id="editcommentbutton" onclick="editComment(${comment.id}, '${comment.content}')" class="btn btn-warning">Edit</button>
@@ -437,7 +433,8 @@ function getComments(otherUserId) {
                         <div class="card-body">
                         <h5 class="card-title" id="senderusername">From: ${comment.sender_username}</h5>
              <p class="card-text" id=${comment.id}>${comment.content}</p>
-             <h6 class="card-subtitle mt-2 text-muted">Created at: ${createdDate} Updated at: ${updatedDate}</h6>
+             <h6 class="card-subtitle mt-2 text-muted">Created at: ${createdDate}</h6>
+             <h6 class="card-subtitle mt-2 text-muted" id="updatedat">Updated at: ${updatedDate}</h6>
              <div id="containerbuttons" class="float-container">
                 <div class= "float-child">
                     <button id="deletecommentbutton" onclick="deleteComment(${comment.id})" class="btn btn-danger">Delete</button>
@@ -451,7 +448,8 @@ function getComments(otherUserId) {
                     <div class="card-body">
                     <h5 class="card-title" id="senderusername">From: ${comment.sender_username}</h5>
          <p class="card-text" id=${comment.id}>${comment.content}</p>
-         <h6 class="card-subtitle mt-2 text-muted">Created at: ${createdDate} Updated at: ${updatedDate}</h6>
+         <h6 class="card-subtitle mt-2 text-muted">Created at: ${createdDate}</h6>
+         <h6 class="card-subtitle mt-2 text-muted" id="updatedat">Updated at: ${updatedDate}</h6>
         </div>
         </div>`
                 }
@@ -571,6 +569,52 @@ function deleteComment(comment_id) {
         }
         );
 }
+
+function setUpStore() {
+    var storeButtons = document.getElementById("buybuttons");
+    var buyContainer = document.createElement("div");
+    buyContainer.className = "float-container";
+    buyContainer.id = "buycontainer";
+
+    buyContainer.innerHTML = `<button type="button" id="100" onclick="buyCoins(100)" class="btn btn-primary ml-2">Buy 100 coins</button>`
+    buyContainer.innerHTML += `<button type="button" id="500" onclick="buyCoins(500)" class="btn btn-primary ml-2">Buy 500 coins</button>`
+    buyContainer.innerHTML += `<button type="button" id="1000" onclick="buyCoins(1000)" class="btn btn-primary ml-2">Buy 1000 coins</button>`
+
+    storeButtons.appendChild(buyContainer);
+}
+
+function buyCoins(amount) {
+    //fetch post request
+    fetch(urlCoins, {
+        method: 'PUT', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, *cors, same-origin
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'same-origin', // include, *same-origin, omit
+        headers: {
+            'Content-Type': 'application/json'
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        redirect: 'follow', // manual, *follow, error
+        referrer: 'no-referrer', // no-referrer, *client
+        body: JSON.stringify({
+            user_id: document.getElementById("myuser-id").textContent,
+            amount: amount
+        }) // body data type must match "Content-Type" header
+    })
+        .then(function (response) {
+            if (response.ok) {
+                alert("Coins bought!");
+                var newCoins = "Balance: " + document.getElementById("coins").textContent + document.getElementById("amount").value;
+
+                document.getElementById("coins").innerHTML = "Balance: " + newCoins;
+            }
+            else {
+                alert("Coins not bought!");
+            }
+        }
+        );
+}
+
 
 //TODO: LAV DENNE!
 /* function coinBet() {

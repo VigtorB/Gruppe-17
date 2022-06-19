@@ -29,6 +29,18 @@ class CoinController extends Controller
         //
     }
 
+    public function buyCoins(Request $request)
+    {
+        try{
+            $coin = Coin::where('user_id', $request->id)
+                ->update(['coin_amount' => $request->coin_amount + $request->amount]);
+            return response()->json(['success' => true, $coin => 'Balance']);
+        }
+        catch(\Exception $e){
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
     /**
      * Display the specified resource.
      *

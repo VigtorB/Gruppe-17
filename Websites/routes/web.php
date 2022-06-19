@@ -58,6 +58,7 @@ Route::get('getfriends', [FriendController::class, 'getFriends'])->name('getFrie
 
 //CoinController
 Route::get('coins', [CoinController::class, 'getCoins'])->name('coins')->middleware(Authenticate::class);
+Route::put('coins', [CoinController::class, 'buyCoins'])->name('coins.store')->middleware(Authenticate::class);
 Route::get('store', [CoinController::class, 'storeView'])->name('store')->middleware(Authenticate::class);
 
 //PostController

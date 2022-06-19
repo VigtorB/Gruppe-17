@@ -36,6 +36,7 @@ Route::delete("user/{id}",[UserController::class,'destroy']);
 Route::get("coins/{id}",[CoinController::class,'getCoins']);
 Route::post("coins",[CoinController::class,'storeCoin']);
 Route::put("coins/{id}",[CoinController::class,'updateCoin']);
+Route::put("coins/{id}/{amount}",[CoinController::class,'buyCoins']);
 Route::delete("coins/{id}",[CoinController::class,'destroyCoin']);
 //Coin End-points
 
